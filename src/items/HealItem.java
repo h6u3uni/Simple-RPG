@@ -1,0 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package items;
+
+import rpggame.Logic;
+
+/**
+ *
+ * @author haruk
+ */
+public class HealItem extends Item{
+    public int heal;
+    
+    public HealItem(String name, int heal, int price) {
+        super(name, true);
+        this.heal = heal;
+        this.price = price;
+    }
+
+    @Override
+    public void printItem() {
+        Logic.clearConsole();
+        Logic.printHeading(name);
+        System.out.println("Heal: " + this.heal);
+    }
+    
+    // This static method parses a string in the format "name:heal:price"
+    // and returns a new HealItem object with the specified values
+    public static HealItem parseHeal(String str) {
+        // Split the input string by colon and get the different parts
+        String[] parts = str.split(":");
+        String name = parts[0]; // The first part is the name of the item
+        int heal = Integer.parseInt(parts[1]); // The second part is the amount of HP the item can heal
+        int price = Integer.parseInt(parts[2]); // The third part is the price of the item
+        // Create a new HealItem object using the extracted values and return it
+        return new HealItem(name, heal, price);
+    }
+
+}

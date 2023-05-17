@@ -155,7 +155,7 @@ public class Logic {
         //boss dark knight
         
         enemyWeapon.put("Golem", new Weapon("Golem Arm", 10,5,0,200));
-        enemyWeapon.put("Troll", new Weapon("Troll Axe", 17,0,-3,200));
+        enemyWeapon.put("Troll", new Weapon("Troll Axe", 17,0,-2,200));
         enemyWeapon.put("Minotaur", new Weapon("Axe of the Minotaur", 25,0,-5,1000));
         //boss minotaur
         

@@ -16,6 +16,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +30,71 @@ import java.util.logging.Logger;
  * @author haruk
  */
 public class SaveManager {    
+    private static final String USER_NAME = "pdc"; //your DB username
+    private static final String PASSWORD = "rpg"; //your DB password
+    private static final String URL = "jdbc:derby:databases/gameDB; create=true";  //url of the DB host
+
+    Connection conn;
+    Statement statement;
+    
+    public SaveManager() {
+        establishConnection();
+    }
+
+//    public static void main(String[] args) {
+//        SaveManager sManager = new SaveManager();
+//        System.out.println(sManager.getConnection());
+////        try {
+////                ResultSet rs = sManager.statement.executeQuery("SELECT * FROM WEAPON");
+////            while(rs.next()){
+////                int id = rs.getInt("ITEMID");
+////                String name = rs.getString("WEAPONNAME");
+////                System.out.println("ITEMID: " + id);
+////                System.out.println("NAME: " + name);
+////            }
+////        } catch (SQLException ex) {
+////            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+////        }
+//    }
+
+    public Connection getConnection() {
+        return this.conn;
+    }
+
+    //Establish connection
+    public void establishConnection() {
+        if (this.conn == null) {
+            try {
+                conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+                System.out.println(URL + " Get Connected Successfully ....");
+                statement = conn.createStatement();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+
+    public void closeConnections() {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //main saving method for use in game. calls private methods to save individual aspects. 
     public static void saveAll(){
         savePlayer();

@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,8 +35,8 @@ public class SaveManager {
     private static final String PASSWORD = "rpg"; //your DB password
     private static final String URL = "jdbc:derby:databases/gameDB; create=true";  //url of the DB host
 
-    Connection conn;
-    Statement statement;
+    static Connection conn;
+    static Statement statement;
     
     public SaveManager() {
         establishConnection();
@@ -85,7 +86,7 @@ public class SaveManager {
         }
     }
     
-    public HealItem[] getShopHeals(){
+    public static HealItem[] getShopHeals(){
         ArrayList<HealItem> arrHeal = new ArrayList<>();
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM HEALITEM");
@@ -109,7 +110,7 @@ public class SaveManager {
         return ret;
     }
     
-    public DmgItem[] getShopDmgs(){
+    public static DmgItem[] getShopDmgs(){
         ArrayList<DmgItem> arrDmg = new ArrayList<>();
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM DMGITEM");
@@ -133,7 +134,7 @@ public class SaveManager {
         return ret;
     }
     
-    public Weapon[] getShopWeapons(){
+    public static Weapon[] getShopWeapons(){
         ArrayList<Weapon> arrWeapon = new ArrayList<>();
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM WEAPON WHERE TYPE = 'SHOP'");
@@ -193,37 +194,48 @@ public class SaveManager {
     
     //there is a hof file where the names of players who completed the game will be recorded.
     //this method returns an arraylist of the names of the players who cleared the game.
+//    public static ArrayList<String> getHallOfFame(){
+//        ArrayList<String> hof = new ArrayList<>();
+//        String pName = "";
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader("./saves/hof.txt"));
+//            try {
+//                while((pName = br.readLine()) != null){
+//                    hof.add(pName);
+//                }
+//            } catch (IOException ex) {
+//                Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return hof;
+//    }
+    
     public static ArrayList<String> getHallOfFame(){
         ArrayList<String> hof = new ArrayList<>();
-        String pName = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader("./saves/hof.txt"));
-            try {
-                while((pName = br.readLine()) != null){
-                    hof.add(pName);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+            ResultSet rs = statement.executeQuery("SELECT * FROM HALLOFFAME");
+            while(rs.next()){
+                String name = rs.getString("PLAYERNAME");
+                int lvl = rs.getInt("LVL");
+                Date dateOfComplete = rs.getDate("DATEOFCOMPLETION");
+                String entry = "Player Name: " + name + " | Player LVL: " + Integer.toString(lvl) + " | Date of Completion: " + dateOfComplete;
+                hof.add(entry);
             }
-        } catch (FileNotFoundException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return hof;
     }
     
     //method to add player to the hall of fame
     public static void addToHallOfFame(Player player){
-        ArrayList<String> hof = getHallOfFame();
-        hof.add(player.name);
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("./saves/hof.txt"));
-            String out = "";
-            for(String name : hof){
-                out += name + "\n";
-            }
-            writer.write(out);
-            writer.close();
-        } catch (IOException ex) {
+            String sql = "INSERT INTO HALLOFFAME (PLAYERNAME, PLAYERID, LVL, DATEOFCOMPLETION) VALUES (" + player.name + ", " + player.;
+            statement.executeUpdate(sql);
+        } catch (SQLException ex) {
             Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

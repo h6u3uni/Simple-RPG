@@ -22,6 +22,7 @@ public class Player extends Mob{
     private boolean inBattle;
     public Enemy currEnemy;
     public String gender;
+    private int id;
     
     public Player(String name, String gender) {
         super(name);
@@ -267,6 +268,14 @@ public class Player extends Mob{
         System.out.println("Defense: " + def + "(" + weapon.getDef() + ")");
         System.out.println("Speed: " + spd + "(" + weapon.getSpd() + ")");
         System.out.println("Money: " + money + " Gold");
+    }
+    
+    public int getId(){
+        return this.id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
     }
     
 }

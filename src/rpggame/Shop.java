@@ -16,10 +16,8 @@ import java.util.ArrayList;
  */
 public class Shop {
     static Player player;
-    static HealItem[] healItems = {new HealItem("Small Potion", 20, 100), 
-                                new HealItem("Medium Potion", 50,200), 
-                                new HealItem("High Potion", 150,500), 
-                                new HealItem("Elixir", 1000000,1000)};
+    static SaveManager sMan;
+    static HealItem[] healItems;
     
     static DmgItem[] dmgItems = {new DmgItem("Small Bomb", 20,100), 
                                 new DmgItem("Medium Bomb", 50,200), 
@@ -30,6 +28,8 @@ public class Shop {
     
     //main method to call in logic class to entershop. interface to interact with shop. 
     public static void enterShop(Player player){
+        sMan = Logic.sMan;
+        healItems = sMan.getShopHeals();
         Shop.player = player;
         Logic.clearConsole();
         Logic.printHeading("Welcome to the Shop");

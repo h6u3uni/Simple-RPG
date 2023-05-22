@@ -50,6 +50,8 @@ public class Logic {
     
     static HashMap<String, Weapon> enemyWeapon = new HashMap<>();
     
+    static SaveManager sMan;
+    
     //handles virtually every input in the game. Takes in a string and a numberofuserchoice. 
     //handles all options, all types of inputs, and exceptions. 
     public static int readInt(String prompt, int userChoices){
@@ -167,6 +169,8 @@ public class Logic {
         enemyWeapon.put("Imp", new Weapon("Imp Spear", 10,4,11,200));
         enemyWeapon.put("Demon", new Weapon("Demon Spear", 16,4,5,200));
         enemyWeapon.put("Demon Lord", new Weapon("Excalibur", 30,0,5,1000));
+        
+        sMan = new SaveManager();
         
         //file check
         if(SaveManager.saveExist()){

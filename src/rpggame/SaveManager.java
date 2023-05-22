@@ -44,17 +44,18 @@ public class SaveManager {
 //    public static void main(String[] args) {
 //        SaveManager sManager = new SaveManager();
 //        System.out.println(sManager.getConnection());
-////        try {
-////                ResultSet rs = sManager.statement.executeQuery("SELECT * FROM WEAPON");
-////            while(rs.next()){
-////                int id = rs.getInt("ITEMID");
-////                String name = rs.getString("WEAPONNAME");
-////                System.out.println("ITEMID: " + id);
-////                System.out.println("NAME: " + name);
-////            }
-////        } catch (SQLException ex) {
-////            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
-////        }
+//        try {
+//            ResultSet rs = sManager.statement.executeQuery("SELECT * FROM HEALITEM");
+//            while(rs.next()){
+//                String name = rs.getString("ITEMNAME");
+//                int heal = rs.getInt("HEAL");
+//                int price = rs.getInt("PRICE");
+//                String item = name + ":" + Integer.toString(heal) + ":" + Integer.toString(price);
+//                System.out.println(item);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //    }
 
     public Connection getConnection() {
@@ -66,7 +67,7 @@ public class SaveManager {
         if (this.conn == null) {
             try {
                 conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-                System.out.println(URL + " Get Connected Successfully ....");
+                //System.out.println(URL + " Get Connected Successfully ....");
                 statement = conn.createStatement();
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -84,7 +85,29 @@ public class SaveManager {
         }
     }
     
-    
+    public HealItem[] getShopHeals(){
+        ArrayList<HealItem> arrHeal = new ArrayList<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT * FROM HEALITEM");
+            while(rs.next()){
+                String name = rs.getString("ITEMNAME");
+                int heal = rs.getInt("HEAL");
+                int price = rs.getInt("PRICE");
+                String item = name + ":" + Integer.toString(heal) + ":" + Integer.toString(price);
+                arrHeal.add(HealItem.parseHeal(item));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        HealItem[] ret = new HealItem[arrHeal.size()];
+        
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = arrHeal.get(i);
+        }
+        
+        return ret;
+    }
     
     
     

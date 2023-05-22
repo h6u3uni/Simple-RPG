@@ -19,17 +19,16 @@ public class Shop {
     static SaveManager sMan;
     static HealItem[] healItems;
     
-    static DmgItem[] dmgItems = {new DmgItem("Small Bomb", 20,100), 
-                                new DmgItem("Medium Bomb", 50,200), 
-                                new DmgItem("High Bomb", 150,500)};
+    static DmgItem[] dmgItems;
     
-    static Weapon[] shopWeapons = {new Weapon("Iron Dagger", 4,0,3,500), new Weapon("Iron Sword", 7,0,0,500), new Weapon("Iron Axe", 11,0,-4,500), new Weapon("Iron Shield", 3,5,-1,500),
-                                    new Weapon("Steel Dagger", 6,0,3,1000), new Weapon("Steel Sword", 9,0,0,1000), new Weapon("Steel Axe", 13,0,-4,1000), new Weapon("Steel Shield", 4,6,-1,1000)};
+    static Weapon[] shopWeapons;
     
     //main method to call in logic class to entershop. interface to interact with shop. 
     public static void enterShop(Player player){
         sMan = Logic.sMan;
         healItems = sMan.getShopHeals();
+        dmgItems = sMan.getShopDmgs();
+        shopWeapons = sMan.getShopWeapons();
         Shop.player = player;
         Logic.clearConsole();
         Logic.printHeading("Welcome to the Shop");

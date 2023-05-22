@@ -109,9 +109,55 @@ public class SaveManager {
         return ret;
     }
     
+    public DmgItem[] getShopDmgs(){
+        ArrayList<DmgItem> arrDmg = new ArrayList<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT * FROM DMGITEM");
+            while(rs.next()){
+                String name = rs.getString("ITEMNAME");
+                int dmg = rs.getInt("DMG");
+                int price = rs.getInt("PRICE");
+                String item = name + ":" + Integer.toString(dmg) + ":" + Integer.toString(price);
+                arrDmg.add(DmgItem.parseDmg(item));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        DmgItem[] ret = new DmgItem[arrDmg.size()];
+        
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = arrDmg.get(i);
+        }
+        
+        return ret;
+    }
     
-    
-    
+    public Weapon[] getShopWeapons(){
+        ArrayList<Weapon> arrWeapon = new ArrayList<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT * FROM WEAPON WHERE TYPE = 'SHOP'");
+            while(rs.next()){
+                String name = rs.getString("WEAPONNAME");
+                int atk = rs.getInt("ATK");
+                int def = rs.getInt("DEF");
+                int spd = rs.getInt("SPD");
+                int price = rs.getInt("PRICE");
+                String item = name + ":" + Integer.toString(atk) + ":" + Integer.toString(def) + ":" + Integer.toString(spd) + ":" + Integer.toString(price);
+                arrWeapon.add(Weapon.parseWeapon(item));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Weapon[] ret = new Weapon[arrWeapon.size()];
+        
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = arrWeapon.get(i);
+        }
+        
+        return ret;
+    }
     
     
     

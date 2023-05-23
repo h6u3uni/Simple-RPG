@@ -265,6 +265,27 @@ public class SaveManager {
         return ret;
     }
     
+    
+    public static HashMap<String, String> getBossTypes(){
+        String[] places = getPlaces();
+        HashMap<String, String> ret = new HashMap<>();
+        
+        for(String place : places){
+            try {
+                ResultSet rs = statement.executeQuery("SELECT ENEMY.ENEMYNAME FROM ENEMY, PLACE WHERE ENEMY.LOCATIONID = PLACE.PLACEID AND PLACE.PLACENAME = '" + place + "' AND ENEMY.BOSS = TRUE");
+                while(rs.next()){
+                    String name = rs.getString("ENEMYNAME");
+                    ret.put(place, name);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return ret;
+    }
+    
+    
     //main saving method for use in game. calls private methods to save individual aspects. 
     public static void saveAll(){
         savePlayer();

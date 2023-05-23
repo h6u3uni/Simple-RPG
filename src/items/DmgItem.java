@@ -11,11 +11,13 @@ import rpggame.Logic;
  *
  * @author haruk
  */
-public class DmgItem extends Item{
+public class DmgItem implements Item{
+    public String name;
     public int dmg; //equal to atk stat used in mob (same damage calculations)
+    public int price;
     
     public DmgItem(String name, int dmg, int price) {
-        super(name, true);
+        this.name = name;
         this.dmg = dmg;
         this.price = price;
     }
@@ -40,5 +42,15 @@ public class DmgItem extends Item{
         int price = Integer.parseInt(parts[2]);
         // Create and return a new DmgItem object with the parsed values
         return new DmgItem(name, dmg, price);
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public int getPrice() {
+        return this.price;
     }
 }

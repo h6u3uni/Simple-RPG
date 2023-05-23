@@ -1,16 +1,20 @@
-Mon May 22 16:41:57 NZST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+Tue May 23 14:49:20 NZST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Mon May 22 16:41:58 NZST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-41c3-990a-000070a16e3d 
-on database directory D:\uniwork\comp603\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
-Loaded from file:/E:/comp603-programdesignandconstruction/db-derby-10.14.2.0-bin/lib/derby.jar
+Tue May 23 14:49:20 NZST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-4682-da02-ffffe97bf0a8 
+on database directory C:\Users\haruk\Uni Work\comp603-pdc\RPGGameGUIVer\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Loaded from file:/C:/Users/haruk/Uni%20Work/comp603-pdc/db-derby-10.14.2.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_361-b09
-user.dir=E:\comp603-programdesignandconstruction\db-derby-10.14.2.0-bin
-os.name=Windows 10
+user.dir=C:\Users\haruk\Uni Work\comp603-pdc\db-derby-10.14.2.0-bin
+os.name=Windows 11
 os.arch=amd64
 os.version=10.0
-derby.system.home=D:\uniwork\comp603\Simple-RPG\databases
+derby.system.home=C:\Users\haruk\Uni Work\comp603-pdc\RPGGameGUIVer\Simple-RPG\databases
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Mon May 22 17:12:14 NZST 2023: Shutting down Derby engine
+Tue May 23 15:02:24 NZST 2023: Shutting down Derby engine
+----------------------------------------------------------------
+Tue May 23 15:02:24 NZST 2023:
+Shutting down instance a816c00e-0188-4682-da02-ffffe97bf0a8 on database directory C:\Users\haruk\Uni Work\comp603-pdc\RPGGameGUIVer\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
+----------------------------------------------------------------

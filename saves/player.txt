@@ -2,13 +2,13 @@ Name: haruki
 HP Stat: 10
 Max HP: 50
 HP: 50
-XP Now: 0
+XP Now: 2
 XP Needed: 6
 Level: 1
 Attack: 11
 Defense: 1
 Speed: 1
 Stat Point: 0
-Money: 100
+Money: 20
 Weapon: Basic Sword:2:0:0:10
 Gender: Male

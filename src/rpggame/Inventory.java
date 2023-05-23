@@ -35,7 +35,7 @@ public class Inventory {
         Logic.clearConsole();
         Logic.printHeading("Inventory");
         for(Item i : inventory){
-            System.out.println("- " + i.name);
+            System.out.println("- " + i.getName());
         }
         Logic.gamePauser();
     }

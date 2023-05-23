@@ -146,12 +146,12 @@ public class Player extends Mob{
         if(!inBattle){
             if(item instanceof HealItem){
                 Logic.clearConsole();
-                Logic.printHeading("Use " + item.name + "?");
+                Logic.printHeading("Use " + item.getName() + "?");
                 System.out.println("(1) Yes");
                 System.out.println("(2) No");
                 int confirm = Logic.readInt("-> ", 2);
                 if(confirm == 2){
-                    System.out.println("Didn't use " + item.name);
+                    System.out.println("Didn't use " + item.getName());
                     Logic.gamePauser();
                 }
                 else{
@@ -171,12 +171,12 @@ public class Player extends Mob{
             }
             else if(item instanceof DmgItem){
                 Logic.clearConsole();
-                Logic.printHeading("Use " + item.name + "?");
+                Logic.printHeading("Use " + item.getName() + "?");
                 System.out.println("(1) Yes");
                 System.out.println("(2) No");
                 int confirm = Logic.readInt("-> ", 2);
                 if(confirm == 2){
-                    System.out.println("Didn't use " + item.name);
+                    System.out.println("Didn't use " + item.getName());
                     Logic.gamePauser();
                 }
                 else{
@@ -194,12 +194,12 @@ public class Player extends Mob{
         else{ //inbattle
             if(item instanceof HealItem){
                 Logic.clearConsole();
-                Logic.printHeading("Use " + item.name + "?");
+                Logic.printHeading("Use " + item.getName() + "?");
                 System.out.println("(1) Yes");
                 System.out.println("(2) No");
                 int confirm = Logic.readInt("-> ", 2);
                 if(confirm == 2){
-                    System.out.println("Didn't use " + item.name);
+                    System.out.println("Didn't use " + item.getName());
                     Logic.gamePauser();
                 }
                 else{
@@ -219,12 +219,12 @@ public class Player extends Mob{
             }
             else if(item instanceof DmgItem){
                 Logic.clearConsole();
-                Logic.printHeading("Use " + item.name + "?");
+                Logic.printHeading("Use " + item.getName() + "?");
                 System.out.println("(1) Yes");
                 System.out.println("(2) No");
                 int confirm = Logic.readInt("-> ", 2);
                 if(confirm == 2){
-                    System.out.println("Didn't use " + item.name);
+                    System.out.println("Didn't use " + item.getName());
                     Logic.gamePauser();
                 }
                 else{

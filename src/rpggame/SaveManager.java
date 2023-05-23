@@ -22,7 +22,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -160,10 +162,108 @@ public class SaveManager {
         return ret;
     }
     
+    public static Weapon[] getStarterWeapons(){
+        ArrayList<Weapon> arrWeapon = new ArrayList<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT * FROM WEAPON WHERE TYPE = 'START'");
+            while(rs.next()){
+                String name = rs.getString("WEAPONNAME");
+                int atk = rs.getInt("ATK");
+                int def = rs.getInt("DEF");
+                int spd = rs.getInt("SPD");
+                int price = rs.getInt("PRICE");
+                String item = name + ":" + Integer.toString(atk) + ":" + Integer.toString(def) + ":" + Integer.toString(spd) + ":" + Integer.toString(price);
+                arrWeapon.add(Weapon.parseWeapon(item));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Weapon[] ret = new Weapon[arrWeapon.size()];
+        
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = arrWeapon.get(i);
+        }
+        
+        return ret;
+    }
     
+    public static QuestItem[] getQuestItems(){
+        ArrayList<QuestItem> arrQuest = new ArrayList<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT * FROM QUESTITEM");
+            while(rs.next()){
+                String name = rs.getString("ITEMNAME");
+                String description = rs.getString("DESCRIPTION");
+                String item = name + ":" + description;
+                arrQuest.add(QuestItem.parseQuest(item));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        QuestItem[] ret = new QuestItem[arrQuest.size()];
+        
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = arrQuest.get(i);
+        }
+        
+        return ret;
+    }
     
+    public static String[] getPlaces(){
+        ArrayList<String> arrPlaces = new ArrayList<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT * FROM PLACE");
+            while(rs.next()){
+                String name = rs.getString("PLACENAME");
+                arrPlaces.add(name);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String[] ret = new String[arrPlaces.size()];
+        
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = arrPlaces.get(i);
+        }
+        
+        return ret;
+    }
     
+    public static HashMap<String, String[]> getEnemyTypes(){
+        String[] places = getPlaces();
+        HashMap<String, String[]> ret = new HashMap<>();
+        
+        for(String place : places){
+            String[] enemies = enemyTypeHelper(place);
+            ret.put(place, enemies);
+        }
+        
+        return ret;
+    }
     
+    private static String[] enemyTypeHelper(String place){
+        ArrayList<String> arrEnemies = new ArrayList<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT ENEMY.ENEMYNAME FROM ENEMY, PLACE WHERE ENEMY.LOCATIONID = PLACE.PLACEID AND PLACE.PLACENAME = '" + place + "' AND ENEMY.BOSS = FALSE");
+            while(rs.next()){
+                String name = rs.getString("ENEMYNAME");
+                arrEnemies.add(name);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String[] ret = new String[arrEnemies.size()];
+        
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = arrEnemies.get(i);
+        }
+        
+        return ret;
+    }
     
     //main saving method for use in game. calls private methods to save individual aspects. 
     public static void saveAll(){
@@ -233,13 +333,29 @@ public class SaveManager {
     //method to add player to the hall of fame
     public static void addToHallOfFame(Player player){
         try {
-            String sql = "INSERT INTO HALLOFFAME (PLAYERNAME, PLAYERID, LVL, DATEOFCOMPLETION) VALUES (" + player.name + ", " + player.;
+            // Get the current date
+            LocalDate currentDate = LocalDate.now();
+
+            // Convert LocalDate to java.util.Date
+            java.util.Date utilDate = java.util.Date.from(currentDate.atStartOfDay()
+                                                    .atZone(java.time.ZoneId.systemDefault())
+                                                    .toInstant());
+
+            // Convert java.util.Date to java.sql.Date
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            String sql = "INSERT INTO HALLOFFAME (PLAYERID, PLAYERNAME, LVL, DATEOFCOMPLETION) VALUES (" + player.getId() + ", " + player.name + ", " + player.lvl + ", " + sqlDate + ") ON DUPLICATE KEY UPDATE PLAYERNAME = VALUES(" + player.name + "), LVL = VALUES(" + player.lvl + "), DATEOFCOMPLETION = VALUES(" + sqlDate + ")";
             statement.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    
+    
+    
+    
+    
+    
     //saves the player data to a file.
     private static void savePlayer() {
         try {

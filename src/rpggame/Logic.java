@@ -21,17 +21,9 @@ import java.util.Scanner;
  */
 public class Logic {
     static Scanner scan = new Scanner(System.in);
-    static Weapon[] starters = {new Weapon("Basic Dagger", 1,0,1,10), 
-                                new Weapon("Basic Sword", 2,0,0,10), 
-                                new Weapon("Basic Axe", 3,0,-1,10), 
-                                new Weapon("Basic Shield", 1,2,-1,10)};
+    static Weapon[] starters;
     
-    static QuestItem[] clearRewards = {new QuestItem("Elf's Approval","Proof you have cleared the Goblin Forest and returned peace to the elves."), 
-                                        new QuestItem("Proof of Courage","Proof you have cleared the Ancient Tomb and passed the trial of courage."), 
-                                        new QuestItem("Proof of Wisdom","Proof you have cleared the Minotaur Labyrinth and passed the trial of wisdom."), 
-                                        new QuestItem("Proof of Power","Proof you have cleared the Death Mountain and passed the trial of power."), 
-                                        new QuestItem("Map to the Demon Castle","A map that you received from the elves after completing all the trials.\nShows the path to the Demon Castle where the Demon Lord resides."),
-                                        new QuestItem("Heart of the Demon Lord", "Heart of the demon lord. \nProof you have defeated the final boss.")};
+    static QuestItem[] clearRewards;
     
     static Player player;
     static boolean isRunning;
@@ -40,9 +32,9 @@ public class Logic {
     private static int exploration = 0;
     
     public static int place = 0, act = 0;
-    public static String[] places = {"Elven City", "Goblin Forest", "Ancient Tomb", "Minotaur Labyrinth", "Death Mountain", "Demon Castle"};
+    public static String[] places;
     
-    static HashMap<String, String[]> enemyTypes = new HashMap<>();
+    static HashMap<String, String[]> enemyTypes;
     
     static HashMap<String, double[]> enemyStats = new HashMap<>();
     
@@ -105,6 +97,13 @@ public class Logic {
         gamePauser();
         isRunning = true;
         
+        sMan = new SaveManager();
+        
+        clearRewards = SaveManager.getQuestItems();
+        starters = SaveManager.getStarterWeapons();
+        places = SaveManager.getPlaces();
+        enemyTypes = SaveManager.getEnemyTypes();
+        
         // Add enemy types and their ratio values to the HashMap
          // hpratio, atkratio, defratio, spdratio
         enemyStats.put("Goblin", new double[]{0.1667, 0.0833, 0.1667, 0.5833});
@@ -132,12 +131,6 @@ public class Logic {
         enemyStats.put("Demon", new double[]{0.3333, 0.2667, 0.2, 0.1333});
         enemyStats.put("Demon Lord", new double[]{0.3333, 0.2667, 0.2, 0.1333});
         //final boss demon lord
-        
-        enemyTypes.put(places[1], new String[]{"Goblin","Giant Spider","Orc"});
-        enemyTypes.put(places[2], new String[]{"Skeleton", "Zombie"});
-        enemyTypes.put(places[3], new String[]{"Golem", "Troll"});
-        enemyTypes.put(places[4], new String[]{"Wyvern", "Dragon"});
-        enemyTypes.put(places[5], new String[]{"Imp", "Demon"});
         
         bossTypes.put(places[1], "Goblin King");
         bossTypes.put(places[2], "Dark Knight");
@@ -170,7 +163,6 @@ public class Logic {
         enemyWeapon.put("Demon", new Weapon("Demon Spear", 16,4,5,200));
         enemyWeapon.put("Demon Lord", new Weapon("Excalibur", 30,0,5,1000));
         
-        sMan = new SaveManager();
         
         //file check
         if(SaveManager.saveExist()){
@@ -537,6 +529,7 @@ public class Logic {
                 if(!enemy.isBoss){
                     if((player.spd+player.weapon.getSpd()) < (enemy.spd+enemy.weapon.getSpd())){
                         System.out.println("The enemy is faster than you! You can't run away!");
+                        gamePauser();
                     }
                     else {
                         double run = Math.random();

@@ -11,15 +11,21 @@ package items;
  */
 
 //abstract class item for abstraction, polymorphism, etc for rpg game items. weapon, healitem, dmgitem, questitem all extend this. 
-public abstract class Item {
-    public final String name;
-    public final boolean usable;
-    public int price;
-    
-    public Item(String name, boolean usable){
-        this.name = name;
-        this.usable = usable;
-    }
-    
-    public abstract void printItem();
+//public abstract class Item {
+//    public final String name;
+//    public final boolean usable;
+//    public int price;
+//    
+//    public Item(String name, boolean usable){
+//        this.name = name;
+//        this.usable = usable;
+//    }
+//    
+//    public abstract void printItem();
+//}
+
+public interface Item {
+    String getName();
+    int getPrice();
+    void printItem();
 }

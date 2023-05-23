@@ -11,12 +11,15 @@ import rpggame.Logic;
  *
  * @author haruk
  */
-public class QuestItem extends Item{
+public class QuestItem implements Item{
+    public String name;
     public String description;
+    public int price;
     
     public QuestItem(String name, String description) {
-        super(name, false);
+        this.name = name;
         this.description = description;
+        this.price = 0;
     }
 
     @Override
@@ -42,5 +45,15 @@ public class QuestItem extends Item{
             return 0;
         }
         return 1;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public int getPrice() {
+        return this.price;
     }
 }

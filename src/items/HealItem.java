@@ -11,11 +11,13 @@ import rpggame.Logic;
  *
  * @author haruk
  */
-public class HealItem extends Item{
+public class HealItem implements Item{
+    public String name;
     public int heal;
+    public int price;
     
     public HealItem(String name, int heal, int price) {
-        super(name, true);
+        this.name = name;
         this.heal = heal;
         this.price = price;
     }
@@ -37,6 +39,16 @@ public class HealItem extends Item{
         int price = Integer.parseInt(parts[2]); // The third part is the price of the item
         // Create a new HealItem object using the extracted values and return it
         return new HealItem(name, heal, price);
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public int getPrice() {
+        return this.price;
     }
 
 }

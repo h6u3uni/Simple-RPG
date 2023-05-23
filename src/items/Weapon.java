@@ -12,13 +12,15 @@ import rpggame.Logic;
  *
  * @author haruk
  */
-public class Weapon extends Item{
+public class Weapon implements Item{
+    public String name;
     private final int atk;
     private final int def;
     private final int spd;
+    public int price;
     
     public Weapon(String name, int atk, int def, int spd, int price){
-        super(name, false);
+        this.name = name;
         this.atk = atk;
         this.def = def;
         this.spd = spd;
@@ -56,5 +58,15 @@ public class Weapon extends Item{
     
     public int getSpd(){
         return this.spd;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public int getPrice() {
+        return this.price;
     }
 }

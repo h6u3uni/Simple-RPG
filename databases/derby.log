@@ -1,7 +1,7 @@
-Tue May 23 14:49:20 NZST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+Tue May 23 15:10:51 NZST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Tue May 23 14:49:20 NZST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-4682-da02-ffffe97bf0a8 
+Tue May 23 15:10:51 NZST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-4696-8aca-ffffe97bf0a8 
 on database directory C:\Users\haruk\Uni Work\comp603-pdc\RPGGameGUIVer\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
 Loaded from file:/C:/Users/haruk/Uni%20Work/comp603-pdc/db-derby-10.14.2.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -13,8 +13,8 @@ os.version=10.0
 derby.system.home=C:\Users\haruk\Uni Work\comp603-pdc\RPGGameGUIVer\Simple-RPG\databases
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Tue May 23 15:02:24 NZST 2023: Shutting down Derby engine
+Tue May 23 15:11:16 NZST 2023: Shutting down Derby engine
 ----------------------------------------------------------------
-Tue May 23 15:02:24 NZST 2023:
-Shutting down instance a816c00e-0188-4682-da02-ffffe97bf0a8 on database directory C:\Users\haruk\Uni Work\comp603-pdc\RPGGameGUIVer\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Tue May 23 15:11:16 NZST 2023:
+Shutting down instance a816c00e-0188-4696-8aca-ffffe97bf0a8 on database directory C:\Users\haruk\Uni Work\comp603-pdc\RPGGameGUIVer\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
 ----------------------------------------------------------------

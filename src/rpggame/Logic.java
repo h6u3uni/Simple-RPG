@@ -712,6 +712,15 @@ public class Logic {
             System.out.println("(6) Demon Castle");
             count+=act;
         }
+        if(act == 6){
+            System.out.println("(2) Goblin Forest");
+            System.out.println("(3) Ancient Tomb");
+            System.out.println("(4) Minotaur Labyrinth");
+            System.out.println("(5) Death Mountain");
+            System.out.println("(6) Demon Castle");
+            System.out.println("(7) ???");
+            count+=act;
+        }
         System.out.println("(" + (count+1) + ") Stay at current location.");
         int input = readInt("-> ", count+1);
         if(!(input == (count+1))){

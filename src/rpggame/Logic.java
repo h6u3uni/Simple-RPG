@@ -36,11 +36,11 @@ public class Logic {
     
     static HashMap<String, String[]> enemyTypes;
     
-    static HashMap<String, double[]> enemyStats = new HashMap<>();
+    static HashMap<String, double[]> enemyStats;
     
-    static HashMap<String, String> bossTypes = new HashMap<>();
+    static HashMap<String, String> bossTypes;
     
-    static HashMap<String, Weapon> enemyWeapon = new HashMap<>();
+    static HashMap<String, Weapon> enemyWeapon;
     
     static SaveManager sMan;
     
@@ -103,66 +103,9 @@ public class Logic {
         starters = SaveManager.getStarterWeapons();
         places = SaveManager.getPlaces();
         enemyTypes = SaveManager.getEnemyTypes();
-        
-        // Add enemy types and their ratio values to the HashMap
-         // hpratio, atkratio, defratio, spdratio
-        enemyStats.put("Goblin", new double[]{0.1667, 0.0833, 0.1667, 0.5833});
-        enemyStats.put("Giant Spider", new double[]{0.2308, 0.3077, 0.0769, 0.3846});
-        enemyStats.put("Orc", new double[]{0.2941, 0.1765, 0.1176, 0.4118});
-        enemyStats.put("Goblin King", new double[]{0.1667, 0.0833, 0.1667, 0.5833});
-        //boss goblin king
-        
-        enemyStats.put("Skeleton", new double[]{0.2667, 0.1333, 0.2, 0.4});
-        enemyStats.put("Zombie", new double[]{0.3529, 0.2059, 0.2353, 0.2059});
-        enemyStats.put("Dark Knight", new double[]{0.3158, 0.3158, 0.2632, 0.1053});
-        //boss dark knight
-        
-        enemyStats.put("Golem", new double[]{0.3529, 0.0571, 0.5, 0.09});
-        enemyStats.put("Troll", new double[]{0.3636, 0.2273, 0.1818, 0.2273});
-        enemyStats.put("Minotaur", new double[]{0.3529, 0.2059, 0.2353, 0.2059});
-        //boss minotaur
-        
-        enemyStats.put("Wyvern", new double[]{0.25, 0.25, 0.25, 0.25});
-        enemyStats.put("Dragon", new double[]{0.375, 0.25, 0.25, 0.125});
-        enemyStats.put("Ancient Dragon", new double[]{0.375, 0.25, 0.25, 0.125});
-        //boss ancient dragon
-        
-        enemyStats.put("Imp", new double[]{0.3, 0.2, 0.1, 0.4});
-        enemyStats.put("Demon", new double[]{0.3333, 0.2667, 0.2, 0.1333});
-        enemyStats.put("Demon Lord", new double[]{0.3333, 0.2667, 0.2, 0.1333});
-        //final boss demon lord
-        
-        bossTypes.put(places[1], "Goblin King");
-        bossTypes.put(places[2], "Dark Knight");
-        bossTypes.put(places[3], "Minotaur");
-        bossTypes.put(places[4], "Ancient Dragon");
-        bossTypes.put(places[5], "Demon Lord");
-        
-        enemyWeapon.put("Goblin", new Weapon("Goblin Dagger", 2,0,3,200));
-        enemyWeapon.put("Giant Spider", new Weapon("Spider Shield", 1,3,1,200));
-        enemyWeapon.put("Orc", new Weapon("Orc Club", 7,0,-2,200));
-        enemyWeapon.put("Goblin King", new Weapon("Dagger of the Goblin King", 5,0,5,1000));
-        //boss goblin king
-        
-        enemyWeapon.put("Skeleton", new Weapon("Skeleton Bow", 3,0,7,200));
-        enemyWeapon.put("Zombie", new Weapon("Zombie Flesh", 0,10,0,200));
-        enemyWeapon.put("Dark Knight", new Weapon("Blade of the Fallen Knight", 15,0,0,1000));
-        //boss dark knight
-        
-        enemyWeapon.put("Golem", new Weapon("Golem Arm", 10,5,0,200));
-        enemyWeapon.put("Troll", new Weapon("Troll Axe", 17,0,-2,200));
-        enemyWeapon.put("Minotaur", new Weapon("Axe of the Minotaur", 25,0,-5,1000));
-        //boss minotaur
-        
-        enemyWeapon.put("Wyvern", new Weapon("Wyvern Wing", 5,5,10,200));
-        enemyWeapon.put("Dragon", new Weapon("Dragon Heart", 15,5,0,200));
-        enemyWeapon.put("Ancient Dragon", new Weapon("Dragon Armour", 10,5,10,1000));
-        //boss ancient dragon
-        
-        enemyWeapon.put("Imp", new Weapon("Imp Spear", 10,4,11,200));
-        enemyWeapon.put("Demon", new Weapon("Demon Spear", 16,4,5,200));
-        enemyWeapon.put("Demon Lord", new Weapon("Excalibur", 30,0,5,1000));
-        
+        bossTypes = SaveManager.getBossTypes();
+        enemyStats = SaveManager.getEnemyStats();
+        enemyWeapon = SaveManager.getEnemyWeapon();
         
         //file check
         if(SaveManager.saveExist()){

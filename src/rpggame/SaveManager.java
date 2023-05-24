@@ -265,6 +265,46 @@ public class SaveManager {
         return ret;
     }
     
+    public static HashMap<String, double[]> getEnemyStats(){
+        HashMap<String, double[]> ret = new HashMap<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT ENEMYNAME, HPSTAT, ATKSTAT, DEFSTAT, SPDSTAT FROM ENEMY");
+            while(rs.next()){
+                double[] stats = new double[4];
+                String name = rs.getString("ENEMYNAME");
+                stats[0] = rs.getDouble("HPSTAT");
+                stats[1] = rs.getDouble("ATKSTAT");
+                stats[2] = rs.getDouble("DEFSTAT");
+                stats[3] = rs.getDouble("SPDSTAT");
+                ret.put(name, stats);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return ret;
+    }
+    
+    public static HashMap<String, Weapon> getEnemyWeapon(){
+        HashMap<String, Weapon> ret = new HashMap<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT ENEMY.ENEMYNAME, WEAPON.WEAPONNAME, WEAPON.ATK, WEAPON.DEF, WEAPON.SPD, WEAPON.PRICE FROM ENEMY, WEAPON WHERE ENEMY.WEAPONID = WEAPON.ITEMID");
+            while(rs.next()){
+                String name = rs.getString("ENEMYNAME");
+                String weapName = rs.getString("WEAPONNAME");
+                int weapAtk = rs.getInt("ATK");
+                int weapDef = rs.getInt("DEF");
+                int weapSpd = rs.getInt("SPD");
+                int weapPrice = rs.getInt("PRICE");
+                Weapon weap = new Weapon(weapName, weapAtk, weapDef, weapSpd, weapPrice);
+                ret.put(name, weap);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return ret;
+    }
     
     public static HashMap<String, String> getBossTypes(){
         String[] places = getPlaces();

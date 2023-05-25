@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/haruk/Uni%20Work/comp603-pdc/RPGGameGUIVer/Simple-RPG/src/rpggame/Logic.java</file>
-            <file>file:/C:/Users/haruk/Uni%20Work/comp603-pdc/RPGGameGUIVer/Simple-RPG/src/rpggame/SaveManager.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Inventory.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Mob.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Shop.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/items/Item.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/SaveManager.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Player.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Logic.java</file>
         </group>
     </open-files>
 </project-private>

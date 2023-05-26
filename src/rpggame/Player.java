@@ -23,6 +23,8 @@ public class Player extends Mob{
     public Enemy currEnemy;
     public String gender;
     private int id;
+    public int act;
+    public int place;
     
     public Player(String name, String gender) {
         super(name);

@@ -7,6 +7,7 @@ package rpggame;
 
 import items.DmgItem;
 import items.HealItem;
+import items.Item;
 import items.Weapon;
 import items.QuestItem;
 import java.io.BufferedReader;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -356,8 +358,27 @@ public class SaveManager {
 
             // Convert java.util.Date to java.sql.Date
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            String sql = "INSERT INTO HALLOFFAME (PLAYERID, PLAYERNAME, LVL, DATEOFCOMPLETION) VALUES (" + player.getId() + ", " + player.name + ", " + player.lvl + ", " + sqlDate + ") ON DUPLICATE KEY UPDATE PLAYERNAME = VALUES(" + player.name + "), LVL = VALUES(" + player.lvl + "), DATEOFCOMPLETION = VALUES(" + sqlDate + ")";
-            statement.executeUpdate(sql);
+            String insertQuery = "INSERT INTO HALLOFFAME (PLAYERID, PLAYERNAME, LVL, DATEOFCOMPLETION) VALUES (?, ?, ?, ?)";
+            String updateQuery = "UPDATE HALLOFFAME SET PLAYERNAME = ?, LVL = ?, DATEOFCOMPLETION = ? WHERE PLAYERID = ?";
+
+            PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
+            insertStatement.setInt(1, player.getId());
+            insertStatement.setString(2, player.name);
+            insertStatement.setInt(3, player.lvl);
+            insertStatement.setDate(4, sqlDate);
+            int rowsInserted = insertStatement.executeUpdate();
+            insertStatement.close();
+
+            if (rowsInserted == 0) {
+                PreparedStatement updateStatement = conn.prepareStatement(updateQuery);
+                updateStatement.setString(1, player.name);
+                updateStatement.setInt(2, player.lvl);
+                updateStatement.setDate(3, sqlDate);
+                updateStatement.setInt(4, player.getId());
+                updateStatement.executeUpdate();
+                updateStatement.close();
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -376,15 +397,15 @@ public class SaveManager {
     
     //main saving method for use in game. calls private methods to save individual aspects. 
     public static void saveAll(){
-        savePlayer();
-        saveInventory();
+        savePlayer(Logic.player);
+        saveInventory(Logic.player);
     }
     
     //checks if save for game exists. Calls private methods. 
     public static boolean saveExist(){
         boolean playerSaveExists = checkPlayerSave();
-        boolean inventorySaveExists = checkInventorySave();
-        if(playerSaveExists && inventorySaveExists){
+        //boolean inventorySaveExists = checkInventorySave();
+        if(playerSaveExists){ // && inventorySaveExists
             return true;
         }
         else{
@@ -393,10 +414,10 @@ public class SaveManager {
     }
     
     //loads the save 
-    public static void loadSave(){
-        Logic.player = loadPlayerSave();
-        Logic.player.inventory = loadInventorySave();
-    }
+//    public static void loadSave(){
+//        Logic.player = loadPlayerSave();
+//        Logic.player.inventory = loadInventorySave();
+//    }
     
     private static boolean checkPlayerSave(){
         int ret = 0;
@@ -434,12 +455,252 @@ public class SaveManager {
         }
     }
     
+    public static ArrayList<Player> getPlayerSaves() {
+        ArrayList<Player> players = new ArrayList<>();
+        try (ResultSet rs = statement.executeQuery("SELECT * FROM PLAYER")) {
+            while (rs.next()) {
+                Player player = new Player(rs.getString("PLAYERNAME"), rs.getString("GENDER"));
+                player.setId(rs.getInt("PLAYERID"));
+                player.hpStat = rs.getInt("HPSTAT");
+                player.maxHP = rs.getInt("MAXHP");
+                player.hp = rs.getInt("CURRHP");
+                player.xpNeeded = rs.getInt("XPNEEDED");
+                player.xpNow = rs.getInt("XPNOW");
+                player.lvl = rs.getInt("LVL");
+                player.atk = rs.getInt("ATKSTAT");
+                player.def = rs.getInt("DEFSTAT");
+                player.spd = rs.getInt("SPDSTAT");
+                player.statPoint = rs.getInt("STATPOINT");
+                player.money = rs.getInt("MONEY");
+                player.weapon = idToWeapon(rs.getInt("WEAPONID"));
+                player.gender = rs.getString("GENDER");
+                player.act = rs.getInt("ACT");
+                player.place = rs.getInt("PLACEID");
+                players.add(player);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return players;
+    }
     
+    public static int getNewPlayerID(){
+        int lastPlayerId = 0;
+        String getLastIdQuery = "SELECT MAX(playerid) FROM player";
+
+        try{
+            ResultSet resultSet = statement.executeQuery(getLastIdQuery);
+            if (resultSet.next()) {
+                lastPlayerId = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lastPlayerId + 1;
+    }
+    
+    private static void savePlayer(Player player){
+        // Check if the record exists
+        try {
+            String selectQuery = "SELECT COUNT(*) FROM PLAYER WHERE PLAYERID = ?";
+            PreparedStatement selectStatement = conn.prepareStatement(selectQuery);
+            selectStatement.setInt(1, player.getId());
+            ResultSet resultSet = selectStatement.executeQuery();
+            resultSet.next();
+            int count = resultSet.getInt(1);
+            resultSet.close();
+            selectStatement.close();
+
+            // Perform insert or update based on record existence
+            if (count > 0) {
+                // Update the existing record
+                String updateQuery = "UPDATE PLAYER SET PLAYERNAME = ?, HPSTAT = ?, MAXHP = ?, CURRHP = ?, XPNEEDED = ?, XPNOW = ?, LVL = ?, ATKSTAT = ?, DEFSTAT = ?, SPDSTAT = ?, STATPOINT = ?, MONEY = ?, WEAPONID = ?, GENDER = ?, ACT = ?, PLACEID = ? WHERE PLAYERID = ?";
+                PreparedStatement updateStatement;
+                updateStatement = conn.prepareStatement(updateQuery);
+                updateStatement.setString(1, player.name);
+                updateStatement.setInt(2, player.hpStat);
+                updateStatement.setInt(3, player.maxHP);
+                updateStatement.setInt(4, player.hp);
+                updateStatement.setInt(5, player.xpNeeded);
+                updateStatement.setInt(6, player.xpNow);
+                updateStatement.setInt(7, player.lvl);
+                updateStatement.setInt(8, player.atk);
+                updateStatement.setInt(9, player.def);
+                updateStatement.setInt(10, player.spd);
+                updateStatement.setInt(11, player.statPoint);
+                updateStatement.setInt(12, player.money);
+                updateStatement.setInt(13, getWeaponID(player.weapon));
+                updateStatement.setString(14, player.gender);
+                updateStatement.setInt(15, Logic.act);
+                updateStatement.setInt(16, Logic.place);
+                updateStatement.setInt(17, player.getId());
+                updateStatement.executeUpdate();
+                updateStatement.close();
+            } else {
+                // Insert a new record
+                String insertQuery = "INSERT INTO PLAYER (PLAYERID, PLAYERNAME, HPSTAT, MAXHP, CURRHP, XPNEEDED, XPNOW, LVL, ATKSTAT, DEFSTAT, SPDSTAT, STATPOINT, MONEY, WEAPONID, GENDER, ACT, PLACEID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
+                insertStatement.setInt(1, player.getId());
+                insertStatement.setString(2, player.name);
+                insertStatement.setInt(3, player.hpStat);
+                insertStatement.setInt(4, player.maxHP);
+                insertStatement.setInt(5, player.hp);
+                insertStatement.setInt(6, player.xpNeeded);
+                insertStatement.setInt(7, player.xpNow);
+                insertStatement.setInt(8, player.lvl);
+                insertStatement.setInt(9, player.atk);
+                insertStatement.setInt(10, player.def);
+                insertStatement.setInt(11, player.spd);
+                insertStatement.setInt(12, player.statPoint);
+                insertStatement.setInt(13, player.money);
+                insertStatement.setInt(14, getWeaponID(player.weapon));
+                insertStatement.setString(15, player.gender);
+                insertStatement.setInt(16, Logic.act);
+                insertStatement.setInt(17, Logic.place);
+                insertStatement.executeUpdate();
+                insertStatement.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private static int getWeaponID(Weapon weapon){
+        int weaponId = 0;
+        String getLastIdQuery = "SELECT ITEMID FROM WEAPON WHERE WEAPONNAME = '" + weapon.name + "'";
+
+        try{
+            ResultSet resultSet = statement.executeQuery(getLastIdQuery);
+            if (resultSet.next()) {
+                weaponId = resultSet.getInt("ITEMID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return weaponId;
+    }
+    
+    private static Weapon idToWeapon(int id) {
+        Weapon weap = null;
+        String getWeaponQuery = "SELECT * FROM WEAPON WHERE ITEMID = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(getWeaponQuery)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    weap = new Weapon(rs.getString("WEAPONNAME"), rs.getInt("ATK"), rs.getInt("DEF"), rs.getInt("SPD"), rs.getInt("PRICE"));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return weap;
+    }
+    
+    public static Inventory getInventory(Player player) {
+        Inventory inven = new Inventory();
+
+        String getInventoryQuery = "SELECT * FROM INVENTORY, ITEM WHERE ITEM.ITEMID = INVENTORY.ITEMID AND PLAYERID = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(getInventoryQuery)) {
+            stmt.setInt(1, player.getId());
+            ResultSet rs = stmt.executeQuery();
+            ResultSet rs1;
+            items.Item item = null;
+            while (rs.next()) {
+                switch (rs.getString("ITEMTYPE")) {
+                    case "WEAPON":
+                        rs1 = statement.executeQuery("SELECT * FROM WEAPON WHERE ITEMID = " + rs.getInt("ITEMID"));
+                        if (rs1.next()) {
+                            item = new Weapon(rs1.getString("WEAPONNAME"), rs1.getInt("ATK"), rs1.getInt("DEF"), rs1.getInt("SPD"), rs1.getInt("PRICE"));
+                        }
+                        break;
+                    case "HEALITEM":
+                        rs1 = statement.executeQuery("SELECT * FROM HEALITEM WHERE ITEMID = " + rs.getInt("ITEMID"));
+                        if (rs1.next()) {
+                            item = new HealItem(rs1.getString("ITEMNAME"), rs1.getInt("HEAL"), rs1.getInt("PRICE"));
+                        }
+                        break;
+                    case "DMGITEM":
+                        rs1 = statement.executeQuery("SELECT * FROM DMGITEM WHERE ITEMID = " + rs.getInt("ITEMID"));
+                        if (rs1.next()) {
+                            item = new DmgItem(rs1.getString("ITEMNAME"), rs1.getInt("DMG"), rs1.getInt("PRICE"));
+                        }
+                        break;
+                    case "QUESTITEM":
+                        rs1 = statement.executeQuery("SELECT * FROM QUESTITEM WHERE ITEMID = " + rs.getInt("ITEMID"));
+                        if (rs1.next()) {
+                            item = new QuestItem(rs1.getString("ITEMNAME"), rs1.getString("DESCRIPTION"));
+                        }
+                        break;
+                }
+                for (int i = 0; i < rs.getInt("QUANTITY"); i++) {
+                    inven.addItem(item);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return inven;
+    }
 
     
+    private static void saveInventory(Player player){
+        String insertQuery = "INSERT INTO INVENTORY (ITEMID, PLAYERID, QUANTITY) VALUES (?, ?, ?)";
+        String deleteInventory = "DELETE FROM INVENTORY WHERE PLAYERID = " + player.getId();
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = conn.prepareStatement(insertQuery);
+            for (items.Item item : player.inventory.getInventory()) {
+                preparedStatement.setInt(1, getItemId(item)); // Assuming getItemId() returns the item ID
+                preparedStatement.setInt(2, player.getId()); // Assuming you have the player ID
+                preparedStatement.setInt(3, getItemQuantity(item, player.inventory.getInventory())); // Assuming getQuantity() returns the item quantity
+
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+    }
     
+    private static int getItemId(Item item) {
+        String query = "";
+        int id = 0;
+        if(item instanceof items.Weapon){
+            query = "SELECT ITEMID FROM WEAPON WHERE WEAPONNAME = '" + item.getName() + "'";
+        }
+        if(item instanceof items.HealItem){
+            query = "SELECT ITEMID FROM HEALITEM WHERE ITEMNAME = '" + item.getName() + "'";
+        }
+        if(item instanceof items.DmgItem){
+            query = "SELECT ITEMID FROM DMGITEM WHERE ITEMNAME = '" + item.getName() + "'";
+        }
+        if(item instanceof items.QuestItem){
+            query = "SELECT ITEMID FROM QUESTITEM WHERE ITEMNAME = '" + item.getName() + "'";
+        }
+        try {
+            ResultSet rs = statement.executeQuery(query);
+            if (rs.next()) { // Move the cursor to the current row
+                id = rs.getInt("ITEMID");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
     
-    
+    private static int getItemQuantity(Item item, ArrayList<Item> inventory) {
+        int count = 0;
+        int itemid = getItemId(item);
+        for(Item i : inventory){
+            int compareid = getItemId(i);
+            if(itemid == compareid){
+                count++;
+            }
+        }
+        return count;
+    }
     
     
 //    //saves the player data to a file.

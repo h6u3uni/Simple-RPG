@@ -109,7 +109,7 @@ public class Logic {
         
         //file check
         if(SaveManager.saveExist()){
-            System.out.println("Would you like to start from the last save or create a new game?");
+            System.out.println("There are existing saves. Would you like to continue from a save?");
             System.out.println("(1) Yes, continue game.");
             System.out.println("(2) No, start a new game.");
             int input = readInt("-> ", 2);
@@ -161,6 +161,7 @@ public class Logic {
         player = new Player(name, gender);
         
         player.chooseStats();
+        player.setId(SaveManager.getNewPlayerID());
         chooseStartWeapon();
         
         Story.printStoryIntro();
@@ -193,8 +194,23 @@ public class Logic {
     
     //continue game 
     private static void continueGame() {
-        SaveManager.loadSave();
-        
+        Logic.clearConsole();
+        Logic.printHeading("Please select a save: ");
+        ArrayList<Player> saves = SaveManager.getPlayerSaves();
+        for(int i = 0; i < saves.size(); i++){
+            System.out.println("(" + (i+1) + ") " + saves.get(i).name + " | LVL: " + saves.get(i).lvl + " | ACT: " + saves.get(i).act);
+        }
+        System.out.println("(" + (saves.size()+1) + ") Cancel");
+        int input = readInt("-> ", saves.size()+1);
+        if(input == saves.size()+1){
+            gameStart();
+        }
+        else {
+            player = saves.get(input-1);
+            act = player.act;
+            place = player.place;
+            player.inventory = SaveManager.getInventory(player);
+        }
         gameLoop();
     }
     

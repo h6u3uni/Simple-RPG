@@ -384,17 +384,6 @@ public class SaveManager {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //main saving method for use in game. calls private methods to save individual aspects. 
     public static void saveAll(){
         savePlayer(Logic.player);

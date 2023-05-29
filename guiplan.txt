@@ -1,0 +1,19 @@
+confirm window
+	- pop up window with yes no button and confirm message
+title screen
+	- new game button - shows new game view
+	- continue game button - shows continue game view (only available if there are saves. disabled by default)
+	- quit game - close program
+new game view
+ - name set
+	- text field
+	- ok button
+	- text box for asking for name
+	=> confirm window
+continue game view
+	- scroll pane clickable 
+ 	- select button 
+	=> confirm window
+battle view
+gameloop view
+inventory view

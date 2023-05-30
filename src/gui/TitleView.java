@@ -61,15 +61,15 @@ public class TitleView extends JPanel {
         add(buttonPanel, BorderLayout.CENTER);
     }
 
-//    public static void main(String[] args) {
-//        TitleView titleView = new TitleView();
-//
-//        // Create a JFrame to test the TitleView
-//        javax.swing.JFrame frame = new javax.swing.JFrame("Title View Test");
-//        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-//        frame.getContentPane().add(titleView);
-//        frame.setPreferredSize(new Dimension(400, 300));
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
+    public static void main(String[] args) {
+        TitleView titleView = new TitleView();
+
+        // Create a JFrame to test the TitleView
+        javax.swing.JFrame frame = new javax.swing.JFrame("Title View Test");
+        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(titleView);
+        frame.setPreferredSize(new Dimension(400, 300));
+        frame.pack();
+        frame.setVisible(true);
+    }
 }

@@ -50,16 +50,16 @@ public class ConfirmView extends JPanel {
         textLabel.setText(text);
     }
 
-//    public static void main(String[] args) {
-//        ConfirmView confirmView = new ConfirmView();
-//        confirmView.setDynamicText("Dynamic Text");
-//
-//        // Create a JFrame to test the ConfirmView
-//        javax.swing.JFrame frame = new javax.swing.JFrame("Confirm View Test");
-//        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-//        frame.getContentPane().add(confirmView);
-//        frame.setPreferredSize(new Dimension(300, 200));
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
+    public static void main(String[] args) {
+        ConfirmView confirmView = new ConfirmView();
+        confirmView.setDynamicText("Dynamic Text");
+
+        // Create a JFrame to test the ConfirmView
+        javax.swing.JFrame frame = new javax.swing.JFrame("Confirm View Test");
+        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(confirmView);
+        frame.setPreferredSize(new Dimension(400, 300));
+        frame.pack();
+        frame.setVisible(true);
+    }
 }

@@ -6,10 +6,13 @@
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/RPGGameGUI.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Inventory.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/TitleView.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/StatChooseView.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/ConfirmView.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/NewJPanel.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Shop.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/NewGameView.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/SaveManager.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Player.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Logic.java</file>
         </group>
     </open-files>

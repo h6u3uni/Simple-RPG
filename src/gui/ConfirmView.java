@@ -58,7 +58,7 @@ public class ConfirmView extends JPanel {
         javax.swing.JFrame frame = new javax.swing.JFrame("Confirm View Test");
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(confirmView);
-        frame.setPreferredSize(new Dimension(400, 300));
+        frame.setPreferredSize(new Dimension(800, 00));
         frame.pack();
         frame.setVisible(true);
     }

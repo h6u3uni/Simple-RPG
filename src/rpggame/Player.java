@@ -280,4 +280,8 @@ public class Player extends Mob{
         this.id = id;
     }
     
+    @Override
+    public String toString(){
+        return this.name + " | LVL: " + this.lvl + " | ACT: " + this.act;
+    }
 }

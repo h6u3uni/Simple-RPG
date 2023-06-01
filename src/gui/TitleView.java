@@ -68,7 +68,7 @@ public class TitleView extends JPanel {
         javax.swing.JFrame frame = new javax.swing.JFrame("Title View Test");
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(titleView);
-        frame.setPreferredSize(new Dimension(400, 300));
+        frame.setPreferredSize(new Dimension(800, 600));
         frame.pack();
         frame.setVisible(true);
     }

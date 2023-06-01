@@ -14,6 +14,26 @@ continue game view
 	- scroll pane clickable 
  	- select button 
 	=> confirm window
+menu view
+	explore button
+	change location
+		get location 
+	character info
+		show current char info
+	inventory options
+		show inventory view
+	go to shop
+		go to different panel (shop)
+	save game
+		save (show popup if succeed)
+	exit game
+		close game
+
+
 battle view
-gameloop view
 inventory view
+shop view
+	
+
+
+

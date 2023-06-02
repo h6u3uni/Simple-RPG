@@ -1,20 +1,20 @@
-confirm window
+confirm window - mostly good
 	- pop up window with yes no button and confirm message
-title screen
+title screen - mostly good
 	- new game button - shows new game view
 	- continue game button - shows continue game view (only available if there are saves. disabled by default)
 	- quit game - close program
-new game view
+new game view - mostly good - need weapon choose page
  - name set
 	- text field
 	- ok button
 	- text box for asking for name
 	=> confirm window
-continue game view
+continue game view - mostly good
 	- scroll pane clickable 
  	- select button 
 	=> confirm window
-menu view
+menu view - mostly good
 	explore button
 	change location
 		get location 
@@ -28,10 +28,12 @@ menu view
 		save (show popup if succeed)
 	exit game
 		close game
-
+inventory view - partially done
 
 battle view
-inventory view
+
+
+
 shop view
 	
 

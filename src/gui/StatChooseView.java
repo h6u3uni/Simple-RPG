@@ -219,7 +219,7 @@ public class StatChooseView extends JPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Stat Choose View");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(800, 600));
+        frame.setPreferredSize(new Dimension(600, 320));
         StatChooseView statChooseView = new StatChooseView(10, 10, 5, 5, 5);
         frame.getContentPane().add(statChooseView);
         frame.pack();

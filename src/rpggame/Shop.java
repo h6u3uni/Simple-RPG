@@ -10,10 +10,6 @@ import items.HealItem;
 import items.Weapon;
 import java.util.ArrayList;
 
-/**
- *
- * @author haruk
- */
 public class Shop {
     static Player player;
     static SaveManager sMan;

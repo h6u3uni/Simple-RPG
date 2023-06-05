@@ -49,7 +49,8 @@ public class StatChooseView extends JPanel {
     private JLabel atkLabel;
     private JLabel defLabel;
     private JLabel spdLabel;
-    
+    private JButton confirmButton;
+            
     private Player player;
     private boolean initial;
 
@@ -105,7 +106,8 @@ public class StatChooseView extends JPanel {
         resetButton.setAlignmentX(CENTER_ALIGNMENT);
 
         // Create the confirm button
-        JButton confirmButton = new JButton("Confirm");
+        confirmButton = new JButton("Confirm");
+        confirmButton.setEnabled(false);
         confirmButton.setAlignmentX(CENTER_ALIGNMENT);
 
         // Add components to the main panel
@@ -187,6 +189,9 @@ public class StatChooseView extends JPanel {
         atkLabel.setText("" + tempAtk);
         defLabel.setText("" + tempDef);
         spdLabel.setText("" + tempSpd);
+        if(tempStatPt == 0){
+            confirmButton.setEnabled(true);
+        }
     }
     
     private JPanel createStatPanel(String labelPrefix, JButton button, JLabel label) {

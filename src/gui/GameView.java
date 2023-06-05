@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.Stack;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,7 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class GameView extends JPanel {
-
+    private Stack<JPanel> panelStack;
     private JTextArea textArea;
 
     public GameView() {
@@ -74,7 +75,15 @@ public class GameView extends JPanel {
         // Add the menu panel to the right side of the main panel
         add(menuPanel, BorderLayout.EAST);
     }
-
+    
+    public void stackPop(){
+        panelStack.pop();
+    }
+    
+    public void stackPush(JPanel panel){
+        panelStack.push(panel);
+    }
+    
     public static void main(String[] args) {
         JFrame frame = new JFrame("Game View");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

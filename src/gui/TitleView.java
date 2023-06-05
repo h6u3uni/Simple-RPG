@@ -20,6 +20,10 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import rpggame.Logic;
+import rpggame.SaveManager;
 
 public class TitleView extends JPanel {
 
@@ -40,8 +44,20 @@ public class TitleView extends JPanel {
 
         // Create the buttons
         JButton newGameButton = new JButton("New Game");
+        newGameButton.addActionListener(e -> newGame());
+        
         JButton continueGameButton = new JButton("Continue Game");
+        continueGameButton.addActionListener(e -> contGame());
+        
+//        if(SaveManager.saveExist()){
+//            continueGameButton.setEnabled(true);
+//        }
+//        else{
+//            continueGameButton.setEnabled(false);
+//        }
+        
         JButton quitButton = new JButton("Quit");
+        quitButton.addActionListener(e -> quitGame());
 
         // Create a vertical box to hold the buttons
         Box buttonBox = new Box(BoxLayout.Y_AXIS);
@@ -60,7 +76,23 @@ public class TitleView extends JPanel {
 
         add(buttonPanel, BorderLayout.CENTER);
     }
+    
+    private void newGame() {
+        Logic.newGame();
+    }
 
+    private void contGame() {
+        Logic.continueGame();
+    }
+
+    private void quitGame() {
+        // Get the top-level parent frame
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        // Close the frame
+        frame.dispose();
+    }
+    
     public static void main(String[] args) {
         TitleView titleView = new TitleView();
 
@@ -72,4 +104,6 @@ public class TitleView extends JPanel {
         frame.pack();
         frame.setVisible(true);
     }
+
+    
 }

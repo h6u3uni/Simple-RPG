@@ -23,9 +23,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.JFrame;
+import rpggame.Logic;
 
 public class NewGameView extends JPanel {
-
+    JTextField nameField;
+    JRadioButton maleRadioButton;
+    JRadioButton femaleRadioButton;
+    
     public NewGameView() {
         setLayout(new GridBagLayout());
 
@@ -50,7 +54,7 @@ public class NewGameView extends JPanel {
         add(nameLabel, gbcNameLabel);
 
         // Create the text field for name input
-        JTextField nameField = new JTextField(20);
+        nameField = new JTextField(20);
         GridBagConstraints gbcNameField = new GridBagConstraints();
         gbcNameField.gridx = 1;
         gbcNameField.gridy = 1;
@@ -69,8 +73,9 @@ public class NewGameView extends JPanel {
         add(genderLabel, gbcGenderLabel);
 
         // Create the radio buttons for gender selection
-        JRadioButton maleRadioButton = new JRadioButton("Male");
-        JRadioButton femaleRadioButton = new JRadioButton("Female");
+        maleRadioButton = new JRadioButton("Male");
+        maleRadioButton.setSelected(true);
+        femaleRadioButton = new JRadioButton("Female");
 
         // Create a button group to ensure only one radio button can be selected
         ButtonGroup genderGroup = new ButtonGroup();
@@ -93,6 +98,8 @@ public class NewGameView extends JPanel {
 
         // Create the confirmation button
         JButton confirmButton = new JButton("Confirm");
+        confirmButton.addActionListener(e -> confirm());
+        
         GridBagConstraints gbcConfirmButton = new GridBagConstraints();
         gbcConfirmButton.gridx = 0;
         gbcConfirmButton.gridy = 3;
@@ -112,5 +119,20 @@ public class NewGameView extends JPanel {
         frame.setPreferredSize(new Dimension(400, 300)); // Adjust the size as needed
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private void confirm() {
+        if(!(nameField.getText().equals(""))){
+            if (maleRadioButton.isSelected()) {
+                Logic.makeNewPlayer(nameField.getText(), "Male");
+            } else if (femaleRadioButton.isSelected()) {
+                Logic.makeNewPlayer(nameField.getText(), "Female");
+            }
+//            System.out.println(Logic.player.name);
+        }
+        else{
+            System.out.println("empty");
+        }
+        
     }
 }

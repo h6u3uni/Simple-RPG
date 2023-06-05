@@ -7,6 +7,7 @@ package rpggame;
 
 import dialogue.Elf;
 import dialogue.Story;
+import gui.RPGGameGUI;
 import items.DmgItem;
 import items.HealItem;
 import items.Weapon;
@@ -25,9 +26,10 @@ public class Logic {
     
     static QuestItem[] clearRewards;
     
-    static Player player;
+    public static Player player;
     static boolean isRunning;
     static boolean newPlay = true;
+    public static boolean pause = false;
     
     private static int exploration = 0;
     
@@ -43,6 +45,7 @@ public class Logic {
     static HashMap<String, Weapon> enemyWeapon;
     
     static SaveManager sMan;
+    static RPGGameGUI frame;
     
     //handles virtually every input in the game. Takes in a string and a numberofuserchoice. 
     //handles all options, all types of inputs, and exceptions. 
@@ -90,11 +93,11 @@ public class Logic {
     
     //starts the game. if save exists, asks the user if they want to continue. else newGame()
     public static void gameStart(){
-        clearConsole();
-        printSeparator(40);
-        printHeading("Simple RPG \nA text RPG made by Haruki Uda");
-        printSeparator(40);
-        gamePauser();
+//        clearConsole();
+//        printSeparator(40);
+//        printHeading("Simple RPG \nA text RPG made by Haruki Uda");
+//        printSeparator(40);
+//        gamePauser();
         isRunning = true;
         
         sMan = new SaveManager();
@@ -107,93 +110,108 @@ public class Logic {
         enemyStats = SaveManager.getEnemyStats();
         enemyWeapon = SaveManager.getEnemyWeapon();
         
+        frame = new RPGGameGUI();
+        // Make the JFrame visible
+        frame.setVisible(true);
         //file check
-        if(SaveManager.saveExist()){
-            System.out.println("There are existing saves. Would you like to continue from a save?");
-            System.out.println("(1) Yes, continue game.");
-            System.out.println("(2) No, start a new game.");
-            int input = readInt("-> ", 2);
-            if(input == 1){
-                continueGame();
-                newPlay = false;
-            }
-            else{
-                newGame();
-                newPlay = true;
-            }
-        }
-        else{
-            newGame();
-            newPlay = true;
-        }
+//        if(SaveManager.saveExist()){
+//            System.out.println("There are existing saves. Would you like to continue from a save?");
+//            System.out.println("(1) Yes, continue game.");
+//            System.out.println("(2) No, start a new game.");
+//            int input = readInt("-> ", 2);
+//            if(input == 1){
+//                continueGame();
+//                newPlay = false;
+//            }
+//            else{
+//                newGame();
+//                newPlay = true;
+//            }
+//        }
+//        else{
+//            newGame();
+//            newPlay = true;
+//        }
     }
     
     //starts a new game
     public static void newGame(){
-        boolean nameSet = false;
-        String name;
-        String gender = "Male";
-        do{
-            clearConsole();
-            printHeading("What's your name?");
-            name = scan.next();
-            clearConsole();
-            printHeading("Your name is " + name + ".\nIs that correct?");
-            System.out.println("(1) Yes");
-            System.out.println("(2) No, I want to change my name");
-            int input = readInt("-> ", 2);
-            if(input==1){
-                nameSet = true;
-                clearConsole();
-                printHeading("Please select your gender");
-                System.out.println("(1) Male");
-                System.out.println("(2) Female");
-                int select = readInt("-> ", 2);
-                if(select == 1){
-                    gender = "Male";
-                }
-                else{
-                    gender = "Female";
-                }
-            }
-        }while(!nameSet);
+//        boolean nameSet = false;
+//        String name;
+//        String gender;
+//        do{
+//            clearConsole();
+//            printHeading("What's your name?");
+//            name = scan.next();
+//            clearConsole();
+//            printHeading("Your name is " + name + ".\nIs that correct?");
+//            System.out.println("(1) Yes");
+//            System.out.println("(2) No, I want to change my name");
+//            int input = readInt("-> ", 2);
+//            if(input==1){
+//                nameSet = true;
+//                clearConsole();
+//                printHeading("Please select your gender");
+//                System.out.println("(1) Male");
+//                System.out.println("(2) Female");
+//                int select = readInt("-> ", 2);
+//                if(select == 1){
+//                    gender = "Male";
+//                }
+//                else{
+//                    gender = "Female";
+//                }
+//            }
+//        }while(!nameSet);
+        frame.showNewGameView();
         
+        
+//        chooseStartWeapon();
+//        
+//        Story.printStoryIntro();
+//        
+//        gameLoop();
+    }
+    
+    public static void makeNewPlayer(String name, String gender){
         player = new Player(name, gender);
         
-        player.chooseStats();
+//        player.chooseStats();
         player.setId(SaveManager.getNewPlayerID());
-        chooseStartWeapon();
-        
-        Story.printStoryIntro();
-        
-        gameLoop();
+        frame.showStatChooseView(player, true);
+//        while(pause){}
+//        pause = true;
+    }
+    
+    public static void chooseStartWeapon(){
+        frame.showWeaponChooseView();
     }
     
     //choose a starter weaopn for the player. used in newGame()
-    public static void chooseStartWeapon(){
-        Logic.clearConsole();
-        Logic.printHeading("Please select a starter weapon: ");
-        for(int i = 0; i < starters.length; i++){
-            System.out.println("(" + (i+1) + ") " + starters[i].name);
-        }
-        int input = readInt("-> ", starters.length+1);
-        starters[input-1].printItem();
-        System.out.println("");
-        System.out.println("Confirm weapon?");
-        System.out.println("(1) Yes");
-        System.out.println("(2) No, let me choose a different one");
-        int confirm = readInt("-> ", 2);
-        if(confirm == 2){
-            chooseStartWeapon();
-        }
-        else{
-            player.weapon = starters[input-1];
-            System.out.println("You chose the " + player.weapon.name);
-        }
-    }
+//    public static void chooseStartWeapon(){
+//        Logic.clearConsole();
+//        Logic.printHeading("Please select a starter weapon: ");
+//        for(int i = 0; i < starters.length; i++){
+//            System.out.println("(" + (i+1) + ") " + starters[i].name);
+//        }
+//        int input = readInt("-> ", starters.length+1);
+//        starters[input-1].printItem();
+//        System.out.println("");
+//        System.out.println("Confirm weapon?");
+//        System.out.println("(1) Yes");
+//        System.out.println("(2) No, let me choose a different one");
+//        int confirm = readInt("-> ", 2);
+//        if(confirm == 2){
+//            chooseStartWeapon();
+//        }
+//        else{
+//            player.weapon = starters[input-1];
+//            System.out.println("You chose the " + player.weapon.name);
+//        }
+//    }
     
     //continue game 
-    private static void continueGame() {
+    public static void continueGame() {
         Logic.clearConsole();
         Logic.printHeading("Please select a save: ");
         ArrayList<Player> saves = SaveManager.getPlayerSaves();

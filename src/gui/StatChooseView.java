@@ -27,6 +27,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import rpggame.Logic;
+import rpggame.Player;
 
 public class StatChooseView extends JPanel {
     private int initialStatPt;
@@ -47,15 +49,21 @@ public class StatChooseView extends JPanel {
     private JLabel atkLabel;
     private JLabel defLabel;
     private JLabel spdLabel;
+    
+    private Player player;
+    private boolean initial;
 
-    public StatChooseView(int initialStatPt, int initialHP, int initialAtk, int initialDef, int initialSpd) {
+    public StatChooseView(Player player, boolean initial) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        this.initialStatPt = initialStatPt;
-        this.initialHP = initialHP;
-        this.initialAtk = initialAtk;
-        this.initialDef = initialDef;
-        this.initialSpd = initialSpd;
+        this.player = player;
+        this.initial = initial;
+        
+        this.initialStatPt = player.statPoint;
+        this.initialHP = player.hpStat;
+        this.initialAtk = player.atk;
+        this.initialDef = player.def;
+        this.initialSpd = player.spd;
 
         // Initialize stat variables
         tempStatPt = initialStatPt;
@@ -213,16 +221,26 @@ public class StatChooseView extends JPanel {
     }
 
     private void confirmSelection() {
-        // TODO: Implement logic to confirm selection
+        this.player.statPoint = tempStatPt;
+        this.player.hpStat = tempHP;
+        this.player.atk = tempAtk;
+        this.player.def = tempDef;
+        this.player.spd = tempSpd;
+        if(initial){
+           Logic.chooseStartWeapon();
+        }
+        else{
+            
+        }
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Stat Choose View");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(600, 320));
-        StatChooseView statChooseView = new StatChooseView(10, 10, 5, 5, 5);
-        frame.getContentPane().add(statChooseView);
-        frame.pack();
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        JFrame frame = new JFrame("Stat Choose View");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setPreferredSize(new Dimension(600, 320));
+//        StatChooseView statChooseView = new StatChooseView(10, 10, 5, 5, 5);
+//        frame.getContentPane().add(statChooseView);
+//        frame.pack();
+//        frame.setVisible(true);
+//    }
 }

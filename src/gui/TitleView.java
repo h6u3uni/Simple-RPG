@@ -86,11 +86,7 @@ public class TitleView extends JPanel {
     }
 
     private void quitGame() {
-        // Get the top-level parent frame
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-
-        // Close the frame
-        frame.dispose();
+        Logic.exit(false);
     }
     
     public static void main(String[] args) {

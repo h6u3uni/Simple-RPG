@@ -11,6 +11,7 @@ package gui;
  */
 import items.Weapon;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,16 +21,24 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import rpggame.Logic;
 import rpggame.Player;
 
 public class WeaponChooseView extends JPanel {
-    
+
     private JList<Weapon> weaponList;
     private JButton chooseButton;
 
     public WeaponChooseView(ArrayList<Weapon> weapons, Player player) {
         setLayout(new BorderLayout());
+
+        // Create the header label
+        JLabel headerLabel = new JLabel("Select a Weapon");
+        headerLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(headerLabel, BorderLayout.NORTH);
 
         // Create the weapon list model
         DefaultListModel<Weapon> listModel = new DefaultListModel<>();

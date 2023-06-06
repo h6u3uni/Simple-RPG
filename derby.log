@@ -1,12 +1,12 @@
 ----------------------------------------------------------------
-Tue Jun 06 21:49:17 NZST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-901c-5c39-00000e762358 
-on database directory C:\Users\haruk\Uni Work\comp603-pdc\RPGGameGUIVer\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@610455d6 
-Loaded from file:/C:/Users/haruk/Uni%20Work/comp603-pdc/RPGGameGUIVer/Simple-RPG/lib/derby.jar
+Wed Jun 07 02:29:27 NZST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-911c-dc4d-00000ec89548 
+on database directory D:\uniwork\comp603\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@610455d6 
+Loaded from file:/D:/uniwork/comp603/Simple-RPG/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_361-b09
-user.dir=C:\Users\haruk\Uni Work\comp603-pdc\RPGGameGUIVer\Simple-RPG
-os.name=Windows 11
+user.dir=D:\uniwork\comp603\Simple-RPG
+os.name=Windows 10
 os.arch=amd64
 os.version=10.0
 derby.system.home=null

@@ -295,17 +295,17 @@ public class Logic {
                     save();
                     break;
                 case 7:
-                    exit();
+                    exit(true);
                     break;
             }
         }
     }
     
     //prints player info. current stats 
-    private static void checkCharacterInfo() {
-        player.printPlayer();
-        gamePauser();
-    }
+//    private static void checkCharacterInfo() {
+//        player.printPlayer();
+//        gamePauser();
+//    }
 
     //if place is elven city, the checkAct method is called for elf dialogue and story progression. else explore is called. 
     private static void continueJourney() {
@@ -768,21 +768,28 @@ public class Logic {
     }
     
     //exit game
-    private static void exit() {
-        clearConsole();
-        printHeading("Exit");
-        System.out.println("Would you like to save the game before exiting? ");
-        System.out.println("(1) Yes");
-        System.out.println("(2) No");
-        int input = readInt("-> ", 2);
-        if(input == 2){
-            System.out.println("Exiting without saving...");
-            System.out.println("Thanks for playing my game!");
-            isRunning = false;
+    public static void exit(boolean save) {
+//        clearConsole();
+//        printHeading("Exit");
+//        System.out.println("Would you like to save the game before exiting? ");
+//        System.out.println("(1) Yes");
+//        System.out.println("(2) No");
+//        int input = readInt("-> ", 2);
+//        if(input == 2){
+//            System.out.println("Exiting without saving...");
+//            System.out.println("Thanks for playing my game!");
+//            isRunning = false;
+//        }
+//        else{
+//            SaveManager.saveAll();
+//            isRunning = false;
+//        }
+        if(save){
+            SaveManager.saveAll();
+            frame.dispose();
         }
         else{
-            SaveManager.saveAll();
-            isRunning = false;
+            frame.dispose();
         }
     }
 }

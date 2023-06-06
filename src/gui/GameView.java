@@ -16,15 +16,18 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.util.Stack;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import rpggame.Logic;
 import rpggame.Player;
+import rpggame.SaveManager;
 
 public class GameView extends JPanel {
     private Stack<JPanel> panelStack;
@@ -63,16 +66,26 @@ public class GameView extends JPanel {
 
         // Create the menu buttons
         JButton exploreButton = new JButton("Explore");
+        //exploreButton.addActionListener(e -> explore());
+        
         JButton changeLocationButton = new JButton("Change Location");
+        //changeLocationButton.addActionListener(e -> changeLocation());
         
         JButton characterInfoButton = new JButton("Character Info");
         characterInfoButton.addActionListener(e -> showCharInfoPanel(Logic.player));
         
         JButton inventoryOptionsButton = new JButton("Inventory Options");
+        //inventoryOptionsButton.addActionListener(e -> openInventory());
+        
         JButton goToShopButton = new JButton("Go to Shop");
+        goToShopButton.addActionListener(e -> openShop());
+        
         JButton saveGameButton = new JButton("Save Game");
+        saveGameButton.addActionListener(e -> saveGame());
+        
         JButton exitGameButton = new JButton("Exit Game");
-
+        exitGameButton.addActionListener(e -> exitGame());
+        
         // Add the buttons to the menu panel
         menuPanel.add(exploreButton);
         menuPanel.add(changeLocationButton);
@@ -117,29 +130,75 @@ public class GameView extends JPanel {
 //
 //        frame.setVisible(true);
 //    }
-
-    private void showCharInfoPanel(Player player) {
+    private void resetDynamicPanel() {
         if(!panelStack.empty()){
             panelStack.clear();
         }
-        CharInfoView cInfo = new CharInfoView(player);
         removeAllContentInDynamicPanel();
+    }
+    
+    private void showCharInfoPanel(Player player) {
+        resetDynamicPanel();
+        CharInfoView cInfo = new CharInfoView(player);
         dynamicContentPanel.add(cInfo);
         revalidate();
         repaint();
-        
     }
     
     private void removeAllContentInDynamicPanel() {
         Component[] components = dynamicContentPanel.getComponents();
 
         for (Component component : components) {
-            if (component instanceof JPanel) {
-                dynamicContentPanel.remove(component);
-            }
+            dynamicContentPanel.remove(component);
         }
 
         revalidate();
         repaint();
     }
+
+    private void exitGame() {
+        resetDynamicPanel();
+        ExitView eView = new ExitView();
+        dynamicContentPanel.add(eView);
+        revalidate();
+        repaint();
+    }
+
+    private void saveGame() {
+        resetDynamicPanel();
+        String query = "";
+        if(SaveManager.saveExist()){
+            query = "Only one save file can exist for each player. Overwrite previous save?";
+        }
+        else{
+            query = "Save game?";
+        }
+        ConfirmView saveView = new ConfirmView(query);
+        JButton yButton = saveView.getYesButton();
+        JButton nButton = saveView.getNoButton();
+        nButton.setText("Cancel");
+        yButton.addActionListener((ActionEvent e) -> {
+            SaveManager.saveAll();
+            resetDynamicPanel();
+            JLabel confirm = new JLabel("Saved!");
+            dynamicContentPanel.add(confirm);
+            revalidate();
+            repaint();
+        });
+        nButton.addActionListener(e -> resetDynamicPanel());
+        
+        dynamicContentPanel.add(saveView);
+        revalidate();
+        repaint();
+    }
+
+    private void openShop() {
+        resetDynamicPanel();
+        ShopView shopView = new ShopView(Logic.player);
+        dynamicContentPanel.add(shopView);
+        revalidate();
+        repaint();
+    }
+
+    
 }

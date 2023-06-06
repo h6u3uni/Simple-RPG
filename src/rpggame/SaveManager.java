@@ -426,23 +426,23 @@ public class SaveManager {
         }
     }
     
-    private static boolean checkInventorySave(){
-        int ret = 0;
-        try {
-            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM INVENTORY");
-            while(rs.next()){
-                ret = rs.getInt("1");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(ret == 0){
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
+//    private static boolean checkInventorySave(){
+//        int ret = 0;
+//        try {
+//            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM INVENTORY");
+//            while(rs.next()){
+//                ret = rs.getInt("1");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        if(ret == 0){
+//            return false;
+//        }
+//        else {
+//            return true;
+//        }
+//    }
     
     public static ArrayList<Player> getPlayerSaves() {
         ArrayList<Player> players = new ArrayList<>();

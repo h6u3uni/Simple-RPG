@@ -45,8 +45,8 @@ public class ConfirmView extends JPanel {
         add(textLabel, BorderLayout.NORTH);
 
         // Create the buttons
-        JButton yesButton = new JButton("Yes");
-        JButton noButton = new JButton("No");
+        yesButton = new JButton("Yes");
+        noButton = new JButton("No");
 
         // Create a JPanel to hold the buttons
         JPanel buttonPanel = new JPanel();
@@ -81,6 +81,7 @@ public class ConfirmView extends JPanel {
                     Logic.frame.showGameView(Story.getStoryIntro());
                 }
                 else{
+                    player.inventory.addItem(player.weapon);
                     player.weapon = selectedWeapon;
                     player.inventory.removeItem(selectedWeapon);
                     Logic.frame.gView.goBack();
@@ -110,7 +111,15 @@ public class ConfirmView extends JPanel {
 
         add(buttonPanel, BorderLayout.CENTER);
     }
-
+    
+    public JButton getYesButton(){
+        return yesButton;
+    }
+    
+    public JButton getNoButton(){
+        return noButton;
+    }
+    
 //    public static void main(String[] args) {
 //        ConfirmView confirmView = new ConfirmView(new Player("test", "test"), new Weapon("testweapon", 10, 0, 2, 100));
 //

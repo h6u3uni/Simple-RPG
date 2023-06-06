@@ -217,6 +217,7 @@ public class StatChooseView extends JPanel {
     
     private void resetSelection() {
         // Reset the stat values to their initial values
+        confirmButton.setEnabled(false);
         tempStatPt = initialStatPt;
         tempHP = initialHP;
         tempAtk = initialAtk;

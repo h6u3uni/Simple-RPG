@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Jun 07 02:29:27 NZST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-911c-dc4d-00000ec89548 
+Wed Jun 07 02:35:36 NZST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-9122-7bdc-00000ec89548 
 on database directory D:\uniwork\comp603\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@610455d6 
 Loaded from file:/D:/uniwork/comp603/Simple-RPG/lib/derby.jar
 java.vendor=Oracle Corporation

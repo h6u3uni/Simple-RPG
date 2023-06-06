@@ -12,6 +12,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -32,7 +33,9 @@ public class GameView extends JPanel {
 
     public GameView(String text) {
         setLayout(new BorderLayout());
-
+        
+        panelStack = new Stack<>();
+        
         // Create the text area
         textArea = new JTextArea(text);
         textArea.setEditable(false);
@@ -44,11 +47,12 @@ public class GameView extends JPanel {
 
         // Create the dynamic content panel
         dynamicContentPanel = new JPanel();
+        dynamicContentPanel.setPreferredSize(new Dimension(600,320));
 //        JTextArea test = new JTextArea("test");
 //        test.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        JScrollPane test1 = new JScrollPane();
-        test1.setPreferredSize(new Dimension(600,320));
-        dynamicContentPanel.add(test1);
+//        JScrollPane test1 = new JScrollPane();
+//        test1.setPreferredSize(new Dimension(600,320));
+//        dynamicContentPanel.add(test1);
         dynamicContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(dynamicContentPanel, BorderLayout.CENTER);
 
@@ -115,6 +119,27 @@ public class GameView extends JPanel {
 //    }
 
     private void showCharInfoPanel(Player player) {
+        if(!panelStack.empty()){
+            panelStack.clear();
+        }
+        CharInfoView cInfo = new CharInfoView(player);
+        removeAllContentInDynamicPanel();
+        dynamicContentPanel.add(cInfo);
+        revalidate();
+        repaint();
         
+    }
+    
+    private void removeAllContentInDynamicPanel() {
+        Component[] components = dynamicContentPanel.getComponents();
+
+        for (Component component : components) {
+            if (component instanceof JPanel) {
+                dynamicContentPanel.remove(component);
+            }
+        }
+
+        revalidate();
+        repaint();
     }
 }

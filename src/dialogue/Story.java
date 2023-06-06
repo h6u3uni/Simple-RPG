@@ -32,19 +32,18 @@ public class Story {
 //        Logic.gamePauser();
 //    }
     public static String getStoryIntro(){
-        String ret = "<html>";
-        ret += Logic.createHeading("Story") + "<br/>";
-        ret += "In a quiet village nestled deep in the forest, you lived a simple life as a young warrior. ";
-        ret += "You hunted and trained to hone your skills in combat. One fateful night, however, changed ";
-        ret += "everything. As you returned from a successful hunt, you saw the village in flames, the air ";
-        ret += "thick with smoke and the ground littered with bodies. The demon lord had attacked, burning ";
-        ret += "the village to the ground and killing everyone in it, including your family.";
-        ret += "Filled with rage and the desire for revenge, you set out on a journey to track down and ";
-        ret += "confront the demon lord. You knew that you couldn't take on the demon lord alone, so you ";
-        ret += "decided to seek out the help of the elves, who were known for their long lives and vast ";
-        ret += "knowledge. After traveling for days through treacherous landscapes and battling dangerous ";
-        ret += "creatures, you arrived at the elven city, where you were met with skepticism and distrust.";
-        ret += "</html>";
+        String ret = "";
+        ret += Logic.createHeading("Story") + "\n";
+        ret += "In a quiet village nestled deep in the forest, you lived a simple life as a young warrior. \n";
+        ret += "You hunted and trained to hone your skills in combat. One fateful night, however, changed \n";
+        ret += "everything. As you returned from a successful hunt, you saw the village in flames, the air \n";
+        ret += "thick with smoke and the ground littered with bodies. The demon lord had attacked, burning \n";
+        ret += "the village to the ground and killing everyone in it, including your family.\n\n";
+        ret += "Filled with rage and the desire for revenge, you set out on a journey to track down and \n";
+        ret += "confront the demon lord. You knew that you couldn't take on the demon lord alone, so you \n";
+        ret += "decided to seek out the help of the elves, who were known for their long lives and vast \n";
+        ret += "knowledge. After traveling for days through treacherous landscapes and battling dangerous \n";
+        ret += "creatures, you arrived at the elven city, where you were met with skepticism and distrust.\n";
         
         return ret;
     }

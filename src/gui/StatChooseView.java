@@ -228,6 +228,8 @@ public class StatChooseView extends JPanel {
     private void confirmSelection() {
         this.player.statPoint = tempStatPt;
         this.player.hpStat = tempHP;
+        this.player.hp = tempHP*5;
+        this.player.maxHP = tempHP*5;
         this.player.atk = tempAtk;
         this.player.def = tempDef;
         this.player.spd = tempSpd;

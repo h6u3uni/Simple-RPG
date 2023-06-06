@@ -89,7 +89,9 @@ public class Logic {
     public static String createHeading(String title){
         String text = "";
         text += createSeparator(30);
+        text += "\n";
         text += title;
+        text += "\n";
         text += createSeparator(30);
         return text;
     }

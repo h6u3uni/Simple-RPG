@@ -22,16 +22,19 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import rpggame.Logic;
+import rpggame.Player;
 
 public class GameView extends JPanel {
     private Stack<JPanel> panelStack;
     private JTextArea textArea;
+    private JPanel dynamicContentPanel;
 
-    public GameView() {
+    public GameView(String text) {
         setLayout(new BorderLayout());
 
         // Create the text area
-        textArea = new JTextArea("txt");
+        textArea = new JTextArea(text);
         textArea.setEditable(false);
         textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         JScrollPane scrollPane = new JScrollPane(textArea);
@@ -40,10 +43,10 @@ public class GameView extends JPanel {
         add(scrollPane, BorderLayout.NORTH);
 
         // Create the dynamic content panel
-        JPanel dynamicContentPanel = new JPanel();
-        JTextArea test = new JTextArea("test");
-        test.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        JScrollPane test1 = new JScrollPane(test);
+        dynamicContentPanel = new JPanel();
+//        JTextArea test = new JTextArea("test");
+//        test.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        JScrollPane test1 = new JScrollPane();
         test1.setPreferredSize(new Dimension(600,320));
         dynamicContentPanel.add(test1);
         dynamicContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -57,7 +60,10 @@ public class GameView extends JPanel {
         // Create the menu buttons
         JButton exploreButton = new JButton("Explore");
         JButton changeLocationButton = new JButton("Change Location");
+        
         JButton characterInfoButton = new JButton("Character Info");
+        characterInfoButton.addActionListener(e -> showCharInfoPanel(Logic.player));
+        
         JButton inventoryOptionsButton = new JButton("Inventory Options");
         JButton goToShopButton = new JButton("Go to Shop");
         JButton saveGameButton = new JButton("Save Game");
@@ -76,22 +82,39 @@ public class GameView extends JPanel {
         add(menuPanel, BorderLayout.EAST);
     }
     
-    public void stackPop(){
-        panelStack.pop();
+    public void goBack(){
+        if (panelStack.size() > 1) {
+            JPanel currentPanel = panelStack.pop();
+            JPanel previousPanel = panelStack.peek();
+            dynamicContentPanel.remove(currentPanel);
+            dynamicContentPanel.add(previousPanel, BorderLayout.CENTER);
+            revalidate();
+            repaint();
+        }
     }
     
-    public void stackPush(JPanel panel){
+    public void goNext(JPanel panel){
+        JPanel previousPanel = panelStack.peek();
         panelStack.push(panel);
+        JPanel newPanel = panelStack.peek();
+        dynamicContentPanel.remove(previousPanel);
+        dynamicContentPanel.add(newPanel);
+        revalidate();
+        repaint();
     }
     
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Game View");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+//    public static void main(String[] args) {
+//        JFrame frame = new JFrame("Game View");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(800, 600);
+//
+//        GameView gameView = new GameView("text");
+//        frame.getContentPane().add(gameView);
+//
+//        frame.setVisible(true);
+//    }
 
-        GameView gameView = new GameView();
-        frame.getContentPane().add(gameView);
-
-        frame.setVisible(true);
+    private void showCharInfoPanel(Player player) {
+        
     }
 }

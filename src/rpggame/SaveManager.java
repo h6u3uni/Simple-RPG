@@ -164,7 +164,7 @@ public class SaveManager {
         return ret;
     }
     
-    public static Weapon[] getStarterWeapons(){
+    public static ArrayList<Weapon> getStarterWeapons(){
         ArrayList<Weapon> arrWeapon = new ArrayList<>();
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM WEAPON WHERE TYPE = 'START'");
@@ -181,13 +181,13 @@ public class SaveManager {
             Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Weapon[] ret = new Weapon[arrWeapon.size()];
+//        Weapon[] ret = new Weapon[arrWeapon.size()];
+//        
+//        for (int i = 0; i < ret.length; i++) {
+//            ret[i] = arrWeapon.get(i);
+//        }
         
-        for (int i = 0; i < ret.length; i++) {
-            ret[i] = arrWeapon.get(i);
-        }
-        
-        return ret;
+        return arrWeapon;
     }
     
     public static QuestItem[] getQuestItems(){

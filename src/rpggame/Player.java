@@ -280,6 +280,10 @@ public class Player extends Mob{
         this.id = id;
     }
     
+    public void setWeapon(Weapon weapon){
+        this.weapon = weapon;
+    }
+    
     @Override
     public String toString(){
         return this.name + " | LVL: " + this.lvl + " | ACT: " + this.act;

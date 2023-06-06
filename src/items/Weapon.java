@@ -69,4 +69,9 @@ public class Weapon implements Item{
     public int getPrice() {
         return this.price;
     }
+    
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }

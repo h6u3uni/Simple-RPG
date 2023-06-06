@@ -15,31 +15,58 @@ import rpggame.Logic;
 // class to save static methods just to print the story text
 public class Story {
     
-    public static void printStoryIntro(){
-        Logic.clearConsole();
-        Logic.printHeading("Story");
-        System.out.println("In a quiet village nestled deep in the forest, you lived a simple life as a young warrior. ");
-        System.out.println("You hunted and trained to hone your skills in combat. One fateful night, however, changed ");
-        System.out.println("everything. As you returned from a successful hunt, you saw the village in flames, the air ");
-        System.out.println("thick with smoke and the ground littered with bodies. The demon lord had attacked, burning ");
-        System.out.println("the village to the ground and killing everyone in it, including your family.");
-        System.out.println("");
-        System.out.println("Filled with rage and the desire for revenge, you set out on a journey to track down and ");
-        System.out.println("confront the demon lord. You knew that you couldn't take on the demon lord alone, so you ");
-        System.out.println("decided to seek out the help of the elves, who were known for their long lives and vast ");
-        System.out.println("knowledge. After traveling for days through treacherous landscapes and battling dangerous ");
-        System.out.println("creatures, you arrived at the elven city, where you were met with skepticism and distrust.");
-        Logic.gamePauser();
+//    public static void printStoryIntro(){
+//        Logic.clearConsole();
+//        Logic.printHeading("Story");
+//        System.out.println("In a quiet village nestled deep in the forest, you lived a simple life as a young warrior. ");
+//        System.out.println("You hunted and trained to hone your skills in combat. One fateful night, however, changed ");
+//        System.out.println("everything. As you returned from a successful hunt, you saw the village in flames, the air ");
+//        System.out.println("thick with smoke and the ground littered with bodies. The demon lord had attacked, burning ");
+//        System.out.println("the village to the ground and killing everyone in it, including your family.");
+//        System.out.println("");
+//        System.out.println("Filled with rage and the desire for revenge, you set out on a journey to track down and ");
+//        System.out.println("confront the demon lord. You knew that you couldn't take on the demon lord alone, so you ");
+//        System.out.println("decided to seek out the help of the elves, who were known for their long lives and vast ");
+//        System.out.println("knowledge. After traveling for days through treacherous landscapes and battling dangerous ");
+//        System.out.println("creatures, you arrived at the elven city, where you were met with skepticism and distrust.");
+//        Logic.gamePauser();
+//    }
+    public static String getStoryIntro(){
+        String ret = "<html>";
+        ret += Logic.createHeading("Story") + "<br/>";
+        ret += "In a quiet village nestled deep in the forest, you lived a simple life as a young warrior. ";
+        ret += "You hunted and trained to hone your skills in combat. One fateful night, however, changed ";
+        ret += "everything. As you returned from a successful hunt, you saw the village in flames, the air ";
+        ret += "thick with smoke and the ground littered with bodies. The demon lord had attacked, burning ";
+        ret += "the village to the ground and killing everyone in it, including your family.";
+        ret += "Filled with rage and the desire for revenge, you set out on a journey to track down and ";
+        ret += "confront the demon lord. You knew that you couldn't take on the demon lord alone, so you ";
+        ret += "decided to seek out the help of the elves, who were known for their long lives and vast ";
+        ret += "knowledge. After traveling for days through treacherous landscapes and battling dangerous ";
+        ret += "creatures, you arrived at the elven city, where you were met with skepticism and distrust.";
+        ret += "</html>";
+        
+        return ret;
     }
     
-    public static void printActOneIntro(){
-        Logic.clearConsole();
-        Logic.printHeading("Act 1: Elf's Approval");
-        System.out.println("The elves had seen many adventurers come and go, each one seeking their help to defeat the ");
-        System.out.println("demon lord, but all of them had failed. To prove your worth, the elves gave you a series of ");
-        System.out.println("quests to complete. The first task is to clear the \"Goblin Forest\" and help the elves ");
-        System.out.println("recover peace in their forest. ");
-        Logic.gamePauser();
+    
+//    public static void printActOneIntro(){
+//        Logic.clearConsole();
+//        Logic.printHeading("Act 1: Elf's Approval");
+//        System.out.println("The elves had seen many adventurers come and go, each one seeking their help to defeat the ");
+//        System.out.println("demon lord, but all of them had failed. To prove your worth, the elves gave you a series of ");
+//        System.out.println("quests to complete. The first task is to clear the \"Goblin Forest\" and help the elves ");
+//        System.out.println("recover peace in their forest. ");
+//        Logic.gamePauser();
+//    }
+    
+    public static String getActOneIntro(){
+        String ret = "<html>";
+        ret += Logic.createHeading("Act 1: Elf's Approval") + "<br/>";
+        ret += "";
+        ret += "</html>";
+        
+        return ret;
     }
     
     public static void printActOneOutro(){

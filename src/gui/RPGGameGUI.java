@@ -9,9 +9,11 @@ package gui;
  *
  * @author haruk
  */
+import items.Weapon;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.Stack;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,6 +25,7 @@ public class RPGGameGUI extends JFrame {
     NewGameView nGView;
     StatChooseView sCView;
     WeaponChooseView wCView;
+    GameView gView;
     
     public RPGGameGUI() {
         // Set the title of the JFrame
@@ -71,10 +74,28 @@ public class RPGGameGUI extends JFrame {
         repaint();
     }
     
-    public void showWeaponChooseView(){
-        wCView = new WeaponChooseView();
+    public void showWeaponChooseView(ArrayList<Weapon> weapons, Player player){
+        wCView = new WeaponChooseView(weapons, player);
         removeAllPanels();
         add(wCView);
+        revalidate();
+        repaint();
+    }
+    
+    public void showGameView(String text){
+        gView = new GameView(text);
+        removeAllPanels();
+        setSize(800,600);
+        add(gView);
+        revalidate();
+        repaint();
+    }
+    
+    //only used for start of game dont use elsewhere
+    public void showConfirmView(Player player, Weapon selectedWeapon, ArrayList<Weapon> weapons){
+        ConfirmView confirmView = new ConfirmView(player, selectedWeapon, weapons);
+        removeAllPanels();
+        add(confirmView);
         revalidate();
         repaint();
     }

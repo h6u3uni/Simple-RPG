@@ -22,13 +22,13 @@ import java.util.Scanner;
  */
 public class Logic {
     static Scanner scan = new Scanner(System.in);
-    static Weapon[] starters;
+    static ArrayList<Weapon> starters;
     
     static QuestItem[] clearRewards;
     
     public static Player player;
     static boolean isRunning;
-    static boolean newPlay = true;
+    public static boolean newPlay = true;
     public static boolean pause = false;
     
     private static int exploration = 0;
@@ -45,7 +45,7 @@ public class Logic {
     static HashMap<String, Weapon> enemyWeapon;
     
     static SaveManager sMan;
-    static RPGGameGUI frame;
+    public static RPGGameGUI frame;
     
     //handles virtually every input in the game. Takes in a string and a numberofuserchoice. 
     //handles all options, all types of inputs, and exceptions. 
@@ -71,11 +71,27 @@ public class Logic {
         System.out.println();
     }
     
+    public static String createSeparator(int n){
+        String ret = "";
+        for(int i = 0; i < n; i++){
+            ret+= "-"; //------------------
+        }
+        return ret;
+    }
+    
     //prints a heading with input String for cool UI
     public static void printHeading(String title){
         printSeparator(30);
         System.out.println(title);
         printSeparator(30);
+    }
+    
+    public static String createHeading(String title){
+        String text = "";
+        text += createSeparator(30);
+        text += title;
+        text += createSeparator(30);
+        return text;
     }
     
     //pauses the game and waits for uesr input. necessary so that the game doesn't skip text.
@@ -163,6 +179,7 @@ public class Logic {
 //                }
 //            }
 //        }while(!nameSet);
+        newPlay = true;
         frame.showNewGameView();
         
         
@@ -178,13 +195,17 @@ public class Logic {
         
 //        player.chooseStats();
         player.setId(SaveManager.getNewPlayerID());
-        frame.showStatChooseView(player, true);
+        frame.showStatChooseView(player, newPlay);
 //        while(pause){}
 //        pause = true;
     }
     
     public static void chooseStartWeapon(){
-        frame.showWeaponChooseView();
+        frame.showWeaponChooseView(starters, player);
+    }
+    
+    public static void setGUIText(String text){
+        frame.showGameView(text);
     }
     
     //choose a starter weaopn for the player. used in newGame()
@@ -632,7 +653,7 @@ public class Logic {
         else {
             act = 1;
             Elf.printAct1ElfDialogue();
-            Story.printActOneIntro();
+            //Story.printActOneIntro();
         }
     }
 

@@ -7,14 +7,21 @@
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Inventory.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/ShopView.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/TitleView.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/testingarea/ParentChildPanelExample.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/ConfirmView.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/items/Weapon.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Shop.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/SaveManager.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/ContinueGameView.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/CharInfoView.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/WeaponChooseView.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/testingarea/PanelNavigationExample.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/StatChooseView.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/GameView.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/NewGameView.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/gui/InventoryView.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/testingarea/PanelRemovalExample.java</file>
+            <file>file:/D:/uniwork/comp603/Simple-RPG/src/dialogue/Story.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Player.java</file>
             <file>file:/D:/uniwork/comp603/Simple-RPG/src/rpggame/Logic.java</file>
         </group>

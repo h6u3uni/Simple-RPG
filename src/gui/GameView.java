@@ -31,9 +31,16 @@ import rpggame.SaveManager;
 
 public class GameView extends JPanel {
     private Stack<JPanel> panelStack;
-    private JTextArea textArea;
+    public JTextArea textArea;
     private JPanel dynamicContentPanel;
-
+    private JButton exploreButton;
+    private JButton changeLocationButton;
+    private JButton characterInfoButton;
+    private JButton inventoryOptionsButton;
+    private JButton goToShopButton;
+    private JButton saveGameButton;
+    private JButton exitGameButton;
+    
     public GameView(String text) {
         setLayout(new BorderLayout());
         
@@ -56,6 +63,7 @@ public class GameView extends JPanel {
 //        JScrollPane test1 = new JScrollPane();
 //        test1.setPreferredSize(new Dimension(600,320));
 //        dynamicContentPanel.add(test1);
+        
         dynamicContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(dynamicContentPanel, BorderLayout.CENTER);
 
@@ -65,25 +73,25 @@ public class GameView extends JPanel {
         menuPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Create the menu buttons
-        JButton exploreButton = new JButton("Explore");
+        exploreButton = new JButton("Explore");
         exploreButton.addActionListener(e -> Logic.continueJourney());
         
-        JButton changeLocationButton = new JButton("Change Location");
+        changeLocationButton = new JButton("Change Location");
         //changeLocationButton.addActionListener(e -> changeLocation());
         
-        JButton characterInfoButton = new JButton("Character Info");
+        characterInfoButton = new JButton("Character Info");
         characterInfoButton.addActionListener(e -> showCharInfoPanel(Logic.player));
         
-        JButton inventoryOptionsButton = new JButton("Inventory Options");
+        inventoryOptionsButton = new JButton("Inventory Options");
         inventoryOptionsButton.addActionListener(e -> openInventory());
         
-        JButton goToShopButton = new JButton("Go to Shop");
+        goToShopButton = new JButton("Go to Shop");
         goToShopButton.addActionListener(e -> openShop());
         
-        JButton saveGameButton = new JButton("Save Game");
+        saveGameButton = new JButton("Save Game");
         saveGameButton.addActionListener(e -> saveGame());
         
-        JButton exitGameButton = new JButton("Exit Game");
+        exitGameButton = new JButton("Exit Game");
         exitGameButton.addActionListener(e -> exitGame());
         
         // Add the buttons to the menu panel
@@ -97,6 +105,26 @@ public class GameView extends JPanel {
 
         // Add the menu panel to the right side of the main panel
         add(menuPanel, BorderLayout.EAST);
+    }
+    
+    public void disableButtons(){
+        exploreButton.setEnabled(false);
+        changeLocationButton.setEnabled(false);
+        characterInfoButton.setEnabled(false);
+        inventoryOptionsButton.setEnabled(false);
+        goToShopButton.setEnabled(false);
+        saveGameButton.setEnabled(false);
+        exitGameButton.setEnabled(false);
+    }
+    
+    public void enableButtons(){
+        exploreButton.setEnabled(true);
+        changeLocationButton.setEnabled(true);
+        characterInfoButton.setEnabled(true);
+        inventoryOptionsButton.setEnabled(true);
+        goToShopButton.setEnabled(true);
+        saveGameButton.setEnabled(true);
+        exitGameButton.setEnabled(true);
     }
     
     public void goBack(){
@@ -213,14 +241,6 @@ public class GameView extends JPanel {
         repaint();
     }
     
-    private void continueJourney() {
-        textArea.setText(Logic.createHeading(Logic.places[Logic.place]));
-        if(Logic.place == 0){ //in in elven city
-            checkAct();
-        }
-        else{
-            explore();
-        }        
-    }
+    
     
 }

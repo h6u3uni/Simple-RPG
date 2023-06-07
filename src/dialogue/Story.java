@@ -31,21 +31,23 @@ public class Story {
 //        System.out.println("creatures, you arrived at the elven city, where you were met with skepticism and distrust.");
 //        Logic.gamePauser();
 //    }
-    public static String getStoryIntro(){
-        String ret = "";
-        ret += Logic.createHeading("Story") + "\n";
-        ret += "In a quiet village nestled deep in the forest, you lived a simple life as a young warrior. \n";
-        ret += "You hunted and trained to hone your skills in combat. One fateful night, however, changed \n";
-        ret += "everything. As you returned from a successful hunt, you saw the village in flames, the air \n";
-        ret += "thick with smoke and the ground littered with bodies. The demon lord had attacked, burning \n";
-        ret += "the village to the ground and killing everyone in it, including your family.\n\n";
-        ret += "Filled with rage and the desire for revenge, you set out on a journey to track down and \n";
-        ret += "confront the demon lord. You knew that you couldn't take on the demon lord alone, so you \n";
-        ret += "decided to seek out the help of the elves, who were known for their long lives and vast \n";
-        ret += "knowledge. After traveling for days through treacherous landscapes and battling dangerous \n";
-        ret += "creatures, you arrived at the elven city, where you were met with skepticism and distrust.\n";
-        
-        return ret;
+    public static String[] getStoryIntro(){
+        String[] out = new String[2];
+        String p1 = Logic.createHeading("Story") + "\n";
+        p1 += "In a quiet village nestled deep in the forest, you lived a simple life as a young warrior. \n";
+        p1 += "You hunted and trained to hone your skills in combat. One fateful night, however, changed \n";
+        p1 += "everything. As you returned from a successful hunt, you saw the village in flames, the air \n";
+        p1 += "thick with smoke and the ground littered with bodies. The demon lord had attacked, burning \n";
+        p1 += "the village to the ground and killing everyone in it, including your family.\n\n";
+        String p2 = Logic.createHeading("Story") + "\n";
+        p2 += "Filled with rage and the desire for revenge, you set out on a journey to track down and \n";
+        p2 += "confront the demon lord. You knew that you couldn't take on the demon lord alone, so you \n";
+        p2 += "decided to seek out the help of the elves, who were known for their long lives and vast \n";
+        p2 += "knowledge. After traveling for days through treacherous landscapes and battling dangerous \n";
+        p2 += "creatures, you arrived at the elven city, where you were met with skepticism and distrust.\n";
+        out[0] = p1;
+        out[1] = p2;
+        return out;
     }
     
     

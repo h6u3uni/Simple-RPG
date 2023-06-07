@@ -14,6 +14,8 @@ import rpggame.Logic;
 
 //class that has static methods just for printing dialogue for the elf npc.
 public class Elf {
+    public static boolean end;
+    
     public static void printAct1ElfDialogue(){
         Logic.clearConsole();
         Logic.printHeading("Elven City");

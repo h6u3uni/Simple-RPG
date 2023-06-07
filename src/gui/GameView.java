@@ -66,7 +66,7 @@ public class GameView extends JPanel {
 
         // Create the menu buttons
         JButton exploreButton = new JButton("Explore");
-        //exploreButton.addActionListener(e -> explore());
+        exploreButton.addActionListener(e -> Logic.continueJourney());
         
         JButton changeLocationButton = new JButton("Change Location");
         //changeLocationButton.addActionListener(e -> changeLocation());
@@ -213,6 +213,14 @@ public class GameView extends JPanel {
         repaint();
     }
     
-    
+    private void continueJourney() {
+        textArea.setText(Logic.createHeading(Logic.places[Logic.place]));
+        if(Logic.place == 0){ //in in elven city
+            checkAct();
+        }
+        else{
+            explore();
+        }        
+    }
     
 }

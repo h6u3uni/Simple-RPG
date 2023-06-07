@@ -206,9 +206,7 @@ public class Logic {
         frame.showWeaponChooseView(starters, player, newPlay);
     }
     
-    public static void setGUIText(String text){
-        frame.showGameView(text);
-    }
+    
     
     //choose a starter weaopn for the player. used in newGame()
 //    public static void chooseStartWeapon(){
@@ -308,9 +306,73 @@ public class Logic {
 //    }
 
     //if place is elven city, the checkAct method is called for elf dialogue and story progression. else explore is called. 
-    private static void continueJourney() {
-        clearConsole();
-        printHeading(places[place]);
+//    private static void continueJourney() {
+//        clearConsole();
+//        printHeading(places[place]);
+//        if(place == 0){ //in in elven city
+//            checkAct();
+//        }
+//        else{
+//            explore();
+//        }        
+//    }
+
+    //explores the dungeon. exploration rate is used to calculate the exploration of dungeon
+    // random battles occur. and at 100% explorate, the boss battle is called.
+    
+    
+    //used in battle system and inventory options menu. allows the user to choose an item and use it or not. 
+//    private static void useItem(){
+//        clearConsole();
+//        printHeading("What Item would you like to use?");
+//        System.out.println("(1) Healing Item");
+//        System.out.println("(2) Damage Item");
+//        System.out.println("(3) Go Back");
+//        int input = readInt("-> ", 3);
+//        if(input == 1){
+//            clearConsole();
+//            printHeading("What healing item would you like to use?");
+//            ArrayList<HealItem> ownedHeals = player.inventory.getHealItems();
+//            for (int i = 0; i < ownedHeals.size(); i++) {
+//                System.out.println("{" + (i+1) + ") " + ownedHeals.get(i).name + " Heals: " + ownedHeals.get(i).heal);
+//            }
+//            System.out.println("(" + (ownedHeals.size()+1) + ") Go Back");
+//            int heal = readInt("-> ", (ownedHeals.size()+1));
+//            if(heal == (ownedHeals.size()+1)){
+//                useItem();
+//            }
+//            else {
+//                player.useItem(ownedHeals.get(heal-1));
+//            }
+//        }
+//        else if(input == 2){
+//            clearConsole();
+//            printHeading("What damage item would you like to use?");
+//            ArrayList<DmgItem> ownedDmg = player.inventory.getDmgItems();
+//            for (int i = 0; i < ownedDmg.size(); i++) {
+//                System.out.println("{" + (i+1) + ") " + ownedDmg.get(i).name + " Damage: " + ownedDmg.get(i).dmg);
+//            }
+//            System.out.println("(" + (ownedDmg.size()+1) + ") Go Back");
+//            int dmg = readInt("-> ", (ownedDmg.size()+1));
+//            if(dmg == (ownedDmg.size()+1)){
+//                useItem();
+//            }
+//            else {
+//                player.useItem(ownedDmg.get(dmg-1));
+//            }
+//        }
+//    }
+    
+    public static void setStoryOrDialogue(String text){
+        frame.showGameView(text);
+    }
+    
+    public static void setGUIText(String text){
+        frame.gView.textArea.setText(text);
+    }
+    
+    public static void continueJourney() {
+        setGUIText(Logic.createHeading(places[place]));
         if(place == 0){ //in in elven city
             checkAct();
         }
@@ -318,9 +380,58 @@ public class Logic {
             explore();
         }        
     }
-
-    //explores the dungeon. exploration rate is used to calculate the exploration of dungeon
-    // random battles occur. and at 100% explorate, the boss battle is called.
+    
+    //updates the current act/elf npc logic. if player has specific questitems, the act changes.
+    private static void checkAct() {
+        if(player.inventory.containsQuestItem(clearRewards[5])){
+            act = 6;
+            Story.printActFiveOutro();
+            Story.printStoryOutro();
+            gamePauser();
+            SaveManager.addToHallOfFame(player);
+            ArrayList<String> hof = SaveManager.getHallOfFame();
+            clearConsole();
+            printHeading("Hall Of Fame - Players who cleared the game.");
+            for(String pName : hof){
+                System.out.println(" - " + pName);
+            }
+            gamePauser();
+            clearConsole();
+            System.out.println("That concludes this simple RPG. Thank you for playing!");
+            SaveManager.saveAll();
+            isRunning = false;
+        }
+        else if(player.inventory.containsQuestItem(clearRewards[3])){
+            act = 5;
+            Story.printActFourOutro();
+            Elf.printAct5ElfDialogue();
+            Story.printActFiveIntro();
+        }
+        else if(player.inventory.containsQuestItem(clearRewards[2])){
+            act = 4;
+            Story.printActThreeOutro();
+            Elf.printAct4ElfDialogue();
+            Story.printActFourIntro();
+        }
+        else if(player.inventory.containsQuestItem(clearRewards[1])){
+            act = 3;
+            Story.printActTwoOutro();
+            Elf.printAct3ElfDialogue();
+            Story.printActThreeIntro();
+        }
+        else if(player.inventory.containsQuestItem(clearRewards[0])){
+            act = 2;
+            Story.printActOneOutro();
+            Elf.printAct2ElfDialogue();
+            Story.printActTwoIntro();
+        }
+        else {
+            act = 1;
+            Elf.printAct1ElfDialogue();
+            //Story.printActOneIntro();
+        }
+    }
+    
     private static void explore() {
         if(exploration < 100){
             exploration += (int)(Math.random()*10) + 1;
@@ -338,6 +449,77 @@ public class Logic {
             System.out.println("Exploration Rate: " + exploration + "/100");
             gamePauser();
             bossBattle();
+        }
+    }
+    
+    //handles when player dies. 
+    public static void playerDied() {
+        todo
+//        clearConsole();
+//        printHeading("You died...");
+//        if(SaveManager.saveExist() && !(newPlay)){
+//            System.out.println("Would you like to revert back to the last save?");
+//            System.out.println("(1) Yes");
+//            System.out.println("(2) No");
+//            int input = readInt("-> ", 2);
+//            if(input == 1){
+//                continueGame();
+//            }
+//        }
+//        System.out.println("Thanks for playing my game!");
+//        isRunning = false;
+    }
+
+    //change current location of character. changes the location options depending on current act.
+    private static void changeLocation() {
+        int count = 1;
+        clearConsole();
+        printHeading("Where would you like to go?");
+        System.out.println("(1) Elven City");
+        if(act == 1){
+            System.out.println("(2) Goblin Forest");
+            count+=act;
+        }
+        if(act == 2){
+            System.out.println("(2) Goblin Forest");
+            System.out.println("(3) Ancient Tomb");
+            count+=act;
+        }
+        if(act == 3){
+            System.out.println("(2) Goblin Forest");
+            System.out.println("(3) Ancient Tomb");
+            System.out.println("(4) Minotaur Labyrinth");
+            count+=act;
+        }
+        if(act == 4){
+            System.out.println("(2) Goblin Forest");
+            System.out.println("(3) Ancient Tomb");
+            System.out.println("(4) Minotaur Labyrinth");
+            System.out.println("(5) Death Mountain");
+            count+=act;
+        }
+        if(act == 5){
+            System.out.println("(2) Goblin Forest");
+            System.out.println("(3) Ancient Tomb");
+            System.out.println("(4) Minotaur Labyrinth");
+            System.out.println("(5) Death Mountain");
+            System.out.println("(6) Demon Castle");
+            count+=act;
+        }
+        if(act == 6){
+            System.out.println("(2) Goblin Forest");
+            System.out.println("(3) Ancient Tomb");
+            System.out.println("(4) Minotaur Labyrinth");
+            System.out.println("(5) Death Mountain");
+            System.out.println("(6) Demon Castle");
+            System.out.println("(7) ???");
+            count+=act;
+        }
+        System.out.println("(" + (count+1) + ") Stay at current location.");
+        int input = readInt("-> ", count+1);
+        if(!(input == (count+1))){
+            place = input-1;
+            exploration = 0;
         }
     }
     
@@ -565,208 +747,43 @@ public class Logic {
         player.setInBattle(false);
         player.currEnemy = null;
     }
-    
-    //used in battle system and inventory options menu. allows the user to choose an item and use it or not. 
-    private static void useItem(){
-        clearConsole();
-        printHeading("What Item would you like to use?");
-        System.out.println("(1) Healing Item");
-        System.out.println("(2) Damage Item");
-        System.out.println("(3) Go Back");
-        int input = readInt("-> ", 3);
-        if(input == 1){
-            clearConsole();
-            printHeading("What healing item would you like to use?");
-            ArrayList<HealItem> ownedHeals = player.inventory.getHealItems();
-            for (int i = 0; i < ownedHeals.size(); i++) {
-                System.out.println("{" + (i+1) + ") " + ownedHeals.get(i).name + " Heals: " + ownedHeals.get(i).heal);
-            }
-            System.out.println("(" + (ownedHeals.size()+1) + ") Go Back");
-            int heal = readInt("-> ", (ownedHeals.size()+1));
-            if(heal == (ownedHeals.size()+1)){
-                useItem();
-            }
-            else {
-                player.useItem(ownedHeals.get(heal-1));
-            }
-        }
-        else if(input == 2){
-            clearConsole();
-            printHeading("What damage item would you like to use?");
-            ArrayList<DmgItem> ownedDmg = player.inventory.getDmgItems();
-            for (int i = 0; i < ownedDmg.size(); i++) {
-                System.out.println("{" + (i+1) + ") " + ownedDmg.get(i).name + " Damage: " + ownedDmg.get(i).dmg);
-            }
-            System.out.println("(" + (ownedDmg.size()+1) + ") Go Back");
-            int dmg = readInt("-> ", (ownedDmg.size()+1));
-            if(dmg == (ownedDmg.size()+1)){
-                useItem();
-            }
-            else {
-                player.useItem(ownedDmg.get(dmg-1));
-            }
-        }
-    }
-    
-    //updates the current act/elf npc logic. if player has specific questitems, the act changes.
-    private static void checkAct() {
-        if(player.inventory.containsQuestItem(clearRewards[5])){
-            act = 6;
-            Story.printActFiveOutro();
-            Story.printStoryOutro();
-            gamePauser();
-            SaveManager.addToHallOfFame(player);
-            ArrayList<String> hof = SaveManager.getHallOfFame();
-            clearConsole();
-            printHeading("Hall Of Fame - Players who cleared the game.");
-            for(String pName : hof){
-                System.out.println(" - " + pName);
-            }
-            gamePauser();
-            clearConsole();
-            System.out.println("That concludes this simple RPG. Thank you for playing!");
-            SaveManager.saveAll();
-            isRunning = false;
-        }
-        else if(player.inventory.containsQuestItem(clearRewards[3])){
-            act = 5;
-            Story.printActFourOutro();
-            Elf.printAct5ElfDialogue();
-            Story.printActFiveIntro();
-        }
-        else if(player.inventory.containsQuestItem(clearRewards[2])){
-            act = 4;
-            Story.printActThreeOutro();
-            Elf.printAct4ElfDialogue();
-            Story.printActFourIntro();
-        }
-        else if(player.inventory.containsQuestItem(clearRewards[1])){
-            act = 3;
-            Story.printActTwoOutro();
-            Elf.printAct3ElfDialogue();
-            Story.printActThreeIntro();
-        }
-        else if(player.inventory.containsQuestItem(clearRewards[0])){
-            act = 2;
-            Story.printActOneOutro();
-            Elf.printAct2ElfDialogue();
-            Story.printActTwoIntro();
-        }
-        else {
-            act = 1;
-            Elf.printAct1ElfDialogue();
-            //Story.printActOneIntro();
-        }
-    }
-
-    //handles when player dies. 
-    public static void playerDied() {
-        todo
-//        clearConsole();
-//        printHeading("You died...");
-//        if(SaveManager.saveExist() && !(newPlay)){
-//            System.out.println("Would you like to revert back to the last save?");
-//            System.out.println("(1) Yes");
-//            System.out.println("(2) No");
-//            int input = readInt("-> ", 2);
-//            if(input == 1){
-//                continueGame();
-//            }
-//        }
-//        System.out.println("Thanks for playing my game!");
-//        isRunning = false;
-    }
-
-    //change current location of character. changes the location options depending on current act.
-    private static void changeLocation() {
-        int count = 1;
-        clearConsole();
-        printHeading("Where would you like to go?");
-        System.out.println("(1) Elven City");
-        if(act == 1){
-            System.out.println("(2) Goblin Forest");
-            count+=act;
-        }
-        if(act == 2){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            count+=act;
-        }
-        if(act == 3){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            System.out.println("(4) Minotaur Labyrinth");
-            count+=act;
-        }
-        if(act == 4){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            System.out.println("(4) Minotaur Labyrinth");
-            System.out.println("(5) Death Mountain");
-            count+=act;
-        }
-        if(act == 5){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            System.out.println("(4) Minotaur Labyrinth");
-            System.out.println("(5) Death Mountain");
-            System.out.println("(6) Demon Castle");
-            count+=act;
-        }
-        if(act == 6){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            System.out.println("(4) Minotaur Labyrinth");
-            System.out.println("(5) Death Mountain");
-            System.out.println("(6) Demon Castle");
-            System.out.println("(7) ???");
-            count+=act;
-        }
-        System.out.println("(" + (count+1) + ") Stay at current location.");
-        int input = readInt("-> ", count+1);
-        if(!(input == (count+1))){
-            place = input-1;
-            exploration = 0;
-        }
-    }
-
     //prints the inventory options.
-    private static void inventoryOptions() {
-        Logic.clearConsole();
-        Logic.printHeading("Inventory");
-        System.out.println("What would you like to do? ");
-        System.out.println("(1) Change Weapon");
-        System.out.println("(2) Use Item");
-        System.out.println("(3) Check Inventory");
-        System.out.println("(4) Go Back");
-        int input = readInt("-> ", 4);
-        switch(input){
-            case 1:
-                player.changeWeapon();
-                break;
-            case 2:
-                useItem();
-                break;
-            case 3:
-                player.inventory.printInventory();
-                break;
-            case 4:
-                break;
-        }
-    }
+//    private static void inventoryOptions() {
+//        Logic.clearConsole();
+//        Logic.printHeading("Inventory");
+//        System.out.println("What would you like to do? ");
+//        System.out.println("(1) Change Weapon");
+//        System.out.println("(2) Use Item");
+//        System.out.println("(3) Check Inventory");
+//        System.out.println("(4) Go Back");
+//        int input = readInt("-> ", 4);
+//        switch(input){
+//            case 1:
+//                player.changeWeapon();
+//                break;
+//            case 2:
+//                useItem();
+//                break;
+//            case 3:
+//                player.inventory.printInventory();
+//                break;
+//            case 4:
+//                break;
+//        }
+//    }
     
     //save game
-    private static void save(){
-        clearConsole();
-        printHeading("Save");
-        System.out.println("Would you like to save the game?");
-        System.out.println("(1) Yes");
-        System.out.println("(2) No");
-        int input = readInt("-> ", 2);
-        if(input == 1){
-            SaveManager.saveAll();
-        }
-    }
+//    private static void save(){
+//        clearConsole();
+//        printHeading("Save");
+//        System.out.println("Would you like to save the game?");
+//        System.out.println("(1) Yes");
+//        System.out.println("(2) No");
+//        int input = readInt("-> ", 2);
+//        if(input == 1){
+//            SaveManager.saveAll();
+//        }
+//    }
     
     //exit game
     public static void exit(boolean save) {

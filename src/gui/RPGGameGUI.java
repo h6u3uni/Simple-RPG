@@ -25,7 +25,7 @@ public class RPGGameGUI extends JFrame {
     NewGameView nGView;
     StatChooseView sCView;
     WeaponChooseView wCView;
-    GameView gView;
+    public GameView gView;
     
     public RPGGameGUI() {
         // Set the title of the JFrame

@@ -46,23 +46,6 @@ public class SaveManager {
         establishConnection();
     }
 
-//    public static void main(String[] args) {
-//        SaveManager sManager = new SaveManager();
-//        System.out.println(sManager.getConnection());
-//        try {
-//            ResultSet rs = sManager.statement.executeQuery("SELECT * FROM HEALITEM");
-//            while(rs.next()){
-//                String name = rs.getString("ITEMNAME");
-//                int heal = rs.getInt("HEAL");
-//                int price = rs.getInt("PRICE");
-//                String item = name + ":" + Integer.toString(heal) + ":" + Integer.toString(price);
-//                System.out.println(item);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-
     public Connection getConnection() {
         return this.conn;
     }
@@ -402,12 +385,6 @@ public class SaveManager {
         }
     }
     
-    //loads the save 
-//    public static void loadSave(){
-//        Logic.player = loadPlayerSave();
-//        Logic.player.inventory = loadInventorySave();
-//    }
-    
     private static boolean checkPlayerSave(){
         int ret = 0;
         try {
@@ -443,6 +420,14 @@ public class SaveManager {
 //            return true;
 //        }
 //    }
+    
+    
+        //loads the save 
+//    public static void loadSave(){
+//        Logic.player = loadPlayerSave();
+//        Logic.player.inventory = loadInventorySave();
+//    }
+    
     
     public static ArrayList<Player> getPlayerSaves() {
         ArrayList<Player> players = new ArrayList<>();
@@ -631,7 +616,6 @@ public class SaveManager {
 
         return inven;
     }
-
     
     private static void saveInventory(Player player){
         String insertQuery = "INSERT INTO INVENTORY (ITEMID, PLAYERID, QUANTITY) VALUES (?, ?, ?)";
@@ -947,5 +931,23 @@ public class SaveManager {
 //        out += q.name + ":";
 //        out += q.description;
 //        return out;
+//    }
+    
+    
+//    public static void main(String[] args) {
+//        SaveManager sManager = new SaveManager();
+//        System.out.println(sManager.getConnection());
+//        try {
+//            ResultSet rs = sManager.statement.executeQuery("SELECT * FROM HEALITEM");
+//            while(rs.next()){
+//                String name = rs.getString("ITEMNAME");
+//                int heal = rs.getInt("HEAL");
+//                int price = rs.getInt("PRICE");
+//                String item = name + ":" + Integer.toString(heal) + ":" + Integer.toString(price);
+//                System.out.println(item);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //    }
 }

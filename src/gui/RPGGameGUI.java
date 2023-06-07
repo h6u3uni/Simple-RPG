@@ -74,8 +74,9 @@ public class RPGGameGUI extends JFrame {
         repaint();
     }
     
-    public void showWeaponChooseView(ArrayList<Weapon> weapons, Player player){
-        wCView = new WeaponChooseView(weapons, player);
+    //use for new player only
+    public void showWeaponChooseView(ArrayList<Weapon> weapons, Player player, boolean initial){
+        wCView = new WeaponChooseView(weapons, player, true);
         removeAllPanels();
         add(wCView);
         revalidate();

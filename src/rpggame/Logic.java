@@ -203,7 +203,7 @@ public class Logic {
     }
     
     public static void chooseStartWeapon(){
-        frame.showWeaponChooseView(starters, player);
+        frame.showWeaponChooseView(starters, player, newPlay);
     }
     
     public static void setGUIText(String text){
@@ -660,20 +660,21 @@ public class Logic {
     }
 
     //handles when player dies. 
-    private static void playerDied() {
-        clearConsole();
-        printHeading("You died...");
-        if(SaveManager.saveExist() && !(newPlay)){
-            System.out.println("Would you like to revert back to the last save?");
-            System.out.println("(1) Yes");
-            System.out.println("(2) No");
-            int input = readInt("-> ", 2);
-            if(input == 1){
-                continueGame();
-            }
-        }
-        System.out.println("Thanks for playing my game!");
-        isRunning = false;
+    public static void playerDied() {
+        todo
+//        clearConsole();
+//        printHeading("You died...");
+//        if(SaveManager.saveExist() && !(newPlay)){
+//            System.out.println("Would you like to revert back to the last save?");
+//            System.out.println("(1) Yes");
+//            System.out.println("(2) No");
+//            int input = readInt("-> ", 2);
+//            if(input == 1){
+//                continueGame();
+//            }
+//        }
+//        System.out.println("Thanks for playing my game!");
+//        isRunning = false;
     }
 
     //change current location of character. changes the location options depending on current act.

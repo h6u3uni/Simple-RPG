@@ -75,7 +75,7 @@ public class GameView extends JPanel {
         characterInfoButton.addActionListener(e -> showCharInfoPanel(Logic.player));
         
         JButton inventoryOptionsButton = new JButton("Inventory Options");
-        //inventoryOptionsButton.addActionListener(e -> openInventory());
+        inventoryOptionsButton.addActionListener(e -> openInventory());
         
         JButton goToShopButton = new JButton("Go to Shop");
         goToShopButton.addActionListener(e -> openShop());
@@ -100,7 +100,12 @@ public class GameView extends JPanel {
     }
     
     public void goBack(){
-        if (panelStack.size() > 1) {
+        if(panelStack.size() <= 1){
+            resetDynamicPanel();
+            revalidate();
+            repaint();
+        }
+        else if (panelStack.size() > 1) {
             JPanel currentPanel = panelStack.pop();
             JPanel previousPanel = panelStack.peek();
             dynamicContentPanel.remove(currentPanel);
@@ -111,10 +116,12 @@ public class GameView extends JPanel {
     }
     
     public void goNext(JPanel panel){
-        JPanel previousPanel = panelStack.peek();
+        if(panelStack.size() > 0){
+            JPanel previousPanel = panelStack.peek();
+            dynamicContentPanel.remove(previousPanel);
+        }
         panelStack.push(panel);
         JPanel newPanel = panelStack.peek();
-        dynamicContentPanel.remove(previousPanel);
         dynamicContentPanel.add(newPanel);
         revalidate();
         repaint();
@@ -130,10 +137,8 @@ public class GameView extends JPanel {
 //
 //        frame.setVisible(true);
 //    }
-    private void resetDynamicPanel() {
-        if(!panelStack.empty()){
-            panelStack.clear();
-        }
+    public void resetDynamicPanel() {
+        panelStack.clear();
         removeAllContentInDynamicPanel();
     }
     
@@ -192,13 +197,22 @@ public class GameView extends JPanel {
         repaint();
     }
 
-    private void openShop() {
+    public void openShop() {
         resetDynamicPanel();
         ShopView shopView = new ShopView(Logic.player);
-        dynamicContentPanel.add(shopView);
+        goNext(shopView);
         revalidate();
         repaint();
     }
 
+    public void openInventory() {
+        resetDynamicPanel();
+        InventoryView iView = new InventoryView(Logic.player);
+        goNext(iView);
+        revalidate();
+        repaint();
+    }
+    
+    
     
 }

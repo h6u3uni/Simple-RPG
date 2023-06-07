@@ -98,4 +98,14 @@ public class Inventory {
         }
         return false;
     }    
+
+    public String inventoryToString() {
+        String out = "";
+        
+        for(Item i : inventory){
+            out += "- " + i.getName() + "\n";
+        }
+        
+        return out;
+    }
 }

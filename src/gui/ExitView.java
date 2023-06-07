@@ -73,14 +73,14 @@ public class ExitView extends JPanel {
         Logic.exit(false);
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Exit View");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 320);
-
-        ExitView exitView = new ExitView();
-        frame.add(exitView);
-
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        JFrame frame = new JFrame("Exit View");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(600, 320);
+//
+//        ExitView exitView = new ExitView();
+//        frame.add(exitView);
+//
+//        frame.setVisible(true);
+//    }
 }

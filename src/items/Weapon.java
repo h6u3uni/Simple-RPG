@@ -73,4 +73,31 @@ public class Weapon implements Item{
     public String toString(){
         return this.name;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Item)) {
+            return false;
+        }
+
+        Item otherItem = (Item) obj;
+
+        // Compare the attributes specific to Weapon
+        if (!(otherItem instanceof Weapon)) {
+            return false;
+        }
+
+        Weapon otherWeapon = (Weapon) otherItem;
+
+        return this.name.equals(otherWeapon.getName())
+                && this.atk == otherWeapon.getAtk()
+                && this.def == otherWeapon.getDef()
+                && this.spd == otherWeapon.getSpd()
+                && this.price == otherWeapon.getPrice();
+    }
+
 }

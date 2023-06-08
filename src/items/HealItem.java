@@ -55,5 +55,28 @@ public class HealItem implements Item{
     public String toString(){
         return this.name;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
 
+        if (!(obj instanceof Item)) {
+            return false;
+        }
+
+        Item otherItem = (Item) obj;
+
+        // Compare the attributes specific to Weapon
+        if (!(otherItem instanceof HealItem)) {
+            return false;
+        }
+
+        HealItem otherWeapon = (HealItem) otherItem;
+
+        return this.name.equals(otherWeapon.getName())
+                && this.heal == otherWeapon.heal
+                && this.price == otherWeapon.getPrice();
+    }
 }

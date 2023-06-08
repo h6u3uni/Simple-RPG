@@ -58,4 +58,28 @@ public class DmgItem implements Item{
     public String toString(){
         return this.name;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Item)) {
+            return false;
+        }
+
+        Item otherItem = (Item) obj;
+
+        // Compare the attributes specific to Weapon
+        if (!(otherItem instanceof DmgItem)) {
+            return false;
+        }
+
+        DmgItem otherWeapon = (DmgItem) otherItem;
+
+        return this.name.equals(otherWeapon.getName())
+                && this.dmg == otherWeapon.dmg
+                && this.price == otherWeapon.getPrice();
+    }
 }

@@ -24,9 +24,9 @@ public class QuestItem implements Item{
 
     @Override
     public void printItem() {
-        Logic.clearConsole();
-        Logic.printHeading(name);
-        System.out.println(description);
+//        Logic.clearConsole();
+//        Logic.printHeading(name);
+//        System.out.println(description);
     }
     
     // converts string to quest object. used for saving .

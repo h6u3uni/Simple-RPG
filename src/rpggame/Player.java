@@ -125,19 +125,6 @@ public class Player extends Mob{
         }
     }
     
-    //prints the details of the player.
-    public void printPlayer(){
-        Logic.clearConsole();
-        Logic.printHeading(this.name + " " + this.gender + " Level: " + this.lvl);
-        System.out.println("Stats:");
-        System.out.println(xpNow + "/" + xpNeeded + "XP");
-        System.out.println(hp + "/" + maxHP + "HP");
-        System.out.println("Attack: " + atk + "(" + weapon.getAtk() + ")");
-        System.out.println("Defense: " + def + "(" + weapon.getDef() + ")");
-        System.out.println("Speed: " + spd + "(" + weapon.getSpd() + ")");
-        System.out.println("Money: " + money + " Gold");
-    }
-    
     public int getId(){
         return this.id;
     }

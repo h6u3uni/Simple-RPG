@@ -6,12 +6,8 @@
 package rpggame;
 
 import dialogue.Dialogue;
-import dialogue.Elf;
-import dialogue.Story;
 import gui.ConfirmView;
 import gui.RPGGameGUI;
-import items.DmgItem;
-import items.HealItem;
 import items.Weapon;
 import items.QuestItem;
 import java.util.ArrayList;
@@ -52,19 +48,19 @@ public class Logic {
     
     //handles virtually every input in the game. Takes in a string and a numberofuserchoice. 
     //handles all options, all types of inputs, and exceptions. 
-    public static int readInt(String prompt, int userChoices){
-        int input;
-        do{
-            System.out.println(prompt);
-            try{
-                input = Integer.parseInt(scan.next());
-            }catch(Exception e){
-                input = -1;
-                System.out.println("Please input an integer!");
-            }
-        }while(input<1 || input>userChoices);
-        return input;
-    }
+//    public static int readInt(String prompt, int userChoices){
+//        int input;
+//        do{
+//            System.out.println(prompt);
+//            try{
+//                input = Integer.parseInt(scan.next());
+//            }catch(Exception e){
+//                input = -1;
+//                System.out.println("Please input an integer!");
+//            }
+//        }while(input<1 || input>userChoices);
+//        return input;
+//    }
     
     //prints a separator for cool UI
     public static void printSeparator(int n){

@@ -31,15 +31,6 @@ public class Inventory {
         inventory.remove(item);
     }
     
-    public void printInventory(){
-        Logic.clearConsole();
-        Logic.printHeading("Inventory");
-        for(Item i : inventory){
-            System.out.println("- " + i.getName());
-        }
-        Logic.gamePauser();
-    }
-    
     //return weapon arraylist by grabbing only the weapons in the inventory
     public ArrayList<Weapon> getWeapons(){
         ArrayList<Weapon> weapons = new ArrayList<>();

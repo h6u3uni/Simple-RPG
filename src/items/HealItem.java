@@ -24,9 +24,9 @@ public class HealItem implements Item{
 
     @Override
     public void printItem() {
-        Logic.clearConsole();
-        Logic.printHeading(name);
-        System.out.println("Heal: " + this.heal);
+//        Logic.clearConsole();
+//        Logic.printHeading(name);
+//        System.out.println("Heal: " + this.heal);
     }
     
     // This static method parses a string in the format "name:heal:price"

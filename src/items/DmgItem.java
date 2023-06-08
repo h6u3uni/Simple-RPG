@@ -25,9 +25,9 @@ public class DmgItem implements Item{
     @Override
     // This method prints out the details of an item
     public void printItem() {
-        Logic.clearConsole();
-        Logic.printHeading(name);
-        System.out.println("Damage: " + this.dmg);
+//        Logic.clearConsole();
+//        Logic.printHeading(name);
+//        System.out.println("Damage: " + this.dmg);
     }
     
     

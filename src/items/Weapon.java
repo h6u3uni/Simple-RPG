@@ -28,11 +28,11 @@ public class Weapon implements Item{
     
     @Override
     public void printItem(){
-        Logic.clearConsole();
-        Logic.printHeading(name);
-        System.out.println("Atk Boost: " + this.atk);
-        System.out.println("Def Boost: " + this.def);
-        System.out.println("Spd Boost: " + this.spd);
+//        Logic.clearConsole();
+//        Logic.printHeading(name);
+//        System.out.println("Atk Boost: " + this.atk);
+//        System.out.println("Def Boost: " + this.def);
+//        System.out.println("Spd Boost: " + this.spd);
     }
     
     // This static method parses a string in the format "name:atk:def:spd:price"

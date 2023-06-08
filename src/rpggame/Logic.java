@@ -395,9 +395,6 @@ public class Logic {
                 if(place != 6){
                     player.inventory.addItem(clearRewards[place]);
                 }
-                if(enemy.name.equals("Demon Lord")){
-                    player.inventory.addItem(clearRewards[5]);
-                }
             }
             else{
                 double drop = Math.random();

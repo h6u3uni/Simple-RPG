@@ -670,14 +670,13 @@ public class SaveManager {
     // get item quantity
     private static int getItemQuantity(Item item, ArrayList<Item> inventory) {
         int count = 0;
-        int itemid = getItemId(item);
-        for(Item i : inventory){
-            int compareid = getItemId(i);
-            if(itemid == compareid){
+        for (Item i : inventory) {
+            if (item.equals(i)) {
                 count++;
             }
         }
         return count;
     }
+
     
 }

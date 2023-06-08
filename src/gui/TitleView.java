@@ -18,10 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import rpggame.Logic;
 import rpggame.SaveManager;
 
@@ -77,14 +74,17 @@ public class TitleView extends JPanel {
         add(buttonPanel, BorderLayout.CENTER);
     }
     
+    // Action Listeners for the button newGameButton
     private void newGame() {
         Logic.newGame();
     }
 
+    // Action Listeners for the button continueGameButton
     private void contGame() {
         Logic.continueGame();
     }
 
+    // Action Listeners for the button quitButton
     private void quitGame() {
         Logic.exit(false);
     }

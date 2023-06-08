@@ -10,19 +10,16 @@ package gui;
  * @author haruk
  */
 
-import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ButtonGroup;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JFrame;
 import rpggame.Logic;
 
 public class NewGameView extends JPanel {
@@ -108,6 +105,7 @@ public class NewGameView extends JPanel {
         add(confirmButton, gbcConfirmButton);
     }
 
+    // get the user input and create a new player
     private void confirm() {
         if(!(nameField.getText().equals(""))){
             if (maleRadioButton.isSelected()) {

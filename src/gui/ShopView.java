@@ -12,7 +12,6 @@ package gui;
 
 import items.DmgItem;
 import items.HealItem;
-import items.Item;
 import items.Weapon;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -20,18 +19,14 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
 import rpggame.Logic;
 import rpggame.Player;
 import rpggame.SaveManager;
@@ -60,6 +55,11 @@ public class ShopView extends JPanel {
     private ActionListener goBack;
     private ActionListener goBack2;
     
+    /*
+     * Constructor
+     * @param player The player
+     * @return none
+     */
     public ShopView(Player player) {
         setLayout(new BorderLayout());
         
@@ -106,6 +106,7 @@ public class ShopView extends JPanel {
         openShop();
     }
     
+    // remove all content from the panel
     private void removeAllContent() {
         Component[] components = getComponents();
 
@@ -117,6 +118,7 @@ public class ShopView extends JPanel {
         repaint();
     }
     
+    // open the shop
     private void openShop(){
         removeAllContent();
         
@@ -258,6 +260,7 @@ public class ShopView extends JPanel {
         repaint();
     }
 
+    // Action listener for the Buy Heal button
     private void buyHeal() {
         remove(buyOptionsPanel); // Remove the current buttons panel
         remove(subheadingLabel);
@@ -311,6 +314,7 @@ public class ShopView extends JPanel {
         repaint();
     }
     
+    // Action listener for the Buy Dmg button
     private void buyDmg() {
         remove(buyOptionsPanel); // Remove the current buttons panel
         remove(subheadingLabel);
@@ -364,6 +368,7 @@ public class ShopView extends JPanel {
         repaint();
     }
 
+    // Action listener for the Sell Weapon button
     private void sellWeapon() {
         removeAll();
 
@@ -420,6 +425,7 @@ public class ShopView extends JPanel {
         repaint();
     }
 
+    // Action listener for the Sell Heal button
     private void sellHeal() {
         removeAll();
 
@@ -476,6 +482,7 @@ public class ShopView extends JPanel {
         repaint();
     }
     
+    // Action listener for the Sell Dmg button
     private void sellDmg() {
         removeAll();
 

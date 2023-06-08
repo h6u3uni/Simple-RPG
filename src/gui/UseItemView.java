@@ -13,7 +13,6 @@ package gui;
 import items.DmgItem;
 import items.HealItem;
 import java.awt.BorderLayout;
-import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,6 +91,7 @@ public class UseItemView extends JPanel{
         useItem();
     }
     
+    // Use Item
     private void useItem(){
         removeAll();
         add(newButtonsPanel, BorderLayout.SOUTH);
@@ -101,6 +101,7 @@ public class UseItemView extends JPanel{
         repaint();
     }
     
+    // Use Heal Item
     private void useHealItem() {
         subheadingLabel.setText("Which Healing Item would you like to use?");
         removeAll();
@@ -167,6 +168,7 @@ public class UseItemView extends JPanel{
         repaint();
     }
     
+    // Use Damage Item
     private void useDamageItem() {
         subheadingLabel.setText("Which Healing Item would you like to use?");
         removeAll();

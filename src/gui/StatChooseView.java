@@ -10,21 +10,16 @@ package gui;
  * @author haruk
  */
 
-import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import rpggame.Logic;
@@ -35,6 +30,7 @@ import static rpggame.Logic.place;
 import static rpggame.Logic.places;
 import rpggame.Player;
 
+// This class is a JPanel that allows the player to distribute stat points
 public class StatChooseView extends JPanel {
     private int initialStatPt;
     private int initialHP;
@@ -167,6 +163,7 @@ public class StatChooseView extends JPanel {
         });
     }
 
+    // Increase the stat point of the specified stat
     private void increaseStatPoint(String stat) {
         if (tempStatPt > 0) {
             switch (stat) {
@@ -188,6 +185,7 @@ public class StatChooseView extends JPanel {
         }
     }
     
+    // Update the labels
     private void updateLabels() {
         remainingPointsLabel.setText("Remaining Points: " + tempStatPt);
         hpLabel.setText("" + tempHP);
@@ -199,6 +197,7 @@ public class StatChooseView extends JPanel {
         }
     }
     
+    // Create a panel for a stat
     private JPanel createStatPanel(String labelPrefix, JButton button, JLabel label) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -219,7 +218,7 @@ public class StatChooseView extends JPanel {
         return panel;
     }
 
-    
+    // Reset the stat values to their initial values
     private void resetSelection() {
         // Reset the stat values to their initial values
         confirmButton.setEnabled(false);
@@ -231,6 +230,7 @@ public class StatChooseView extends JPanel {
         updateLabels();
     }
 
+    // Confirm the stat values
     private void confirmSelection() {
         this.player.statPoint = tempStatPt;
         this.player.hpStat = tempHP;

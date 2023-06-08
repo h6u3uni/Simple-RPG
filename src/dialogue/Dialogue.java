@@ -10,10 +10,18 @@ package dialogue;
  * @author haruk
  */
 public class Dialogue {
+    /*
+     * Dialogue is a class that contains all the dialogue for the game.
+     * It is a static class, so it can be accessed without creating an instance of it.
+     * Dialogue is stored in arrays of strings.
+     */
+
+    // Dialogue for the intro
     public static String[] getDialogueIntro(){
         return Story.getStoryIntro();
     }
     
+    // Dialogue for the act 1
     public static String[] getDialogueOne(){
         String[] array1 = Elf.getAct1ElfDialogue();
         String[] array2 = Story.getActOneIntro();
@@ -30,6 +38,7 @@ public class Dialogue {
         return combinedArray;
     }
     
+    // Dialogue for the act 2
     public static String[] getDialogueTwo(){            
         String[] array1 = Story.getActOneOutro();
         String[] array2 = Elf.getAct2ElfDialogue();
@@ -50,6 +59,7 @@ public class Dialogue {
         return combinedArray;
     }
     
+    // Dialogue for the act 3
     public static String[] getDialogueThree(){
         String[] array1 = Story.getActTwoOutro();
         String[] array2 = Elf.getAct3ElfDialogue();
@@ -70,6 +80,7 @@ public class Dialogue {
         return combinedArray;
     }
     
+    // Dialogue for the act 4
     public static String[] getDialogueFour(){
         String[] array1 = Story.getActThreeOutro();
         String[] array2 = Elf.getAct4ElfDialogue();
@@ -90,6 +101,7 @@ public class Dialogue {
         return combinedArray;
     }
     
+    // Dialogue for the act 5
     public static String[] getDialogueFive(){
         String[] array1 = Story.getActFourOutro();
         String[] array2 = Elf.getAct5ElfDialogue();
@@ -110,6 +122,7 @@ public class Dialogue {
         return combinedArray;
     }
     
+    // Dialogue for the act 6
     public static String[] getDialogueSix(){
         String[] array1 = Story.getActFiveOutro();
         String[] array2 = Story.getStoryOutro();

@@ -10,29 +10,21 @@ package gui;
  * @author haruk
  */
 
-import items.DmgItem;
-import items.HealItem;
 import items.Weapon;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
 import rpggame.Logic;
 import rpggame.Player;
 
@@ -45,8 +37,13 @@ public class InventoryView extends JPanel {
     private JButton goBackButton;
     private JPanel newButtonsPanel;
     private ActionListener goBack;
-    private ActionListener goBack2;
 
+    /*
+     * Constructor
+     * @param player The player
+     * @return none
+     * 
+     */
     public InventoryView(Player player) {
         setLayout(new BorderLayout());
 
@@ -106,6 +103,7 @@ public class InventoryView extends JPanel {
         
     }
     
+    // This method is used to show the default layout of the inventory view
     private void inventoryOptions(){
         removeAll();
         add(buttonsPanel, BorderLayout.SOUTH);
@@ -113,18 +111,20 @@ public class InventoryView extends JPanel {
         add(headerLabel, BorderLayout.NORTH);
     }
     
+    // This method is used to show the layout of the inventory view when the player wants to change weapon
     private void changeWeapon() {
         ArrayList<Weapon> weapons = player.inventory.getWeapons();
         WeaponChooseView wCView = new WeaponChooseView(weapons, player, false);
         Logic.frame.gView.goNext(wCView);
     }
 
+    // This method is used to show the layout of the inventory view when the player wants to use item
     private void useItem() {
         UseItemView uIView = new UseItemView(player);
         Logic.frame.gView.goNext(uIView);
     }
     
-
+    // This method is used to show the layout of the inventory view when the player wants to check inventory
     private void checkInventory() {
         remove(buttonsPanel);
         remove(subheadingLabel);

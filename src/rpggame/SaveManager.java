@@ -74,6 +74,7 @@ public class SaveManager {
         }
     }
     
+    // method to load shop heal items from database
     public static HealItem[] getShopHeals(){
         ArrayList<HealItem> arrHeal = new ArrayList<>();
         try {
@@ -98,6 +99,7 @@ public class SaveManager {
         return ret;
     }
     
+    // method to load shop dmg items from database
     public static DmgItem[] getShopDmgs(){
         ArrayList<DmgItem> arrDmg = new ArrayList<>();
         try {
@@ -122,6 +124,7 @@ public class SaveManager {
         return ret;
     }
     
+    // method to load shop weapons from database
     public static Weapon[] getShopWeapons(){
         ArrayList<Weapon> arrWeapon = new ArrayList<>();
         try {
@@ -148,6 +151,7 @@ public class SaveManager {
         return ret;
     }
     
+    // method to load starter weapons from database
     public static ArrayList<Weapon> getStarterWeapons(){
         ArrayList<Weapon> arrWeapon = new ArrayList<>();
         try {
@@ -168,6 +172,7 @@ public class SaveManager {
         return arrWeapon;
     }
     
+    // method to load quest items from database
     public static QuestItem[] getQuestItems(){
         ArrayList<QuestItem> arrQuest = new ArrayList<>();
         try {
@@ -191,6 +196,7 @@ public class SaveManager {
         return ret;
     }
     
+    // method to loads locations from database
     public static String[] getPlaces(){
         ArrayList<String> arrPlaces = new ArrayList<>();
         try {
@@ -212,6 +218,7 @@ public class SaveManager {
         return ret;
     }
     
+    // loads the enemy types in each area from database
     public static HashMap<String, String[]> getEnemyTypes(){
         String[] places = getPlaces();
         HashMap<String, String[]> ret = new HashMap<>();
@@ -224,6 +231,7 @@ public class SaveManager {
         return ret;
     }
     
+    // helper method for getEnemyTypes
     private static String[] enemyTypeHelper(String place){
         ArrayList<String> arrEnemies = new ArrayList<>();
         try {
@@ -245,6 +253,7 @@ public class SaveManager {
         return ret;
     }
     
+    // loads the enemy stats for every enemy type from database
     public static HashMap<String, double[]> getEnemyStats(){
         HashMap<String, double[]> ret = new HashMap<>();
         try {
@@ -265,6 +274,7 @@ public class SaveManager {
         return ret;
     }
     
+    // loads the enemy weapons for every enemy type from database
     public static HashMap<String, Weapon> getEnemyWeapon(){
         HashMap<String, Weapon> ret = new HashMap<>();
         try {
@@ -286,6 +296,7 @@ public class SaveManager {
         return ret;
     }
     
+    // loads the boss types for every area from database
     public static HashMap<String, String> getBossTypes(){
         String[] places = getPlaces();
         HashMap<String, String> ret = new HashMap<>();
@@ -305,6 +316,7 @@ public class SaveManager {
         return ret;
     }
     
+    // gets hall of fame from database
     public static ArrayList<String> getHallOfFame(){
         ArrayList<String> hof = new ArrayList<>();
         try {
@@ -391,6 +403,7 @@ public class SaveManager {
         }
     }
     
+    // check if player save exists
     private static boolean checkPlayerSave(){
         int ret = 0;
         try {
@@ -409,6 +422,7 @@ public class SaveManager {
         }
     }
     
+    // get player saves from database
     public static ArrayList<Player> getPlayerSaves() {
         ArrayList<Player> players = new ArrayList<>();
         try (ResultSet rs = statement.executeQuery("SELECT * FROM PLAYER")) {
@@ -438,6 +452,7 @@ public class SaveManager {
         return players;
     }
     
+    // get new player id
     public static int getNewPlayerID(){
         int lastPlayerId = 0;
         String getLastIdQuery = "SELECT MAX(playerid) FROM player";
@@ -453,6 +468,7 @@ public class SaveManager {
         return lastPlayerId + 1;
     }
     
+    // save player 
     private static void savePlayer(Player player){
         // Check if the record exists
         try {
@@ -519,6 +535,7 @@ public class SaveManager {
         }
     }
     
+    // get weapon id
     private static int getWeaponID(Weapon weapon){
         int weaponId = 0;
         String getLastIdQuery = "SELECT ITEMID FROM WEAPON WHERE WEAPONNAME = '" + weapon.name + "'";
@@ -534,6 +551,7 @@ public class SaveManager {
         return weaponId;
     }
     
+    // get weapon from id
     private static Weapon idToWeapon(int id) {
         Weapon weap = null;
         String getWeaponQuery = "SELECT * FROM WEAPON WHERE ITEMID = ?";
@@ -550,6 +568,7 @@ public class SaveManager {
         return weap;
     }
     
+    // get inventory from database
     public static Inventory getInventory(Player player) {
         Inventory inven = new Inventory();
 
@@ -597,6 +616,7 @@ public class SaveManager {
         return inven;
     }
     
+    // save inventory
     private static void saveInventory(Player player) {
         String insertQuery = "INSERT INTO INVENTORY (ITEMID, PLAYERID, QUANTITY) VALUES (?, ?, ?)";
         String deleteInventory = "DELETE FROM INVENTORY WHERE PLAYERID = ?";
@@ -620,7 +640,7 @@ public class SaveManager {
         }
     }
 
-    
+    // get item id
     private static int getItemId(Item item) {
         String query = "";
         int id = 0;
@@ -647,6 +667,7 @@ public class SaveManager {
         return id;
     }
     
+    // get item quantity
     private static int getItemQuantity(Item item, ArrayList<Item> inventory) {
         int count = 0;
         int itemid = getItemId(item);

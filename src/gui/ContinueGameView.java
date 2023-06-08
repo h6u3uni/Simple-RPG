@@ -15,25 +15,27 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import rpggame.Logic;
 import rpggame.Player;
 
 public class ContinueGameView extends JPanel {
-    private JList<Player> playerList;
-    private DefaultListModel<Player> listModel;
-    public Player selectedPlayer;
+    private JList<Player> playerList; //list of players
+    private DefaultListModel<Player> listModel; //list model
+    public Player selectedPlayer; //selected player
 
+    /*
+     * Constructor
+     * @param players - list of players
+     * @return none
+     */
     public ContinueGameView(ArrayList<Player> players) {
         setLayout(new BorderLayout());
 

@@ -11,7 +11,6 @@ package gui;
  */
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -24,6 +23,11 @@ public class ExitView extends JPanel {
 
     private JLabel headerLabel;
 
+    /*
+     * Constructor
+     * @param none
+     * @return none
+     */
     public ExitView() {
         setLayout(new BorderLayout());
 
@@ -49,6 +53,7 @@ public class ExitView extends JPanel {
             }
         });
 
+        // Add action listeners to the buttons
         noButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,10 +70,12 @@ public class ExitView extends JPanel {
         add(buttonsPanel, BorderLayout.CENTER);
     }
 
+    // Save and quit
     private void saveAndQuit() {
         Logic.exit(true);
     }
 
+    // Quit without saving
     private void quitWithoutSaving() {
         Logic.exit(false);
     }

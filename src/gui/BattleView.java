@@ -19,22 +19,22 @@ import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import rpggame.Enemy;
 import rpggame.Logic;
 import rpggame.Player;
 
 public class BattleView extends JPanel {
-    private Player player;
-    private Enemy enemy;
+    private Player player; // Declare the player
     
+    /*
+     * Constructor
+     * @param player The player
+     * @return none
+     */
     public BattleView(Player player) {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout()); // Set the layout
 
-        this.player = player;
-        this.enemy = player.currEnemy;
+        this.player = player; // Set the player
         
         // Header Label
         JLabel headerLabel = new JLabel("What do you want to do?");
@@ -66,6 +66,7 @@ public class BattleView extends JPanel {
         runButton.setAlignmentX(CENTER_ALIGNMENT);
         runButton.addActionListener(e -> run());
 
+        // Add the buttons to the panel
         buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(fightButton);
         buttonPanel.add(Box.createVerticalStrut(10));
@@ -79,21 +80,41 @@ public class BattleView extends JPanel {
         add(buttonPanel, BorderLayout.CENTER);
     }
     
+    /*
+     * Change the weapon
+     * @param none
+     * @return none
+     */
     private void changeWeapon() {
         ArrayList<Weapon> weapons = player.inventory.getWeapons();
         WeaponChooseView wCView = new WeaponChooseView(weapons, player, false);
         Logic.frame.gView.goNext(wCView);
     }
 
+    /*
+     * Use the item
+     * @param none
+     * @return none
+     */
     private void useItem() {
         UseItemView uIView = new UseItemView(player);
         Logic.frame.gView.goNext(uIView);
     }
 
+    /*
+     * Fight
+     * @param none
+     * @return none
+     */
     private void fight() {
         Logic.fight();
     }
 
+    /*
+     * Run
+     * @param none
+     * @return none
+     */
     private void run() {
         Logic.run();
     }

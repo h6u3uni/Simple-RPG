@@ -74,6 +74,7 @@ public class Logic {
         System.out.println();
     }
     
+    //creates a separator for cool UI
     public static String createSeparator(int n){
         String ret = "";
         for(int i = 0; i < n; i++){
@@ -89,6 +90,7 @@ public class Logic {
         printSeparator(30);
     }
     
+    //creates a heading with input String for cool UI
     public static String createHeading(String title){
         String text = "";
         text += createSeparator(30);
@@ -137,6 +139,7 @@ public class Logic {
         frame.showNewGameView();
     }
     
+    // make new player
     public static void makeNewPlayer(String name, String gender){
         player = new Player(name, gender);
         
@@ -147,6 +150,7 @@ public class Logic {
 //        pause = true;
     }
     
+    //choose starter weapon
     public static void chooseStartWeapon(){
         frame.showWeaponChooseView(starters, player, newPlay);
     }
@@ -157,6 +161,7 @@ public class Logic {
         frame.showContinueGameView(saves);
     }
     
+    //choose player to continue game with
     public static void playerSelected(Player player){
         newPlay = false;
         Logic.originPlayer = player;
@@ -168,22 +173,27 @@ public class Logic {
         frame.showGameView(loc, false, true);
     }
     
+    //get current location of character
     public static String getCurrentLocationText(){
         return Logic.createHeading(places[place]);
     }
     
+    // set story or dialogue text in gameview
     public static void setStoryOrDialogue(String[] text, boolean end){
         frame.showGameView(text, end, false);
     }
     
+    // set story or dialogue text in gameview
     public static void setGUIText(String text){
         frame.gView.textArea.setText(text);
     }
     
+    // add story or dialogue text in gameview
     public static void addGUIText(String text){
         frame.gView.addGUIText(text);
     }
     
+    // continue journey
     public static void continueJourney() {
         frame.gView.resetDynamicPanel();
         setGUIText(Logic.createHeading(places[place]));
@@ -223,6 +233,7 @@ public class Logic {
         }
     }
     
+    //updates the exploration rate of the player. if exploration rate is 100, boss is encountered.
     private static void explore() {
         if(exploration < 100){
             exploration += (int)(Math.random()*10) + 1;
@@ -280,26 +291,32 @@ public class Logic {
         frame.gView.showBattleView(player);
     }
     
+    // compares speed of player and enemy. if player is faster, player strikes first. else enemy strikes first.
     private static boolean isPlayerFaster(){
         return (player.spd + player.weapon.getSpd()) > (player.currEnemy.spd + player.currEnemy.weapon.getSpd());
     }
     
+    //returns the header of the enemy in battle
     private static String getEnemyHeader(Enemy e){
         return e.name + " HP: " + e.hp + "/" + e.maxHP + " LVL: " + e.lvl;
     }
     
+    //returns the header of the player in battle
     private static String getPlayerHeader(){
         return player.name + " HP: " + player.hp + "/" + player.maxHP + " LVL: " + player.lvl + " Weapon: " + player.weapon.getName();
     }
     
+    //returns the damage dealt by the player
     private static int getDamageDealt(){
         return (int)((player.atk + player.weapon.getAtk())/((player.currEnemy.def+100+player.currEnemy.weapon.getDef())/100));
     }
     
+    //returns the damage dealt by the enemy
     private static int getDamageTaken(){
         return (int)((player.currEnemy.atk+player.currEnemy.weapon.getAtk())/((player.def+100+player.weapon.getDef())/100));
     }
     
+    //handles the player's turn in battle
     public static void fight(){
         Enemy enemy = player.currEnemy;
         if(isPlayerFaster()){
@@ -358,6 +375,7 @@ public class Logic {
         }
     }    
     
+    //handles the player's turn in battle
     public static void run(){
         Enemy enemy = player.currEnemy;
         if(enemy.isBoss){
@@ -389,6 +407,7 @@ public class Logic {
         frame.gView.goNext(cont);
     }
     
+    // calculates the exp gain of the player
     private static int getExpGain(Enemy enemy){
         //return (int) ((Math.pow((double)player.lvl, 1.2)) * (player.currEnemy.lvl/player.lvl));
         int out = (int) ((Math.pow((double)player.lvl, 1.2)) * ((double)enemy.lvl/player.lvl));
@@ -398,6 +417,7 @@ public class Logic {
         return out;
     }
     
+    //handles the end of battle. if player wins, exp and money is gained. if enemy is boss, boss item is obtained.
     public static void battleFin(boolean win, Enemy enemy){
         if(win){
             addGUIText("\n\nYou defeated the enemy!");

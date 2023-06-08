@@ -18,14 +18,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-import rpggame.Player;
 import rpggame.SaveManager;
 
 public class HallOfFameView extends JPanel {
     
+    /*
+     * Constructor
+     * @param none
+     * @return none
+     */
     public HallOfFameView() {
         setLayout(new BorderLayout());
         

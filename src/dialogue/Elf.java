@@ -14,7 +14,7 @@ import rpggame.Logic;
 
 //class that has static methods just for printing dialogue for the elf npc.
 public class Elf {
-    
+    // Dialogue for the act 1 elf
     protected static String[] getAct1ElfDialogue(){
         String[] out = new String[5];
         String p1 = Logic.createHeading("Elven City") + "\n";
@@ -41,6 +41,8 @@ public class Elf {
         out[4] = p5;
         return out;
     }
+
+    // Dialogue for the act 2 elf
     protected static String[] getAct2ElfDialogue(){
         String[] out = new String[3];
         String p1 = Logic.createHeading("Elven City") + "\n";
@@ -60,6 +62,8 @@ public class Elf {
         out[2] = p3;
         return out;
     }
+
+    // Dialogue for the act 3 elf
     protected static String[] getAct3ElfDialogue(){
         String[] out = new String[3];
         String p1 = Logic.createHeading("Elven City") + "\n";
@@ -79,6 +83,8 @@ public class Elf {
         out[2] = p3;
         return out;
     }
+
+    // Dialogue for the act 4 elf
     protected static String[] getAct4ElfDialogue(){
         String[] out = new String[3];
         String p1 = Logic.createHeading("Elven City") + "\n";
@@ -99,6 +105,8 @@ public class Elf {
         out[2] = p3;
         return out;
     }
+
+    // Dialogue for the act 5 elf
     protected static String[] getAct5ElfDialogue(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Elven City") + "\n";

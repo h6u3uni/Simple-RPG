@@ -18,15 +18,17 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import rpggame.Logic;
 
 public class ChangeLocationView extends JPanel {
     
+    /*
+     * This view is used to change the location of the player.
+     * It is called when the player chooses to change location.
+     */
     public ChangeLocationView(int act) {
         setLayout(new BorderLayout());
 
@@ -38,6 +40,7 @@ public class ChangeLocationView extends JPanel {
         // List of Locations
         String[] locations = getLocationList(act);
         
+        // Create the list and put it in a scroll pane
         JList<String> locationList = new JList<>(locations);
         locationList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(locationList);
@@ -58,6 +61,11 @@ public class ChangeLocationView extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /*
+     * This method returns a list of locations based on the act.
+     * @param act The act the player is currently in.
+     * @return String[] The list of locations.
+     */
     private String[] getLocationList(int act) {
         if(act == 1){
             String[] locations = {"(1) Elven City","(2) Goblin Forest"};

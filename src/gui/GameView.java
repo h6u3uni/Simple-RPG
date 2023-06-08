@@ -11,7 +11,6 @@ package gui;
  */
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,7 +19,6 @@ import java.awt.event.ActionEvent;
 import java.util.Stack;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -31,24 +29,42 @@ import rpggame.Player;
 import rpggame.SaveManager;
 
 public class GameView extends JPanel {
-    private Stack<JPanel> panelStack;
-    public JTextArea textArea;
-    private JScrollPane scrollPane;
-    private JPanel dynamicContentPanel;
-    private JButton exploreButton;
-    private JButton changeLocationButton;
-    private JButton characterInfoButton;
-    private JButton inventoryOptionsButton;
-    private JButton goToShopButton;
-    private JButton saveGameButton;
-    private JButton exitGameButton;
-    private JButton storyButton;
-    private int index;
-    private boolean end;
+    private Stack<JPanel> panelStack; //stack of panels
+    public JTextArea textArea; //text area
+    private JScrollPane scrollPane; //scroll pane
+    private JPanel dynamicContentPanel; //dynamic content panel
+    private JButton exploreButton; //explore button
+    private JButton changeLocationButton; //change location button
+    private JButton characterInfoButton; //character info button
+    private JButton inventoryOptionsButton; //inventory options button
+    private JButton goToShopButton; //go to shop button
+    private JButton saveGameButton; //save game button
+    private JButton exitGameButton; //exit game button
+    private JButton storyButton; //story button
+    private int index; //index of dialogue
+    private boolean end; //end
     
+    /*
+     * Constructor
+     * @param dialogue - dialogue
+     * @param end - end
+     * @param cont - continue
+     * @return none
+     */
     public GameView(String[] dialogue, boolean end, boolean cont) {
         setLayout(new BorderLayout());
         
+        /*
+         * Create the stack of panels
+         * Create the text area
+         * Create the dynamic content panel
+         * Create the main menu panel
+         * Create the menu buttons
+         * Add the buttons to the menu panel
+         * Add the menu panel to the right side of the main panel
+         * Add the text area to the top of the main panel
+         * Add the dynamic content panel to the center of the main panel
+         */
         panelStack = new Stack<>();
         index = 1;
         this.end = end;
@@ -117,6 +133,7 @@ public class GameView extends JPanel {
         add(menuPanel, BorderLayout.EAST);
     }
     
+    //disables the menu buttons
     public void disableButtons(){
         exploreButton.setEnabled(false);
         changeLocationButton.setEnabled(false);
@@ -127,6 +144,7 @@ public class GameView extends JPanel {
         exitGameButton.setEnabled(false);
     }
     
+    //enables the menu buttons
     public void enableButtons(){
         exploreButton.setEnabled(true);
         changeLocationButton.setEnabled(true);
@@ -137,6 +155,7 @@ public class GameView extends JPanel {
         exitGameButton.setEnabled(true);
     }
     
+    // go back in panel stack
     public void goBack(){
         if(panelStack.size() <= 1){
             resetDynamicPanel();
@@ -153,6 +172,7 @@ public class GameView extends JPanel {
         }
     }
     
+    // add a panel to the stack and display it
     public void goNext(JPanel panel){
         if(panelStack.size() > 0){
             JPanel previousPanel = panelStack.peek();
@@ -165,11 +185,13 @@ public class GameView extends JPanel {
         repaint();
     }
 
+    //reset the dynamic panel
     public void resetDynamicPanel() {
         panelStack.clear();
         removeAllContentInDynamicPanel();
     }
     
+    // show the character info panel
     private void showCharInfoPanel(Player player) {
         resetDynamicPanel();
         CharInfoView cInfo = new CharInfoView(player);
@@ -178,6 +200,7 @@ public class GameView extends JPanel {
         repaint();
     }
     
+    //remove all content in the dynamic panel
     private void removeAllContentInDynamicPanel() {
         Component[] components = dynamicContentPanel.getComponents();
 
@@ -189,6 +212,7 @@ public class GameView extends JPanel {
         repaint();
     }
 
+    // show exit view
     private void exitGame() {
         resetDynamicPanel();
         ExitView eView = new ExitView();
@@ -197,6 +221,7 @@ public class GameView extends JPanel {
         repaint();
     }
 
+    // show save view
     private void saveGame() {
         resetDynamicPanel();
         String query = "";
@@ -225,6 +250,7 @@ public class GameView extends JPanel {
         repaint();
     }
 
+    // show shop view
     public void openShop() {
         resetDynamicPanel();
         ShopView shopView = new ShopView(Logic.player);
@@ -233,6 +259,7 @@ public class GameView extends JPanel {
         repaint();
     }
 
+    // show inventory view
     public void openInventory() {
         resetDynamicPanel();
         InventoryView iView = new InventoryView(Logic.player);
@@ -241,6 +268,7 @@ public class GameView extends JPanel {
         repaint();
     }
     
+    // show hall of fame view
     private void showHallOfFame() {
         resetDynamicPanel();
         HallOfFameView hofView = new HallOfFameView();
@@ -249,6 +277,7 @@ public class GameView extends JPanel {
         repaint();
     }
 
+    // continue the dialogue
     private void contDialogue(String[] dialogue, int i) {
         index++;
         if(i < dialogue.length){
@@ -268,6 +297,7 @@ public class GameView extends JPanel {
         }
     }
 
+    // show change location view
     private void changeLocation() {
         resetDynamicPanel();
         ChangeLocationView clView = new ChangeLocationView(Logic.act);
@@ -276,6 +306,7 @@ public class GameView extends JPanel {
         repaint();
     }
     
+    // show dead view
     public void showDeadView(){
         resetDynamicPanel();
         disableButtons();
@@ -285,12 +316,14 @@ public class GameView extends JPanel {
         repaint();
     }
 
+    // add text to the text area
     public void addGUIText(String text) {
         textArea.append(text);
         JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
         verticalScrollBar.setValue(verticalScrollBar.getMaximum());
     }
 
+    // show battle view
     public void showBattleView(Player player) {
         resetDynamicPanel();
         disableButtons();
@@ -300,6 +333,7 @@ public class GameView extends JPanel {
         repaint();
     }
 
+    // show stat choose view
     public void showStatChooseView() {
         resetDynamicPanel();
         disableButtons();

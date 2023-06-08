@@ -14,7 +14,7 @@ import rpggame.Logic;
 
 // class to save static methods just to print the story text
 public class Story {
-    
+    // Dialogue for the intro
     protected static String[] getStoryIntro(){
         String[] out = new String[2];
         String p1 = Logic.createHeading("Story") + "\n";
@@ -35,7 +35,7 @@ public class Story {
         return out;
     }
     
-    
+    // Dialogue for the act 1
     protected static String[] getActOneIntro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 1: Elf's Approval") + "\n";
@@ -46,7 +46,7 @@ public class Story {
         out[0] = p1;
         return out;
     }
-    
+    // Dialogue for the act 1
     protected static String[] getActOneOutro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 1: Elf's Approval - Complete") + "\n";
@@ -56,6 +56,8 @@ public class Story {
         out[0] = p1;
         return out;
     }
+
+    // Dialogue for the act 2
     protected static String[] getActTwoIntro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 2: Trial of Courage") + "\n";
@@ -65,6 +67,8 @@ public class Story {
         out[0] = p1;
         return out;
     }
+
+    // Dialogue for the act 2
     protected static String[] getActTwoOutro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 2: Trial of Courage - Complete") + "\n";
@@ -74,6 +78,8 @@ public class Story {
         out[0] = p1;
         return out;
     }
+
+    // Dialogue for the act 3
     protected static String[] getActThreeIntro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 3: Trial of Wisdom") + "\n";
@@ -84,6 +90,8 @@ public class Story {
         out[0] = p1;
         return out;
     }
+
+    // Dialogue for the act 3
     protected static String[] getActThreeOutro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 3: Trial of Wisdom - Complete") + "\n";
@@ -93,6 +101,8 @@ public class Story {
         out[0] = p1;
         return out;
     }
+
+    // Dialogue for the act 4
     protected static String[] getActFourIntro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 4: Trial of Power") + "\n";
@@ -102,6 +112,8 @@ public class Story {
         out[0] = p1;
         return out;
     }
+
+    // Dialogue for the act 4
     protected static String[] getActFourOutro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 4: Trial of Power - Complete") + "\n";
@@ -111,6 +123,8 @@ public class Story {
         out[0] = p1;
         return out;
     }
+
+    // Dialogue for the act 5
     protected static String[] getActFiveIntro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 5: Confronting the Demon Lord") + "\n";
@@ -121,6 +135,8 @@ public class Story {
         out[0] = p1;
         return out;
     }
+
+    // Dialogue for the act 5
     protected static String[] getActFiveOutro(){
         String[] out = new String[1];
         String p1 = Logic.createHeading("Act 5: Confronting the Demon Lord - Complete") + "\n";
@@ -129,6 +145,8 @@ public class Story {
         out[0] = p1;
         return out;
     }
+
+    // Dialogue for the story
     protected static String[] getStoryOutro(){
         String[] out = new String[3];
         String p1 = Logic.createHeading("Story - Complete") + "\n";

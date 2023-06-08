@@ -16,8 +16,13 @@ import javax.swing.JScrollPane;
 import rpggame.Player;
 
 public class CharInfoView extends JPanel {
-    private JTextArea textArea;
+    private JTextArea textArea; // The text area to display the player information
 
+    /*
+     * Constructor
+     * @param player The player object
+     * @return None
+     */
     public CharInfoView(Player player) {
         textArea = new JTextArea();
         textArea.setEditable(false);
@@ -35,6 +40,11 @@ public class CharInfoView extends JPanel {
         updateTextArea(player);
     }
 
+    /*
+     * Update the text area with the player information
+     * @param player The player object
+     * @return None
+     */
     private void updateTextArea(Player player) {
         StringBuilder sb = new StringBuilder();
         sb.append("Player Information:\n");

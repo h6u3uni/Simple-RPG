@@ -10,7 +10,6 @@ package gui;
  * @author haruk
  */
 import dialogue.Dialogue;
-import dialogue.Story;
 import items.DmgItem;
 import items.HealItem;
 import items.Item;
@@ -22,21 +21,25 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import rpggame.Logic;
 import rpggame.Player;
-import rpggame.SaveManager;
 
 public class ConfirmView extends JPanel {
 
+    // Declare the components
     private JLabel textLabel;
     private JButton yesButton;
     private JButton noButton;
 
+    /*
+     * Constructor
+     * @param query The query to display
+     * @return none
+     */
     public ConfirmView(String query) {
         setLayout(new BorderLayout());
 
@@ -61,7 +64,13 @@ public class ConfirmView extends JPanel {
         add(buttonPanel, BorderLayout.CENTER);
     }
 
-    //choose weapon confirmation
+    /*
+     * Constructor
+     * @param player The player
+     * @param selectedWeapon The selected weapon
+     * @param weapons The list of weapons
+     * @return none
+     */
     public ConfirmView(Player player, Weapon selectedWeapon, ArrayList<Weapon> weapons) {
         setLayout(new BorderLayout());
 
@@ -96,6 +105,7 @@ public class ConfirmView extends JPanel {
             }
         });
         
+        // Create a JPanel to hold the buttons
         noButton = new JButton("No");
         noButton.addActionListener(new ActionListener() {
             @Override
@@ -119,7 +129,13 @@ public class ConfirmView extends JPanel {
         add(buttonPanel, BorderLayout.CENTER);
     }
 
-    //sell confirmation
+    /*
+     * Constructor
+     * @param Item The item being used
+     * @param player The player
+     * @param boolean Whether the item is being sold
+     * @return none
+     */
     public ConfirmView(Item item, Player player, Boolean sell) {
         setLayout(new BorderLayout());
 
@@ -129,6 +145,7 @@ public class ConfirmView extends JPanel {
         
         String separator = Logic.createSeparator(item.getName().length());
         
+        // Create the JLabel for the dynamic text
         String itemDetails = "";
         if(item instanceof Weapon){
             Weapon selectedWeapon = (Weapon)item;
@@ -173,6 +190,7 @@ public class ConfirmView extends JPanel {
         else{
             yesButton.setEnabled(true);
         }
+        
         yesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -231,6 +249,12 @@ public class ConfirmView extends JPanel {
     }
     
     //use item confirmation
+    /*
+     * Constructor
+     * @param Item The item being used
+     * @param player The player
+     * @param boolean whether the player is in battle
+     */
     public ConfirmView(Player player, Item item, Boolean inBattle) {
         setLayout(new BorderLayout());
 
@@ -240,6 +264,7 @@ public class ConfirmView extends JPanel {
         
         String separator = Logic.createSeparator(item.getName().length());
         
+        // Create the JLabel for the dynamic text
         String itemDetails = "";
         if(item instanceof HealItem){
             HealItem selectedHeal = (HealItem)item;
@@ -331,6 +356,11 @@ public class ConfirmView extends JPanel {
         return noButton;
     }
     
+    /*
+     * Method to confirm the action
+     * @param label The label to display
+     * @return none
+     */
     public void confirmed(String label){
         removeAllContent();
         textLabel = new JLabel(label);
@@ -347,6 +377,10 @@ public class ConfirmView extends JPanel {
         repaint();
     }
     
+    /*
+     * Method to remove all content from the panel
+     * @return none
+     */
     private void removeAllContent() {
         Component[] components = getComponents();
         for (Component component : components) {

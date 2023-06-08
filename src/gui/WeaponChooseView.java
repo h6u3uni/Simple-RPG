@@ -13,8 +13,6 @@ import items.Weapon;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -27,6 +25,7 @@ import javax.swing.SwingConstants;
 import rpggame.Logic;
 import rpggame.Player;
 
+// panel for choosing a weapon
 public class WeaponChooseView extends JPanel {
 
     private JList<Weapon> weaponList;

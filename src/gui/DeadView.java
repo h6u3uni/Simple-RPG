@@ -15,13 +15,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Font;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import rpggame.Logic;
 import rpggame.SaveManager;
 
 public class DeadView extends JPanel {
 
+    /*
+     * Constructor
+     * Creates the DeadView panel
+     */
     public DeadView() {
         setLayout(new BorderLayout());
 
@@ -33,6 +35,7 @@ public class DeadView extends JPanel {
 
         // Subheading Label
         JLabel subheadingLabel;
+        // If the player is dead and there is a save file, ask if they want to go back to the previous save
         if (!Logic.newPlay && SaveManager.saveExist()) {
             subheadingLabel = new JLabel("Do you want to go back to the previous save?");
         } else {
@@ -47,6 +50,7 @@ public class DeadView extends JPanel {
         JButton noButton = new JButton("No");
         JButton okButton = new JButton("Ok");
 
+        // Add the buttons to the panel
         if (!Logic.newPlay && SaveManager.saveExist()) {
             buttonPanel.add(yesButton);
             buttonPanel.add(noButton);
@@ -56,11 +60,12 @@ public class DeadView extends JPanel {
 
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Button Actions
+        // If the player chooses to go back to the previous save, load the save
         yesButton.addActionListener(e -> {
             Logic.playerSelected(Logic.originPlayer);
         });
 
+        // If the player chooses not to go back to the previous save, exit the game
         noButton.addActionListener(e -> {
             buttonPanel.removeAll();
             subheadingLabel.setText("Thanks for playing.");

@@ -5,7 +5,6 @@
  */
 package items;
 
-import java.util.HashMap;
 import rpggame.Logic;
 
 /**

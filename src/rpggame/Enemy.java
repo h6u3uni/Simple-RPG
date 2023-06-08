@@ -6,7 +6,6 @@
 package rpggame;
 
 import items.Weapon;
-import java.util.HashMap;
 
 /**
  *

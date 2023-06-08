@@ -597,32 +597,29 @@ public class SaveManager {
         return inven;
     }
     
-    private static void saveInventory(Player player){
+    private static void saveInventory(Player player) {
         String insertQuery = "INSERT INTO INVENTORY (ITEMID, PLAYERID, QUANTITY) VALUES (?, ?, ?)";
-        String deleteInventory = "DELETE FROM INVENTORY WHERE PLAYERID = " + player.getId();
+        String deleteInventory = "DELETE FROM INVENTORY WHERE PLAYERID = ?";
         PreparedStatement preparedStatement;
         try {
             preparedStatement = conn.prepareStatement(deleteInventory);
+            preparedStatement.setInt(1, player.getId());
             preparedStatement.executeUpdate();
-            
+
             preparedStatement = conn.prepareStatement(insertQuery);
-            HashSet<Item> uniqueItemInInventory = new HashSet<>();
-            for (items.Item item : player.inventory.getInventory()) {
-                uniqueItemInInventory.add(item);
-            }
-            for(items.Item item : uniqueItemInInventory){
+            HashSet<Item> uniqueItemInInventory = new HashSet<>(player.inventory.getInventory());
+            for (Item item : uniqueItemInInventory) {
                 preparedStatement.setInt(1, getItemId(item)); // Assuming getItemId() returns the item ID
                 preparedStatement.setInt(2, player.getId()); // Assuming you have the player ID
                 preparedStatement.setInt(3, getItemQuantity(item, player.inventory.getInventory())); // Assuming getQuantity() returns the item quantity
-            
+
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException ex) {
             Logger.getLogger(SaveManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
     }
+
     
     private static int getItemId(Item item) {
         String query = "";

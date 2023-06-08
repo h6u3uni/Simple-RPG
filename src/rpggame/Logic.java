@@ -411,6 +411,9 @@ public class Logic {
                 addGUIText("\nYou obtained the " + enemy.weapon.name);
                 player.inventory.addItem(enemy.weapon);
                 player.inventory.addItem(clearRewards[act-1]);
+                if(enemy.name.equals("Demon Lord")){
+                    player.inventory.addItem(clearRewards[act]);
+                }
             }
             else{
                 double drop = Math.random();

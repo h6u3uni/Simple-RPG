@@ -308,7 +308,4 @@ public class GameView extends JPanel {
         revalidate();
         repaint();
     }
-    
-    
-    
 }

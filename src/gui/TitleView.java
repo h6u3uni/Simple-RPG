@@ -49,12 +49,12 @@ public class TitleView extends JPanel {
         JButton continueGameButton = new JButton("Continue Game");
         continueGameButton.addActionListener(e -> contGame());
         
-//        if(SaveManager.saveExist()){
-//            continueGameButton.setEnabled(true);
-//        }
-//        else{
-//            continueGameButton.setEnabled(false);
-//        }
+        if(SaveManager.saveExist()){
+            continueGameButton.setEnabled(true);
+        }
+        else{
+            continueGameButton.setEnabled(false);
+        }
         
         JButton quitButton = new JButton("Quit");
         quitButton.addActionListener(e -> quitGame());

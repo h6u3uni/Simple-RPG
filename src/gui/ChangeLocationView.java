@@ -58,19 +58,6 @@ public class ChangeLocationView extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            JFrame frame = new JFrame("Change Location");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//            ChangeLocationView changeLocationView = new ChangeLocationView(2);
-//            frame.getContentPane().add(changeLocationView);
-//
-//            frame.pack();
-//            frame.setVisible(true);
-//        });
-//    }
-
     private String[] getLocationList(int act) {
         if(act == 1){
             String[] locations = {"(1) Elven City","(2) Goblin Forest"};

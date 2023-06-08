@@ -354,16 +354,5 @@ public class ConfirmView extends JPanel {
         revalidate();
         repaint();
     }
-    
-//    public static void main(String[] args) {
-//        ConfirmView confirmView = new ConfirmView(new Player("test", "test"), new Weapon("testweapon", 10, 0, 2, 100));
-//
-//        // Create a JFrame to test the ConfirmView
-//        javax.swing.JFrame frame = new javax.swing.JFrame("Confirm View Test");
-//        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-//        frame.getContentPane().add(confirmView);
-//        frame.setPreferredSize(new Dimension(600, 320));
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
+
 }

@@ -74,20 +74,5 @@ public class DeadView extends JPanel {
         });
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            Logic.newPlay = false; // Set newPlay flag accordingly
-//            //Logic.saveExists = true; // Set saveExists flag accordingly
-//            SaveManager sMan = new SaveManager();
-//            JFrame frame = new JFrame("Game Over");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//            DeadView deadView = new DeadView();
-//            frame.getContentPane().add(deadView);
-//
-//            frame.pack();
-//            frame.setVisible(true);
-//        });
-//    }
 }
 

@@ -64,11 +64,7 @@ public class GameView extends JPanel {
         // Create the dynamic content panel
         dynamicContentPanel = new JPanel();
         dynamicContentPanel.setPreferredSize(new Dimension(600,320));
-//        JTextArea test = new JTextArea("test");
-//        test.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-//        JScrollPane test1 = new JScrollPane();
-//        test1.setPreferredSize(new Dimension(600,320));
-//        dynamicContentPanel.add(test1);
+        
         if(!cont){
             storyButton = new JButton("Continue");
             storyButton.addActionListener(e -> contDialogue(dialogue, index));
@@ -168,17 +164,7 @@ public class GameView extends JPanel {
         revalidate();
         repaint();
     }
-    
-//    public static void main(String[] args) {
-//        JFrame frame = new JFrame("Game View");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(800, 600);
-//
-//        GameView gameView = new GameView("text");
-//        frame.getContentPane().add(gameView);
-//
-//        frame.setVisible(true);
-//    }
+
     public void resetDynamicPanel() {
         panelStack.clear();
         removeAllContentInDynamicPanel();

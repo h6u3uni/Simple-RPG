@@ -42,96 +42,60 @@ public class Player extends Mob{
     }
     
     //distribute stat points for the player.
-    @Override
+    @Override //irrelevant but necessary for abstract class
     public void chooseStats(){
-        int tempStatPt = this.statPoint;
-        int tempHP = this.hpStat;
-        int tempAtk = this.atk;
-        int tempDef = this.def;
-        int tempSpd = this.spd;
-        while(tempStatPt > 0){
-            Logic.clearConsole();
-            Logic.printHeading("Please Distribute stat points. \nRemaining: " + tempStatPt);
-            System.out.println("(1) HP Stat: " + tempHP + " (Each statpoint is equal to 5 HP. Default HP Stat is 10. Thus HP is 50.)");
-            System.out.println("(2) Atk Stat: " + tempAtk);
-            System.out.println("(3) Def Stat: " + tempDef);
-            System.out.println("(4) Spd Stat: " + tempSpd);
-            int input = Logic.readInt("-> ", 4);
-            switch(input){
-                case 1:
-                    tempHP++;
-                    break;
-                case 2:
-                    tempAtk++;
-                    break;
-                case 3:
-                    tempDef++;
-                    break;
-                case 4:
-                    tempSpd++;
-                    break;
-            }
-            tempStatPt -= 1;
-        }
-        Logic.clearConsole();
-        Logic.printHeading("Is the following selection alright?");
-        System.out.println("HP Stat: " + tempHP);
-        System.out.println("Atk Stat: " + tempAtk);
-        System.out.println("Def Stat: " + tempDef);
-        System.out.println("Spd Stat: " + tempSpd);
-        System.out.println();
-        System.out.println("(1) Yes");
-        System.out.println("(2) No, let me retry");
-        int input = Logic.readInt("-> ", 2);
-        if(input == 2){
-            chooseStats();
-        }
-        else{
-            this.hpStat = tempHP;
-            this.maxHP = this.hpStat * 5;
-            this.hp = this.maxHP;
-            this.atk = tempAtk;
-            this.def = tempDef;
-            this.spd = tempSpd;
-            this.statPoint = 0;
-        }
-    }
-    
-    //change weapon to weapon in inventory
-//    public void changeWeapon(){
+//        int tempStatPt = this.statPoint;
+//        int tempHP = this.hpStat;
+//        int tempAtk = this.atk;
+//        int tempDef = this.def;
+//        int tempSpd = this.spd;
+//        while(tempStatPt > 0){
+//            Logic.clearConsole();
+//            Logic.printHeading("Please Distribute stat points. \nRemaining: " + tempStatPt);
+//            System.out.println("(1) HP Stat: " + tempHP + " (Each statpoint is equal to 5 HP. Default HP Stat is 10. Thus HP is 50.)");
+//            System.out.println("(2) Atk Stat: " + tempAtk);
+//            System.out.println("(3) Def Stat: " + tempDef);
+//            System.out.println("(4) Spd Stat: " + tempSpd);
+//            int input = Logic.readInt("-> ", 4);
+//            switch(input){
+//                case 1:
+//                    tempHP++;
+//                    break;
+//                case 2:
+//                    tempAtk++;
+//                    break;
+//                case 3:
+//                    tempDef++;
+//                    break;
+//                case 4:
+//                    tempSpd++;
+//                    break;
+//            }
+//            tempStatPt -= 1;
+//        }
 //        Logic.clearConsole();
-//        Logic.printHeading("Change current weapon, " + this.weapon.name + ", to: ");
-//        ArrayList<Weapon> weapons = inventory.getWeapons();
-//        if(weapons.isEmpty()){
-//            System.out.println("You don't have any other weapons!");
-//            Logic.gamePauser();
+//        Logic.printHeading("Is the following selection alright?");
+//        System.out.println("HP Stat: " + tempHP);
+//        System.out.println("Atk Stat: " + tempAtk);
+//        System.out.println("Def Stat: " + tempDef);
+//        System.out.println("Spd Stat: " + tempSpd);
+//        System.out.println();
+//        System.out.println("(1) Yes");
+//        System.out.println("(2) No, let me retry");
+//        int input = Logic.readInt("-> ", 2);
+//        if(input == 2){
+//            chooseStats();
 //        }
 //        else{
-//            for(int i = 0; i<weapons.size(); i++){
-//                System.out.println("(" + (i+1) + ") " + weapons.get(i).name);
-//            }
-//            System.out.println("(" + (weapons.size()+1) + ") Cancel");
-//            int input = Logic.readInt("-> ", (weapons.size()+1));
-//            if(!(input == (weapons.size()+1))){
-//                weapons.get(input-1).printItem();
-//                System.out.println("");
-//                System.out.println("Confirm weapon?");
-//                System.out.println("(1) Yes");
-//                System.out.println("(2) No, let me choose a different one");
-//                int confirm = Logic.readInt("-> ", 2);
-//                if(confirm == 2){
-//                    changeWeapon();
-//                }
-//                else{
-//                    inventory.addItem(this.weapon);
-//                    this.weapon = weapons.get(input-1);
-//                    inventory.removeItem(weapons.get(input-1));
-//                    System.out.println("You changed to the " + this.weapon.name);
-//                    Logic.gamePauser();
-//                }
-//            }
+//            this.hpStat = tempHP;
+//            this.maxHP = this.hpStat * 5;
+//            this.hp = this.maxHP;
+//            this.atk = tempAtk;
+//            this.def = tempDef;
+//            this.spd = tempSpd;
+//            this.statPoint = 0;
 //        }
-//    }
+    }
     
     //get the boolean value inBattle. 
     public boolean getInBattle(){
@@ -143,117 +107,21 @@ public class Player extends Mob{
         this.inBattle = inBattle;
     }
     
-    //use item. (changes effect depending if the player is inbattle or not.)
-    public void useItem(Item item){
-        if(!inBattle){
-            if(item instanceof HealItem){
-                Logic.clearConsole();
-                Logic.printHeading("Use " + item.getName() + "?");
-                System.out.println("(1) Yes");
-                System.out.println("(2) No");
-                int confirm = Logic.readInt("-> ", 2);
-                if(confirm == 2){
-                    System.out.println("Didn't use " + item.getName());
-                    Logic.gamePauser();
-                }
-                else{
-                    if(this.hp < this.maxHP){
-                        inventory.removeItem(item);
-                        HealItem heal = (HealItem)item;
-                        this.hp += heal.heal;
-                        if(this.hp>this.maxHP){
-                            this.hp = this.maxHP;
-                        }
-                    }
-                    else {
-                        System.out.println("It won't have any effect!");
-                        Logic.gamePauser();
-                    }
-                }
-            }
-            else if(item instanceof DmgItem){
-                Logic.clearConsole();
-                Logic.printHeading("Use " + item.getName() + "?");
-                System.out.println("(1) Yes");
-                System.out.println("(2) No");
-                int confirm = Logic.readInt("-> ", 2);
-                if(confirm == 2){
-                    System.out.println("Didn't use " + item.getName());
-                    Logic.gamePauser();
-                }
-                else{
-                    inventory.removeItem(item);
-                    DmgItem dmg = (DmgItem) item;
-                    int damage = (int)(dmg.dmg/((this.def+100)/100));
-                    this.hp -= damage;
-                    System.out.println("You damaged yourself!");
-                    System.out.println();
-                    System.out.println("You took " + damage + " damage.");
-                    Logic.gamePauser();
-                }
-            }
-        }
-        else{ //inbattle
-            if(item instanceof HealItem){
-                Logic.clearConsole();
-                Logic.printHeading("Use " + item.getName() + "?");
-                System.out.println("(1) Yes");
-                System.out.println("(2) No");
-                int confirm = Logic.readInt("-> ", 2);
-                if(confirm == 2){
-                    System.out.println("Didn't use " + item.getName());
-                    Logic.gamePauser();
-                }
-                else{
-                    if(this.hp < this.maxHP){
-                        inventory.removeItem(item);
-                        HealItem heal = (HealItem)item;
-                        this.hp += heal.heal;
-                        if(this.hp>this.maxHP){
-                            this.hp = this.maxHP;
-                        }
-                    }
-                    else {
-                        System.out.println("It won't have any effect!");
-                        Logic.gamePauser();
-                    }
-                }
-            }
-            else if(item instanceof DmgItem){
-                Logic.clearConsole();
-                Logic.printHeading("Use " + item.getName() + "?");
-                System.out.println("(1) Yes");
-                System.out.println("(2) No");
-                int confirm = Logic.readInt("-> ", 2);
-                if(confirm == 2){
-                    System.out.println("Didn't use " + item.getName());
-                    Logic.gamePauser();
-                }
-                else{
-                    inventory.removeItem(item);
-                    DmgItem dmg = (DmgItem) item;
-                    int damage = (int)(dmg.dmg/((currEnemy.def+100)/100));
-                    currEnemy.hp -= damage;
-                    System.out.println("You damaged the enemy!");
-                    System.out.println();
-                    System.out.println("They took " + damage + " damage.");
-                    Logic.gamePauser();
-                }
-            }
-        }
-    }
-    
     //checks if the player will level up. if level up, lvl will be increased, player will be given 3 statpoints and choosestats will be called. 
-    public void levelCheck(){
+    public boolean levelCheck(){
         if(xpNow>=xpNeeded){
             this.lvl++;
             this.xpNow -= this.xpNeeded;
             this.xpNeeded = (int) Math.pow(lvl/0.3, 1.6);
-            Logic.addGUIText("You levelled up!");
-            Logic.addGUIText("LVL " + (this.lvl-1) + " -> " + "LVL " + (this.lvl));
-            Logic.addGUIText("XP Needed for next Lvl up: " + this.xpNeeded);
-            this.statPoint = 3;
+            Logic.addGUIText("\n\nYou levelled up!");
+            Logic.addGUIText("\nLVL " + (this.lvl-1) + " -> " + "LVL " + (this.lvl));
+            Logic.addGUIText("\nXP Needed for next Lvl up: " + this.xpNeeded);
+            this.statPoint += 3;
             Logic.frame.gView.showStatChooseView();
+            return true;
+        }
+        else{
+            return false;
         }
     }
     

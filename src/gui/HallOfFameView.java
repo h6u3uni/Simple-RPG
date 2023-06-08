@@ -56,25 +56,5 @@ public class HallOfFameView extends JPanel {
         
         add(scrollPane, BorderLayout.CENTER);
     }
-    
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            SaveManager sMan = new SaveManager();
-//            JFrame frame = new JFrame("Hall of Fame");
-//            
-//            Player test = new Player("hackerman", "Non Binary");
-//            test.lvl = 999;
-//            
-//            SaveManager.addToHallOfFame(test);
-//            
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.setSize(600, 320);
-//
-//            HallOfFameView hallOfFameView = new HallOfFameView();
-//            frame.getContentPane().add(hallOfFameView);
-//
-//            frame.pack();
-//            frame.setVisible(true);
-//        });
-//    }
+
 }

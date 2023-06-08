@@ -50,13 +50,6 @@ public class RPGGameGUI extends JFrame {
         add(tView, BorderLayout.CENTER);
     }
 
-//    public static void main(String[] args) {
-//        // Create an instance of the MyFrame class
-//        RPGGameGUI frame = new RPGGameGUI();
-//
-//        // Make the JFrame visible
-//        frame.setVisible(true);
-//    }
     
     public void showNewGameView(){
         nGView = new NewGameView();

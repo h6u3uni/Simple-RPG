@@ -531,16 +531,6 @@ public class ShopView extends JPanel {
         revalidate();
         repaint();
     }
-//    public static void main(String[] args) {
-//        JFrame frame = new JFrame("Shop View");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(600, 320);
-//
-//        ShopView shopView = new ShopView();
-//        frame.add(shopView);
-//
-//        frame.setVisible(true);
-//    }
 
 
 }

@@ -104,10 +104,6 @@ public class InventoryView extends JPanel {
         // Add the buttons panel to the south position
         inventoryOptions();
         
-//        if(player.getInBattle() == true){
-//            useItem();
-//        }
-        
     }
     
     private void inventoryOptions(){
@@ -145,13 +141,13 @@ public class InventoryView extends JPanel {
         textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(400, 250));
 
         goBackButton = new JButton("Go Back");
         goBackButton.addActionListener(goBack);
 
         newButtonsPanel = new JPanel();
         newButtonsPanel.setLayout(new BoxLayout(newButtonsPanel, BoxLayout.Y_AXIS));
-        newButtonsPanel.add(scrollPane);
         newButtonsPanel.add(Box.createVerticalStrut(10));
         newButtonsPanel.add(goBackButton);
         newButtonsPanel.add(Box.createVerticalStrut(100));
@@ -159,6 +155,7 @@ public class InventoryView extends JPanel {
 
         goBackButton.setAlignmentX(CENTER_ALIGNMENT);
 
+        add(scrollPane, BorderLayout.CENTER);
         add(newButtonsPanel, BorderLayout.SOUTH);
         revalidate();
         repaint();

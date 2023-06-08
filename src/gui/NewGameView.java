@@ -107,19 +107,6 @@ public class NewGameView extends JPanel {
         gbcConfirmButton.insets = new Insets(10, 10, 0, 10); // Add some padding
         add(confirmButton, gbcConfirmButton);
     }
-    
-//    public static void main(String[] args) {
-//        // Create an instance of the NewGameView
-//        NewGameView newGameView = new NewGameView();
-//
-//        // Create a JFrame to display the NewGameView
-//        JFrame frame = new JFrame("New Game");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.getContentPane().add(newGameView);
-//        frame.setPreferredSize(new Dimension(400, 300)); // Adjust the size as needed
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
 
     private void confirm() {
         if(!(nameField.getText().equals(""))){

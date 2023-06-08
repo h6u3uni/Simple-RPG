@@ -28,6 +28,11 @@ import javax.swing.JFrame;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import rpggame.Logic;
+import static rpggame.Logic.addGUIText;
+import static rpggame.Logic.createHeading;
+import static rpggame.Logic.frame;
+import static rpggame.Logic.place;
+import static rpggame.Logic.places;
 import rpggame.Player;
 
 public class StatChooseView extends JPanel {
@@ -238,17 +243,10 @@ public class StatChooseView extends JPanel {
            Logic.chooseStartWeapon();
         }
         else{
-            Logic.frame.gView.goBack();
+            addGUIText("\n\n\n" + createHeading(places[place]));
+            frame.gView.goBack();
+            frame.gView.enableButtons();
         }
     }
 
-//    public static void main(String[] args) {
-//        JFrame frame = new JFrame("Stat Choose View");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setPreferredSize(new Dimension(600, 320));
-//        StatChooseView statChooseView = new StatChooseView(10, 10, 5, 5, 5);
-//        frame.getContentPane().add(statChooseView);
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
 }

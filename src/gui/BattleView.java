@@ -79,25 +79,6 @@ public class BattleView extends JPanel {
         add(buttonPanel, BorderLayout.CENTER);
     }
     
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            // Create a Player object
-//            Player player = new Player("test","test");
-//
-//            // Create a JFrame
-//            JFrame frame = new JFrame("Battle View");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//            // Create a BattleView panel with the Player object
-//            BattleView battleView = new BattleView(player);
-//            frame.getContentPane().add(battleView);
-//
-//            // Pack and display the JFrame
-//            frame.pack();
-//            frame.setVisible(true);
-//        });
-//    }
-
     private void changeWeapon() {
         ArrayList<Weapon> weapons = player.inventory.getWeapons();
         WeaponChooseView wCView = new WeaponChooseView(weapons, player, false);

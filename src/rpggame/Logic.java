@@ -8,6 +8,7 @@ package rpggame;
 import dialogue.Dialogue;
 import dialogue.Elf;
 import dialogue.Story;
+import gui.ConfirmView;
 import gui.RPGGameGUI;
 import items.DmgItem;
 import items.HealItem;
@@ -47,6 +48,7 @@ public class Logic {
     
     static SaveManager sMan;
     public static RPGGameGUI frame;
+    public static Player originPlayer;
     
     //handles virtually every input in the game. Takes in a string and a numberofuserchoice. 
     //handles all options, all types of inputs, and exceptions. 
@@ -257,6 +259,7 @@ public class Logic {
     
     public static void playerSelected(Player player){
         newPlay = false;
+        Logic.originPlayer = player;
         Logic.player = player;
         act = player.act;
         place = player.place;
@@ -387,6 +390,10 @@ public class Logic {
         frame.gView.textArea.setText(text);
     }
     
+    public static void addGUIText(String text){
+        frame.gView.addGUIText(text);
+    }
+    
     public static void continueJourney() {
         setGUIText(Logic.createHeading(places[place]));
         if(place == 0){ //in in elven city
@@ -444,16 +451,18 @@ public class Logic {
             if(exploration >= 100){
                 exploration = 100;
             }
-            System.out.println("Exploration Rate: " + exploration + "/100");
-            gamePauser();
+            addGUIText("\nExploration Rate: " + exploration + "/100");
+//            System.out.println("Exploration Rate: " + exploration + "/100");
             double encounter = Math.random();
             if(encounter <= 0.2){
+                addGUIText("\nYou encountered an Enemy! You will have to fight it...");
                 randomBattle();
             }
         }
         else {
-            System.out.println("Exploration Rate: " + exploration + "/100");
-            gamePauser();
+            exploration = 100;
+            addGUIText("\nExploration Rate: " + exploration + "/100");
+            addGUIText("\nYou have encountered the area boss.");
             bossBattle();
         }
     }
@@ -487,22 +496,21 @@ public class Logic {
     private static void randomBattle(){
         int maxLevel = player.lvl+3;
         int minLevel = (player.lvl-3>=1 ? player.lvl-3 : 1);
-        clearConsole();
-        printHeading("You encountered an Enemy! You will have to fight it... ");
-        gamePauser();
+//        clearConsole();
+//        printHeading("You encountered an Enemy! You will have to fight it... ");
+//        gamePauser();
         String enemyEncountered = enemyTypes.get(places[place])[(int)(Math.random()*enemyTypes.get(places[place]).length)];
         battle(new Enemy(enemyEncountered, maxLevel, minLevel, false));
     }
     
     //boss enemy generated. battle() is called
     private static void bossBattle(){
-        clearConsole();
-        printHeading("You have encountered the area boss.");
-        gamePauser();
+//        clearConsole();
+//        printHeading("You have encountered the area boss.");
+//        gamePauser();
         String enemyEncountered = bossTypes.get(places[place]);
-        battle(new Enemy(enemyEncountered, player.lvl+5, player.lvl-3, true));
-        player.inventory.addItem(clearRewards[act-1]);
         exploration = 0;
+        battle(new Enemy(enemyEncountered, player.lvl+5, player.lvl-3, true));
     }
     
     //controls the battle system of the game. 
@@ -510,202 +518,203 @@ public class Logic {
         player.setInBattle(true);
         player.currEnemy = enemy;
         player.currEnemy.weapon = enemyWeapon.get(enemy.name);
-        while(true){
-            clearConsole();
-            printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP);
-            System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
-            printSeparator(20);
-            System.out.println("Choose an Action");
-            System.out.println("(1) Fight");
-            System.out.println("(2) Use an Item");
-            System.out.println("(3) Change Weapon");
-            System.out.println("(4) Run");
-            int input = readInt("-> ", 4);
-            if(input == 1){
-                if((player.spd + player.weapon.getSpd()) > (enemy.spd + enemy.weapon.getSpd())){
-                    System.out.println("You will attack first!");
-                    gamePauser();
-                    clearConsole();
-                    printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
-                    System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);  
-                    printSeparator(20);
-                    int damageDealt = (int)((player.atk + player.weapon.getAtk())/((enemy.def+100+enemy.weapon.getDef())/100));
-                    enemy.hp -= damageDealt;
-                    System.out.println("You dealt " + damageDealt + " damage to the enemy.");
-                    gamePauser();
-                    clearConsole();
-                    printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
-                    System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
-                    printSeparator(20);
-                    if(enemy.hp <= 0){
-                        System.out.println("You defeated the enemy!");
-                        int expGain = (int) Math.pow(player.lvl, 1.2) * (enemy.lvl/player.lvl);
-                        player.xpNow += expGain;
-                        System.out.println("You gained " + expGain + " exp.");
-                        int money = enemy.lvl*10;
-                        System.out.println("You obtained " + money + " gold.");
-                        player.money += money;
-                        gamePauser();
-                        clearConsole();
-                        player.levelCheck();
-                        if(enemy.isBoss){
-                            System.out.println("You obtained the " + enemy.weapon.name);
-                            player.inventory.addItem(enemy.weapon);
-                            gamePauser();
-                        }
-                        else{
-                            double drop = Math.random();
-                            if(drop<=0.2){
-                                System.out.println("The enemy dropped the " + enemy.weapon.name);
-                                player.inventory.addItem(enemy.weapon);
-                                gamePauser();
-                            }
-                        }
-                        break;
-                    }
-                    else {
-                        System.out.println("The enemy strikes.");
-                        int damageTaken = (int)((enemy.atk+enemy.weapon.getAtk())/((player.def+100+player.weapon.getDef())/100));
-                        player.hp -= damageTaken;
-                        gamePauser();
-                        clearConsole();
-                        printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
-                        System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
-                        printSeparator(20);
-                        System.out.println("You took " + damageTaken + " damage from the enemy.");
-                        gamePauser();
-                        clearConsole();
-                        if(player.hp <= 0){
-                            playerDied();
-                            break;
-                        }
-                    }
-                }
-                else {
-                    System.out.println("The enemy strikes first!");
-                    gamePauser();
-                    clearConsole();
-                    printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
-                    System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
-                    printSeparator(20);
-                    int damageTaken = (int)((enemy.atk+enemy.weapon.getAtk())/((player.def+100+player.weapon.getDef())/100));
-                    player.hp -= damageTaken;
-                    System.out.println("You took " + damageTaken + " damage from the enemy.");
-                    gamePauser();
-                    clearConsole();
-                    printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
-                    System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
-                    printSeparator(20);
-                    if(player.hp <= 0){
-                        playerDied();
-                        break;
-                    }
-                    else {
-                        System.out.println("Your turn to strike.");
-                        int damageDealt = (int)((player.atk + player.weapon.getAtk())/((enemy.def+100+enemy.weapon.getDef())/100));
-                        enemy.hp -= damageDealt;
-                        System.out.println("You dealt " + damageDealt + " damage to the enemy.");
-                        gamePauser();
-                        clearConsole();
-                        if(enemy.hp <= 0){
-                            System.out.println("You defeated the enemy!");
-                            int expGain = (int) Math.pow(player.lvl, 1.2) * (enemy.lvl/player.lvl);
-                            player.xpNow += expGain;
-                            System.out.println("You gained " + expGain + " exp.");
-                            int money = enemy.lvl*10;
-                            System.out.println("You obtained " + money + " gold.");
-                            player.money += money;
-                            gamePauser();
-                            clearConsole();
-                            player.levelCheck();
-                            if(enemy.isBoss){
-                                System.out.println("You obtained the " + enemy.weapon.name);
-                                player.inventory.addItem(enemy.weapon);
-                                gamePauser();
-                            }
-                            else{
-                                double drop = Math.random();
-                                if(drop<=0.2){
-                                    System.out.println("The enemy dropped the " + enemy.weapon.name);
-                                    player.inventory.addItem(enemy.weapon);
-                                    gamePauser();
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-            else if(input == 2){
-                useItem();
-                if(enemy.hp <= 0){
-                    System.out.println("You defeated the enemy!");
-                    int expGain = (int) Math.pow(player.lvl, 1.2) * (enemy.lvl/player.lvl);
-                    player.xpNow += expGain;
-                    System.out.println("You gained " + expGain + " exp.");
-                    int money = enemy.lvl*10;
-                    System.out.println("You obtained " + money + " gold.");
-                    player.money += money;
-                    gamePauser();
-                    clearConsole();
-                    player.levelCheck();
-                    if(enemy.isBoss){
-                        System.out.println("You obtained the " + enemy.weapon);
-                        player.inventory.addItem(enemy.weapon);
-                        gamePauser();
-                    }
-                    else{
-                        double drop = Math.random();
-                        if(drop<=0.2){
-                            System.out.println("The enemy dropped the " + enemy.weapon);
-                            player.inventory.addItem(enemy.weapon);
-                            gamePauser();
-                        }
-                    }
-                    break;
-                }
-            }
-            else if(input == 3){
-                player.changeWeapon();
-            }else{
-                if(!enemy.isBoss){
-                    if((player.spd+player.weapon.getSpd()) < (enemy.spd+enemy.weapon.getSpd())){
-                        System.out.println("The enemy is faster than you! You can't run away!");
-                        gamePauser();
-                    }
-                    else {
-                        double run = Math.random();
-                        if(run<=0.2){
-                            System.out.println("You successfully ran away!");
-                            gamePauser();
-                            break;
-                        }
-                        else {
-                            System.out.println("You failed to run away!");
-                            gamePauser();
-                            clearConsole();
-                            System.out.println("The enemy strikes!");
-                            gamePauser();
-                            clearConsole();
-                            int damageTaken = (int)((enemy.atk+enemy.weapon.getAtk())/((player.def+100+player.weapon.getDef())/100));
-                            System.out.println("You took " + damageTaken + " damage from the enemy.");
-                            gamePauser();
-                            clearConsole();
-                            if(player.hp <= 0){
-                                playerDied();
-                                break;
-                            }
-                        }
-                    }
-                }
-                else {
-                    System.out.println("You can't escape from the boss fight!");
-                    gamePauser();
-                }
-            }
-        }
-        player.setInBattle(false);
-        player.currEnemy = null;
+        frame.gView.showBattleView(player);
+//        while(true){
+//            clearConsole();
+//            printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP);
+//            System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
+//            printSeparator(20);
+//            System.out.println("Choose an Action");
+//            System.out.println("(1) Fight");
+//            System.out.println("(2) Use an Item");
+//            System.out.println("(3) Change Weapon");
+//            System.out.println("(4) Run");
+//            int input = readInt("-> ", 4);
+//            if(input == 1){
+//                if((player.spd + player.weapon.getSpd()) > (enemy.spd + enemy.weapon.getSpd())){
+//                    System.out.println("You will attack first!");
+//                    gamePauser();
+//                    clearConsole();
+//                    printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
+//                    System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);  
+//                    printSeparator(20);
+//                    int damageDealt = (int)((player.atk + player.weapon.getAtk())/((enemy.def+100+enemy.weapon.getDef())/100));
+//                    enemy.hp -= damageDealt;
+//                    System.out.println("You dealt " + damageDealt + " damage to the enemy.");
+//                    gamePauser();
+//                    clearConsole();
+//                    printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
+//                    System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
+//                    printSeparator(20);
+//                    if(enemy.hp <= 0){
+//                        System.out.println("You defeated the enemy!");
+//                        int expGain = (int) Math.pow(player.lvl, 1.2) * (enemy.lvl/player.lvl);
+//                        player.xpNow += expGain;
+//                        System.out.println("You gained " + expGain + " exp.");
+//                        int money = enemy.lvl*10;
+//                        System.out.println("You obtained " + money + " gold.");
+//                        player.money += money;
+//                        gamePauser();
+//                        clearConsole();
+//                        player.levelCheck();
+//                        if(enemy.isBoss){
+//                            System.out.println("You obtained the " + enemy.weapon.name);
+//                            player.inventory.addItem(enemy.weapon);
+//                            gamePauser();
+//                        }
+//                        else{
+//                            double drop = Math.random();
+//                            if(drop<=0.2){
+//                                System.out.println("The enemy dropped the " + enemy.weapon.name);
+//                                player.inventory.addItem(enemy.weapon);
+//                                gamePauser();
+//                            }
+//                        }
+//                        break;
+//                    }
+//                    else {
+//                        System.out.println("The enemy strikes.");
+//                        int damageTaken = (int)((enemy.atk+enemy.weapon.getAtk())/((player.def+100+player.weapon.getDef())/100));
+//                        player.hp -= damageTaken;
+//                        gamePauser();
+//                        clearConsole();
+//                        printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
+//                        System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
+//                        printSeparator(20);
+//                        System.out.println("You took " + damageTaken + " damage from the enemy.");
+//                        gamePauser();
+//                        clearConsole();
+//                        if(player.hp <= 0){
+//                            playerDied();
+//                            break;
+//                        }
+//                    }
+//                }
+//                else {
+//                    System.out.println("The enemy strikes first!");
+//                    gamePauser();
+//                    clearConsole();
+//                    printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
+//                    System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
+//                    printSeparator(20);
+//                    int damageTaken = (int)((enemy.atk+enemy.weapon.getAtk())/((player.def+100+player.weapon.getDef())/100));
+//                    player.hp -= damageTaken;
+//                    System.out.println("You took " + damageTaken + " damage from the enemy.");
+//                    gamePauser();
+//                    clearConsole();
+//                    printHeading(enemy.name + " HP: " + enemy.hp + "/" + enemy.maxHP + " LVL: " + enemy.lvl);
+//                    System.out.println(player.name + " HP: " + player.hp + "/" + player.maxHP + " Weapon: " + player.weapon.name);
+//                    printSeparator(20);
+//                    if(player.hp <= 0){
+//                        playerDied();
+//                        break;
+//                    }
+//                    else {
+//                        System.out.println("Your turn to strike.");
+//                        int damageDealt = (int)((player.atk + player.weapon.getAtk())/((enemy.def+100+enemy.weapon.getDef())/100));
+//                        enemy.hp -= damageDealt;
+//                        System.out.println("You dealt " + damageDealt + " damage to the enemy.");
+//                        gamePauser();
+//                        clearConsole();
+//                        if(enemy.hp <= 0){
+//                            System.out.println("You defeated the enemy!");
+//                            int expGain = (int) Math.pow(player.lvl, 1.2) * (enemy.lvl/player.lvl);
+//                            player.xpNow += expGain;
+//                            System.out.println("You gained " + expGain + " exp.");
+//                            int money = enemy.lvl*10;
+//                            System.out.println("You obtained " + money + " gold.");
+//                            player.money += money;
+//                            gamePauser();
+//                            clearConsole();
+//                            player.levelCheck();
+//                            if(enemy.isBoss){
+//                                System.out.println("You obtained the " + enemy.weapon.name);
+//                                player.inventory.addItem(enemy.weapon);
+//                                gamePauser();
+//                            }
+//                            else{
+//                                double drop = Math.random();
+//                                if(drop<=0.2){
+//                                    System.out.println("The enemy dropped the " + enemy.weapon.name);
+//                                    player.inventory.addItem(enemy.weapon);
+//                                    gamePauser();
+//                                }
+//                            }
+//                            break;
+//                        }
+//                    }
+//                }
+//            }
+//            else if(input == 2){
+//                useItem();
+//                if(enemy.hp <= 0){
+//                    System.out.println("You defeated the enemy!");
+//                    int expGain = (int) Math.pow(player.lvl, 1.2) * (enemy.lvl/player.lvl);
+//                    player.xpNow += expGain;
+//                    System.out.println("You gained " + expGain + " exp.");
+//                    int money = enemy.lvl*10;
+//                    System.out.println("You obtained " + money + " gold.");
+//                    player.money += money;
+//                    gamePauser();
+//                    clearConsole();
+//                    player.levelCheck();
+//                    if(enemy.isBoss){
+//                        System.out.println("You obtained the " + enemy.weapon);
+//                        player.inventory.addItem(enemy.weapon);
+//                        gamePauser();
+//                    }
+//                    else{
+//                        double drop = Math.random();
+//                        if(drop<=0.2){
+//                            System.out.println("The enemy dropped the " + enemy.weapon);
+//                            player.inventory.addItem(enemy.weapon);
+//                            gamePauser();
+//                        }
+//                    }
+//                    break;
+//                }
+//            }
+//            else if(input == 3){
+//                player.changeWeapon();
+//            }else{
+//                if(!enemy.isBoss){
+//                    if((player.spd+player.weapon.getSpd()) < (enemy.spd+enemy.weapon.getSpd())){
+//                        System.out.println("The enemy is faster than you! You can't run away!");
+//                        gamePauser();
+//                    }
+//                    else {
+//                        double run = Math.random();
+//                        if(run<=0.2){
+//                            System.out.println("You successfully ran away!");
+//                            gamePauser();
+//                            break;
+//                        }
+//                        else {
+//                            System.out.println("You failed to run away!");
+//                            gamePauser();
+//                            clearConsole();
+//                            System.out.println("The enemy strikes!");
+//                            gamePauser();
+//                            clearConsole();
+//                            int damageTaken = (int)((enemy.atk+enemy.weapon.getAtk())/((player.def+100+player.weapon.getDef())/100));
+//                            System.out.println("You took " + damageTaken + " damage from the enemy.");
+//                            gamePauser();
+//                            clearConsole();
+//                            if(player.hp <= 0){
+//                                playerDied();
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//                else {
+//                    System.out.println("You can't escape from the boss fight!");
+//                    gamePauser();
+//                }
+//            }
+//        }
+//        player.setInBattle(false);
+//        player.currEnemy = null;
     }
     //prints the inventory options.
 //    private static void inventoryOptions() {
@@ -744,6 +753,145 @@ public class Logic {
 //            SaveManager.saveAll();
 //        }
 //    }
+    private static boolean isPlayerFaster(){
+        return (player.spd + player.weapon.getSpd()) > (player.currEnemy.spd + player.currEnemy.weapon.getSpd());
+    }
+    
+    private static String getEnemyHeader(Enemy e){
+        return e.name + " HP: " + e.hp + "/" + e.maxHP + " LVL: " + e.lvl;
+    }
+    
+    private static String getPlayerHeader(){
+        return player.name + " HP: " + player.hp + "/" + player.maxHP + " LVL: " + player.lvl + " Weapon: " + player.weapon.getName();
+    }
+    
+    private static int getDamageDealt(){
+        return (int)((player.atk + player.weapon.getAtk())/((player.currEnemy.def+100+player.currEnemy.weapon.getDef())/100));
+    }
+    
+    private static int getDamageTaken(){
+        return (int)((player.currEnemy.atk+player.currEnemy.weapon.getAtk())/((player.def+100+player.weapon.getDef())/100));
+    }
+    
+    public static void fight(){
+        Enemy enemy = player.currEnemy;
+        if(isPlayerFaster()){
+            addGUIText("\n\nYou strike first!");
+            addGUIText("\n\n" + createSeparator(20));
+            addGUIText("\n\n" + createHeading(getEnemyHeader(enemy)));
+            addGUIText("\nvs\n" + createHeading(getPlayerHeader())); 
+            int damageDealt = getDamageDealt();
+            enemy.hp -= damageDealt;
+            addGUIText("\nYou dealt " + damageDealt + " damage to the enemy.");
+            addGUIText("\n\n" + createSeparator(20));
+            addGUIText("\n\n" + createHeading(getEnemyHeader(enemy)));
+            addGUIText("\nvs\n" + createHeading(getPlayerHeader())); 
+            if(enemy.hp <= 0){
+                battleFin(true, enemy);
+            }
+            else {
+                addGUIText("\n\nThe enemy strikes.");
+                int damageTaken = getDamageTaken();
+                player.hp -= damageTaken;
+            addGUIText("\n\n" + createSeparator(20));
+                addGUIText("\n\n" + createHeading(getEnemyHeader(enemy)));
+                addGUIText("\nvs\n" + createHeading(getPlayerHeader())); 
+                addGUIText("\nYou took " + damageTaken + " damage from the enemy.");
+                if(player.hp <= 0){
+                    playerDied();
+                }
+            }
+        }
+        else {
+            addGUIText("\n\nThe enemy strikes first!");
+            addGUIText("\n\n" + createSeparator(20));
+            addGUIText("\n\n" + createHeading(getEnemyHeader(enemy)));
+            addGUIText("\nvs\n" + createHeading(getPlayerHeader()));
+            int damageTaken = getDamageTaken();
+            player.hp -= damageTaken;
+            addGUIText("\nYou took " + damageTaken + " damage from the enemy.");
+            addGUIText("\n\n" + createSeparator(20));
+            addGUIText("\n\n" + createHeading(getEnemyHeader(enemy)));
+            addGUIText("\nvs\n" + createHeading(getPlayerHeader()));
+            if(player.hp <= 0){
+                playerDied();
+            }
+            else {
+                addGUIText("\n\nYour turn to strike.");
+                int damageDealt = getDamageDealt();
+                enemy.hp -= damageDealt;
+                addGUIText("\nYou dealt " + damageDealt + " damage to the enemy.");
+                addGUIText("\n\n" + createSeparator(20));
+                addGUIText("\n\n" + createHeading(getEnemyHeader(enemy)));
+                addGUIText("\nvs\n" + createHeading(getPlayerHeader())); 
+                if(enemy.hp <= 0){
+                    battleFin(true, enemy);
+                }
+            }
+        }
+    }    
+    
+    public static void run(){
+        Enemy enemy = player.currEnemy;
+        if(enemy.isBoss){
+            Logic.addGUIText("\nYou cannot run from a boss fight!");
+        }
+        else{
+            if(!isPlayerFaster()){
+                Logic.addGUIText("\nThe enemy is faster than you! You can't run away!");
+            }
+            else{
+                double run = Math.random();
+                if(run<=0.5){
+                    Logic.addGUIText("\nYou successfully ran away!");
+                    battleFin(false, enemy);
+                }
+                else {
+                    Logic.addGUIText("\nYou failed to run away!");
+                    Logic.addGUIText("\nThe enemy strikes!");
+                    int damageTaken = (int)((enemy.atk+enemy.weapon.getAtk())/((player.def+100+player.weapon.getDef())/100));
+                    Logic.addGUIText("\nYou took " + damageTaken + " damage from the enemy.");
+                    if(player.hp <= 0){
+                        Logic.playerDied();
+                    }
+                }
+            }
+        }
+        ConfirmView cont = new ConfirmView("");
+        cont.confirmed("Continue?");
+        frame.gView.goNext(cont);
+    }
+    
+    public static void battleFin(boolean win, Enemy enemy){
+        if(win){
+            addGUIText("\n\nYou defeated the enemy!");
+            int expGain = (int) Math.pow(player.lvl, 1.2) * (enemy.lvl/player.lvl);
+            player.xpNow += expGain;
+            addGUIText("\nYou gained " + expGain + " exp.");
+            int money = enemy.lvl*10;
+            addGUIText("\nYou obtained " + money + " gold.");
+            player.money += money;
+            if(enemy.isBoss){
+                addGUIText("\nYou obtained the " + enemy.weapon.name);
+                player.inventory.addItem(enemy.weapon);
+                player.inventory.addItem(clearRewards[act-1]);
+            }
+            else{
+                double drop = Math.random();
+                if(drop<=0.4){
+                    addGUIText("\nThe enemy dropped the " + enemy.weapon.name);
+                    player.inventory.addItem(enemy.weapon);
+                }
+            }
+            player.levelCheck();
+        }else{//runaway
+            setGUIText(createHeading(places[place]));
+            Logic.addGUIText("\n\nYou successfully ran away from the fight!");
+        }
+        addGUIText("\n\n\n" + createHeading(places[place]));
+        frame.gView.goBack();
+        frame.gView.enableButtons();
+    }
     
     //exit game
     public static void exit(boolean save) {

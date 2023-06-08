@@ -14,6 +14,7 @@ import items.DmgItem;
 import items.HealItem;
 import items.Weapon;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -102,6 +103,11 @@ public class InventoryView extends JPanel {
 
         // Add the buttons panel to the south position
         inventoryOptions();
+        
+//        if(player.getInBattle() == true){
+//            useItem();
+//        }
+        
     }
     
     private void inventoryOptions(){
@@ -118,174 +124,34 @@ public class InventoryView extends JPanel {
     }
 
     private void useItem() {
-        subheadingLabel.setText("What Item would you like to use?");
-        removeAll();
-        
-        newButtonsPanel = new JPanel();
-        newButtonsPanel.setLayout(new BoxLayout(newButtonsPanel, BoxLayout.Y_AXIS));
-        
-        JButton useHealItemButton = new JButton("Use Heal Item");
-        useHealItemButton.addActionListener(e -> useHealItem());
-        
-        JButton useDamageItemButton = new JButton("Use Damage Item");
-        useDamageItemButton.addActionListener(e -> useDamageItem());
-        
-        goBackButton = new JButton("Go Back");
-        goBackButton.addActionListener(goBack);
-        
-        newButtonsPanel.add(Box.createVerticalStrut(10));
-        newButtonsPanel.add(useHealItemButton);
-        newButtonsPanel.add(Box.createVerticalStrut(10));
-        newButtonsPanel.add(useDamageItemButton);
-        newButtonsPanel.add(Box.createVerticalStrut(10));
-        newButtonsPanel.add(goBackButton);
-        newButtonsPanel.add(Box.createVerticalStrut(100));
-        newButtonsPanel.add(Box.createVerticalGlue());
-        
-        useHealItemButton.setAlignmentX(CENTER_ALIGNMENT);
-        useDamageItemButton.setAlignmentX(CENTER_ALIGNMENT);
-        goBackButton.setAlignmentX(CENTER_ALIGNMENT);
-        
-        add(newButtonsPanel, BorderLayout.SOUTH);
-        add(subheadingLabel, BorderLayout.CENTER);
-        add(headerLabel, BorderLayout.NORTH);
-        revalidate();
-        repaint();
+        UseItemView uIView = new UseItemView(player);
+        Logic.frame.gView.goNext(uIView);
     }
     
-    private void useHealItem() {
-        subheadingLabel.setText("Which Healing Item would you like to use?");
-        removeAll();
-
-        // Create the weapon list model
-        ArrayList<HealItem> playerHeals = Logic.player.inventory.getHealItems();
-        DefaultListModel<HealItem> listModel = new DefaultListModel<>();
-        for (HealItem heal : playerHeals) {
-            listModel.addElement(heal);
-        }
-
-        // Create the weapon list
-        JList<HealItem> healsList = new JList<>(listModel);
-        healsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        // Create the scroll pane and add the weapon list to it
-        JScrollPane scrollPane = new JScrollPane(healsList);
-
-        // Create the Go Back button
-        JPanel goBackPanel = new JPanel();
-        
-        JButton selectButton = new JButton("Select");
-        selectButton.addActionListener((ActionEvent e) -> {
-            int selectedIndex = healsList.getSelectedIndex();
-            if (selectedIndex != -1) {
-                HealItem selectedHeal = (HealItem) healsList.getModel().getElementAt(selectedIndex);
-                ConfirmView confirmUse = new ConfirmView(player, selectedHeal, false);
-                Logic.frame.gView.goNext(confirmUse);
-            }
-        });
-        
-        goBackPanel.add(selectButton);
-        
-        goBack2 = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                goBackButton.removeActionListener(goBack2);
-                useItem();
-            }
-        };
-        goBackButton.removeActionListener(goBack);
-        goBackButton.addActionListener(goBack2);
-        
-        goBackPanel.add(goBackButton);
-
-        // Add the scroll pane and the Go Back button to the center and south positions, respectively
-        add(scrollPane, BorderLayout.CENTER);
-        add(goBackPanel, BorderLayout.SOUTH);
-        add(subheadingLabel, BorderLayout.NORTH);
-        //add(headerLabel, BorderLayout.NORTH);
-
-        // Repaint the panel
-        revalidate();
-        repaint();
-    }
-    
-    private void useDamageItem() {
-        subheadingLabel.setText("Which Healing Item would you like to use?");
-        removeAll();
-
-        // Create the weapon list model
-        ArrayList<DmgItem> playerDmgs = Logic.player.inventory.getDmgItems();
-        DefaultListModel<DmgItem> listModel = new DefaultListModel<>();
-        for (DmgItem dmg : playerDmgs) {
-            listModel.addElement(dmg);
-        }
-
-        // Create the weapon list
-        JList<DmgItem> dmgsList = new JList<>(listModel);
-        dmgsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        // Create the scroll pane and add the weapon list to it
-        JScrollPane scrollPane = new JScrollPane(dmgsList);
-
-        // Create the Go Back button
-        JPanel goBackPanel = new JPanel();
-        
-        JButton selectButton = new JButton("Select");
-        selectButton.addActionListener((ActionEvent e) -> {
-            int selectedIndex = dmgsList.getSelectedIndex();
-            if (selectedIndex != -1) {
-                DmgItem selectedDmg = (DmgItem) dmgsList.getModel().getElementAt(selectedIndex);
-                ConfirmView confirmUse = new ConfirmView(player, selectedDmg, false);
-                Logic.frame.gView.goNext(confirmUse);
-            }
-        });
-        
-        goBackPanel.add(selectButton);
-        
-        goBack2 = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                goBackButton.removeActionListener(goBack2);
-                useItem();
-            }
-        };
-        goBackButton.removeActionListener(goBack);
-        goBackButton.addActionListener(goBack2);
-        
-        goBackPanel.add(goBackButton);
-
-        // Add the scroll pane and the Go Back button to the center and south positions, respectively
-        add(scrollPane, BorderLayout.CENTER);
-        add(goBackPanel, BorderLayout.SOUTH);
-        add(subheadingLabel, BorderLayout.NORTH);
-        //add(headerLabel, BorderLayout.NORTH);
-
-        // Repaint the panel
-        revalidate();
-        repaint();
-    }
 
     private void checkInventory() {
         remove(buttonsPanel);
         remove(subheadingLabel);
-        
+
         String inventory = "";
-        if(!player.inventory.getInventory().isEmpty()){
+        if (!player.inventory.getInventory().isEmpty()) {
             inventory = player.inventory.inventoryToString();
-        }
-        else {
+        } else {
             inventory = "Inventory contents will be displayed here.";
         }
+
         JTextArea textArea = new JTextArea(inventory);
         textArea.setEditable(false);
         textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
 
         goBackButton = new JButton("Go Back");
         goBackButton.addActionListener(goBack);
 
         newButtonsPanel = new JPanel();
         newButtonsPanel.setLayout(new BoxLayout(newButtonsPanel, BoxLayout.Y_AXIS));
-        newButtonsPanel.add(textArea);
+        newButtonsPanel.add(scrollPane);
         newButtonsPanel.add(Box.createVerticalStrut(10));
         newButtonsPanel.add(goBackButton);
         newButtonsPanel.add(Box.createVerticalStrut(100));
@@ -297,4 +163,5 @@ public class InventoryView extends JPanel {
         revalidate();
         repaint();
     }
+
 }

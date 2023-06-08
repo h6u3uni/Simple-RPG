@@ -238,7 +238,7 @@ public class StatChooseView extends JPanel {
            Logic.chooseStartWeapon();
         }
         else{
-            
+            Logic.frame.gView.goBack();
         }
     }
 

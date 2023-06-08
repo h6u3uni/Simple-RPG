@@ -58,13 +58,13 @@ public class DeadView extends JPanel {
 
         // Button Actions
         yesButton.addActionListener(e -> {
-            Logic.playerSelected(Logic.player);
+            Logic.playerSelected(Logic.originPlayer);
         });
 
         noButton.addActionListener(e -> {
             buttonPanel.removeAll();
             subheadingLabel.setText("Thanks for playing.");
-            buttonPanel.add(new JButton("Ok"));
+            buttonPanel.add(okButton);
             revalidate();
             repaint();
         });

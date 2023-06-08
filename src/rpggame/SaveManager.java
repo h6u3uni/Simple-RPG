@@ -27,6 +27,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -633,12 +634,19 @@ public class SaveManager {
         String deleteInventory = "DELETE FROM INVENTORY WHERE PLAYERID = " + player.getId();
         PreparedStatement preparedStatement;
         try {
+            preparedStatement = conn.prepareStatement(deleteInventory);
+            preparedStatement.executeUpdate();
+            
             preparedStatement = conn.prepareStatement(insertQuery);
+            HashSet<Item> uniqueItemInInventory = new HashSet<>();
             for (items.Item item : player.inventory.getInventory()) {
+                uniqueItemInInventory.add(item);
+            }
+            for(items.Item item : uniqueItemInInventory){
                 preparedStatement.setInt(1, getItemId(item)); // Assuming getItemId() returns the item ID
                 preparedStatement.setInt(2, player.getId()); // Assuming you have the player ID
                 preparedStatement.setInt(3, getItemQuantity(item, player.inventory.getInventory())); // Assuming getQuantity() returns the item quantity
-
+            
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -654,13 +662,13 @@ public class SaveManager {
         if(item instanceof items.Weapon){
             query = "SELECT ITEMID FROM WEAPON WHERE WEAPONNAME = '" + item.getName() + "'";
         }
-        if(item instanceof items.HealItem){
+        else if(item instanceof items.HealItem){
             query = "SELECT ITEMID FROM HEALITEM WHERE ITEMNAME = '" + item.getName() + "'";
         }
-        if(item instanceof items.DmgItem){
+        else if(item instanceof items.DmgItem){
             query = "SELECT ITEMID FROM DMGITEM WHERE ITEMNAME = '" + item.getName() + "'";
         }
-        if(item instanceof items.QuestItem){
+        else if(item instanceof items.QuestItem){
             query = "SELECT ITEMID FROM QUESTITEM WHERE ITEMNAME = '" + item.getName() + "'";
         }
         try {

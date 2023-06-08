@@ -98,40 +98,40 @@ public class Player extends Mob{
     }
     
     //change weapon to weapon in inventory
-    public void changeWeapon(){
-        Logic.clearConsole();
-        Logic.printHeading("Change current weapon, " + this.weapon.name + ", to: ");
-        ArrayList<Weapon> weapons = inventory.getWeapons();
-        if(weapons.isEmpty()){
-            System.out.println("You don't have any other weapons!");
-            Logic.gamePauser();
-        }
-        else{
-            for(int i = 0; i<weapons.size(); i++){
-                System.out.println("(" + (i+1) + ") " + weapons.get(i).name);
-            }
-            System.out.println("(" + (weapons.size()+1) + ") Cancel");
-            int input = Logic.readInt("-> ", (weapons.size()+1));
-            if(!(input == (weapons.size()+1))){
-                weapons.get(input-1).printItem();
-                System.out.println("");
-                System.out.println("Confirm weapon?");
-                System.out.println("(1) Yes");
-                System.out.println("(2) No, let me choose a different one");
-                int confirm = Logic.readInt("-> ", 2);
-                if(confirm == 2){
-                    changeWeapon();
-                }
-                else{
-                    inventory.addItem(this.weapon);
-                    this.weapon = weapons.get(input-1);
-                    inventory.removeItem(weapons.get(input-1));
-                    System.out.println("You changed to the " + this.weapon.name);
-                    Logic.gamePauser();
-                }
-            }
-        }
-    }
+//    public void changeWeapon(){
+//        Logic.clearConsole();
+//        Logic.printHeading("Change current weapon, " + this.weapon.name + ", to: ");
+//        ArrayList<Weapon> weapons = inventory.getWeapons();
+//        if(weapons.isEmpty()){
+//            System.out.println("You don't have any other weapons!");
+//            Logic.gamePauser();
+//        }
+//        else{
+//            for(int i = 0; i<weapons.size(); i++){
+//                System.out.println("(" + (i+1) + ") " + weapons.get(i).name);
+//            }
+//            System.out.println("(" + (weapons.size()+1) + ") Cancel");
+//            int input = Logic.readInt("-> ", (weapons.size()+1));
+//            if(!(input == (weapons.size()+1))){
+//                weapons.get(input-1).printItem();
+//                System.out.println("");
+//                System.out.println("Confirm weapon?");
+//                System.out.println("(1) Yes");
+//                System.out.println("(2) No, let me choose a different one");
+//                int confirm = Logic.readInt("-> ", 2);
+//                if(confirm == 2){
+//                    changeWeapon();
+//                }
+//                else{
+//                    inventory.addItem(this.weapon);
+//                    this.weapon = weapons.get(input-1);
+//                    inventory.removeItem(weapons.get(input-1));
+//                    System.out.println("You changed to the " + this.weapon.name);
+//                    Logic.gamePauser();
+//                }
+//            }
+//        }
+//    }
     
     //get the boolean value inBattle. 
     public boolean getInBattle(){
@@ -249,13 +249,11 @@ public class Player extends Mob{
             this.lvl++;
             this.xpNow -= this.xpNeeded;
             this.xpNeeded = (int) Math.pow(lvl/0.3, 1.6);
-            Logic.clearConsole();
-            Logic.printHeading("You levelled up!");
-            System.out.println("LVL " + (this.lvl-1) + " -> " + "LVL " + (this.lvl));
-            System.out.println("XP Needed for next Lvl up: " + this.xpNeeded);
+            Logic.addGUIText("You levelled up!");
+            Logic.addGUIText("LVL " + (this.lvl-1) + " -> " + "LVL " + (this.lvl));
+            Logic.addGUIText("XP Needed for next Lvl up: " + this.xpNeeded);
             this.statPoint = 3;
-            Logic.gamePauser();
-            chooseStats();
+            Logic.frame.gView.showStatChooseView();
         }
     }
     

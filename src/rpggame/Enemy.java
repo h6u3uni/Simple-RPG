@@ -13,8 +13,8 @@ import java.util.HashMap;
  * @author haruk
  */
 public class Enemy extends Mob{
-    Weapon weapon;
-    boolean isBoss;
+    public Weapon weapon;
+    public boolean isBoss;
     double[] stats;
    
     public Enemy(String name, int maxLvl, int minLvl, boolean boss) {

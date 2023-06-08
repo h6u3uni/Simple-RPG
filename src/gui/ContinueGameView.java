@@ -32,6 +32,7 @@ import rpggame.Player;
 public class ContinueGameView extends JPanel {
     private JList<Player> playerList;
     private DefaultListModel<Player> listModel;
+    public Player selectedPlayer;
 
     public ContinueGameView(ArrayList<Player> players) {
         setLayout(new BorderLayout());
@@ -57,7 +58,7 @@ public class ContinueGameView extends JPanel {
         // Create the select button
         JButton selectButton = new JButton("Select");
         selectButton.addActionListener((ActionEvent e) -> {
-            Player selectedPlayer = playerList.getSelectedValue();
+            selectedPlayer = playerList.getSelectedValue();
             if (selectedPlayer != null) {
                 Logic.playerSelected(selectedPlayer);
             } else {

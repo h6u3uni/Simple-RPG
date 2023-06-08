@@ -271,25 +271,34 @@ public class ConfirmView extends JPanel {
                 if(item instanceof HealItem){
                     HealItem selectedHeal = (HealItem)item;
                     if(inBattle){
-                        todo
+                        player.hp += selectedHeal.heal;
+                        if(player.hp > player.maxHP){
+                            player.hp = player.maxHP;
+                        }
                     }
                     else{
                         player.hp += selectedHeal.heal;
                         if(player.hp > player.maxHP){
                             player.hp = player.maxHP;
                         }
-                        player.inventory.removeItem(selectedHeal);
                     }
+                    player.inventory.removeItem(selectedHeal);
                     confirmed("Used " + selectedHeal.getName());
                 }
                 else if(item instanceof DmgItem){
                     DmgItem selectedDmg = (DmgItem)item;
                     if(inBattle){
-                        todo
+                        player.currEnemy.hp -= selectedDmg.dmg;
+                        Logic.addGUIText("The item dealth " + selectedDmg.dmg + " damage to the enemy!");
+                        if(player.currEnemy.hp <= 0){
+                            Logic.battleFin(true, player.currEnemy);
+                        }
+                        player.inventory.removeItem(selectedDmg);
                         confirmed("Used " + selectedDmg.getName());
                     }
                     else{
                         player.hp-= selectedDmg.dmg;
+                        player.inventory.removeItem(selectedDmg);
                         confirmed("Used " + selectedDmg.getName() + ". You took damage!");
                     }
                 }
@@ -326,10 +335,10 @@ public class ConfirmView extends JPanel {
         textLabel = new JLabel(label);
         JButton okButton = new JButton("Ok");
         okButton.addActionListener((ActionEvent e) -> {
-            Logic.frame.gView.goBack();
             if(Logic.player.hp <= 0){
                 Logic.playerDied();
             }
+            Logic.frame.gView.goBack();
         });
         add(textLabel, BorderLayout.NORTH);
         add(okButton, BorderLayout.CENTER);

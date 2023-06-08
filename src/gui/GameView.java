@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import rpggame.Logic;
@@ -32,6 +33,7 @@ import rpggame.SaveManager;
 public class GameView extends JPanel {
     private Stack<JPanel> panelStack;
     public JTextArea textArea;
+    private JScrollPane scrollPane;
     private JPanel dynamicContentPanel;
     private JButton exploreButton;
     private JButton changeLocationButton;
@@ -54,7 +56,7 @@ public class GameView extends JPanel {
         textArea = new JTextArea(dialogue[0]);
         textArea.setEditable(false);
         textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(400, 200));
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(scrollPane, BorderLayout.NORTH);
@@ -293,6 +295,30 @@ public class GameView extends JPanel {
         disableButtons();
         DeadView dView = new DeadView();
         dynamicContentPanel.add(dView);
+        revalidate();
+        repaint();
+    }
+
+    public void addGUIText(String text) {
+        textArea.append(text);
+        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+        verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+    }
+
+    public void showBattleView(Player player) {
+        resetDynamicPanel();
+        disableButtons();
+        BattleView bView = new BattleView(player);
+        goNext(bView);
+        revalidate();
+        repaint();
+    }
+
+    public void showStatChooseView() {
+        resetDynamicPanel();
+        disableButtons();
+        StatChooseView sCView = new StatChooseView(Logic.player, false);
+        goNext(sCView);
         revalidate();
         repaint();
     }

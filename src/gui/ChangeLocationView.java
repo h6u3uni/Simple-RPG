@@ -48,6 +48,7 @@ public class ChangeLocationView extends JPanel {
         selectButton.addActionListener((ActionEvent e) -> {
             int placeId = locationList.getSelectedIndex();
             Logic.changeLocation(placeId);
+            Logic.frame.gView.resetDynamicPanel();
         });
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));

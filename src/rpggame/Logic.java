@@ -116,7 +116,17 @@ public class Logic {
     //choose player to continue game with
     public static void playerSelected(Player player){
         newPlay = false;
-        Logic.originPlayer = player;
+        Logic.originPlayer = player.makeCopy();
+        Logic.player = player;
+        act = player.act;
+        place = player.place;
+        Logic.player.inventory = SaveManager.getInventory(player);
+        String[] loc = {createHeading(places[place])};
+        frame.showGameView(loc, false, true);
+    }
+    
+    public static void contFromDeath(Player player){
+        newPlay = false;
         Logic.player = player;
         act = player.act;
         place = player.place;

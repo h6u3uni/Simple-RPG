@@ -97,6 +97,28 @@ public class Player extends Mob{
 //        }
     }
     
+    public Player makeCopy() {
+        Player copy = new Player(this.name, this.gender);
+        copy.money = this.money;
+        copy.weapon = this.weapon;
+        copy.inBattle = this.inBattle;
+        copy.currEnemy = this.currEnemy;
+        copy.id = this.id;
+        copy.act = this.act;
+        copy.place = this.place;
+        copy.hpStat = this.hpStat;
+        copy.maxHP = this.maxHP;
+        copy.hp = this.hp;
+        copy.xpNow = this.xpNow;
+        copy.xpNeeded = this.xpNeeded;
+        copy.lvl = this.lvl;
+        copy.atk = this.atk;
+        copy.def = this.def;
+        copy.spd = this.spd;
+        copy.statPoint = this.statPoint;
+        return copy;
+    }
+    
     //get the boolean value inBattle. 
     public boolean getInBattle(){
         return this.inBattle;

@@ -62,7 +62,7 @@ public class DeadView extends JPanel {
 
         // If the player chooses to go back to the previous save, load the save
         yesButton.addActionListener(e -> {
-            Logic.playerSelected(Logic.originPlayer);
+            Logic.contFromDeath(Logic.originPlayer);
         });
 
         // If the player chooses not to go back to the previous save, exit the game

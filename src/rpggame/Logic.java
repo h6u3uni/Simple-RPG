@@ -46,30 +46,6 @@ public class Logic {
     public static RPGGameGUI frame;
     public static Player originPlayer;
     
-    //handles virtually every input in the game. Takes in a string and a numberofuserchoice. 
-    //handles all options, all types of inputs, and exceptions. 
-//    public static int readInt(String prompt, int userChoices){
-//        int input;
-//        do{
-//            System.out.println(prompt);
-//            try{
-//                input = Integer.parseInt(scan.next());
-//            }catch(Exception e){
-//                input = -1;
-//                System.out.println("Please input an integer!");
-//            }
-//        }while(input<1 || input>userChoices);
-//        return input;
-//    }
-    
-    //prints a separator for cool UI
-    public static void printSeparator(int n){
-        for(int i = 0; i < n; i++){
-            System.out.print("-"); //------------------
-        }
-        System.out.println();
-    }
-    
     //creates a separator for cool UI
     public static String createSeparator(int n){
         String ret = "";
@@ -77,13 +53,6 @@ public class Logic {
             ret+= "-"; //------------------
         }
         return ret;
-    }
-    
-    //prints a heading with input String for cool UI
-    public static void printHeading(String title){
-        printSeparator(30);
-        System.out.println(title);
-        printSeparator(30);
     }
     
     //creates a heading with input String for cool UI
@@ -95,19 +64,6 @@ public class Logic {
         text += "\n";
         text += createSeparator(30);
         return text;
-    }
-    
-    //pauses the game and waits for uesr input. necessary so that the game doesn't skip text.
-    public static void gamePauser(){
-        System.out.println("\nEnter anything to continue...");
-        scan.next();
-    }
-    
-    //simulates the clearing of console. just prints 100 lines of empty text
-    public static void clearConsole(){
-        for (int i = 0; i < 100; i++) {
-            System.out.println();
-        }
     }
     
     //starts the game. if save exists, asks the user if they want to continue. else newGame()

@@ -344,15 +344,26 @@ public class SaveManager {
             String insertQuery = "INSERT INTO HALLOFFAME (PLAYERID, PLAYERNAME, LVL, DATEOFCOMPLETION) VALUES (?, ?, ?, ?)";
             String updateQuery = "UPDATE HALLOFFAME SET PLAYERNAME = ?, LVL = ?, DATEOFCOMPLETION = ? WHERE PLAYERID = ?";
 
-            PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
-            insertStatement.setInt(1, player.getId());
-            insertStatement.setString(2, player.name);
-            insertStatement.setInt(3, player.lvl);
-            insertStatement.setDate(4, sqlDate);
-            int rowsInserted = insertStatement.executeUpdate();
-            insertStatement.close();
+            // Check if the record already exists
+            String checkQuery = "SELECT COUNT(*) FROM HALLOFFAME WHERE PLAYERID = ?";
+            PreparedStatement checkStatement = conn.prepareStatement(checkQuery);
+            checkStatement.setInt(1, player.getId());
+            ResultSet resultSet = checkStatement.executeQuery();
+            resultSet.next();
+            int rowCount = resultSet.getInt(1);
+            checkStatement.close();
 
-            if (rowsInserted == 0) {
+            if (rowCount == 0) {
+                // Insert the new record
+                PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
+                insertStatement.setInt(1, player.getId());
+                insertStatement.setString(2, player.name);
+                insertStatement.setInt(3, player.lvl);
+                insertStatement.setDate(4, sqlDate);
+                insertStatement.executeUpdate();
+                insertStatement.close();
+            } else {
+                // Update the existing record
                 PreparedStatement updateStatement = conn.prepareStatement(updateQuery);
                 updateStatement.setString(1, player.name);
                 updateStatement.setInt(2, player.lvl);

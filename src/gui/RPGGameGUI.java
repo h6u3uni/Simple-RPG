@@ -83,8 +83,8 @@ public class RPGGameGUI extends JFrame {
         repaint();
     }
     
-    public void showGameView(String text){
-        gView = new GameView(text);
+    public void showGameView(String[] text, boolean end, boolean cont){
+        gView = new GameView(text, end, cont);
         removeAllPanels();
         setSize(800,600);
         add(gView);
@@ -110,6 +110,14 @@ public class RPGGameGUI extends JFrame {
             }
         }
 
+        revalidate();
+        repaint();
+    }
+
+    public void showContinueGameView(ArrayList<Player> saves) {
+        ContinueGameView continueView = new ContinueGameView(saves);
+        removeAllPanels();
+        add(continueView);
         revalidate();
         repaint();
     }

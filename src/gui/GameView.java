@@ -40,14 +40,18 @@ public class GameView extends JPanel {
     private JButton goToShopButton;
     private JButton saveGameButton;
     private JButton exitGameButton;
+    private JButton storyButton;
+    private int index;
+    private boolean end;
     
-    public GameView(String text) {
+    public GameView(String[] dialogue, boolean end, boolean cont) {
         setLayout(new BorderLayout());
         
         panelStack = new Stack<>();
-        
+        index = 1;
+        this.end = end;
         // Create the text area
-        textArea = new JTextArea(text);
+        textArea = new JTextArea(dialogue[0]);
         textArea.setEditable(false);
         textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         JScrollPane scrollPane = new JScrollPane(textArea);
@@ -63,7 +67,11 @@ public class GameView extends JPanel {
 //        JScrollPane test1 = new JScrollPane();
 //        test1.setPreferredSize(new Dimension(600,320));
 //        dynamicContentPanel.add(test1);
-        
+        if(!cont){
+            storyButton = new JButton("Continue");
+            storyButton.addActionListener(e -> contDialogue(dialogue, index));
+            dynamicContentPanel.add(storyButton);
+        }
         dynamicContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(dynamicContentPanel, BorderLayout.CENTER);
 
@@ -77,7 +85,7 @@ public class GameView extends JPanel {
         exploreButton.addActionListener(e -> Logic.continueJourney());
         
         changeLocationButton = new JButton("Change Location");
-        //changeLocationButton.addActionListener(e -> changeLocation());
+        changeLocationButton.addActionListener(e -> changeLocation());
         
         characterInfoButton = new JButton("Character Info");
         characterInfoButton.addActionListener(e -> showCharInfoPanel(Logic.player));
@@ -102,7 +110,11 @@ public class GameView extends JPanel {
         menuPanel.add(goToShopButton);
         menuPanel.add(saveGameButton);
         menuPanel.add(exitGameButton);
-
+        
+        if(!cont){
+            disableButtons();
+        }
+        
         // Add the menu panel to the right side of the main panel
         add(menuPanel, BorderLayout.EAST);
     }
@@ -237,6 +249,50 @@ public class GameView extends JPanel {
         resetDynamicPanel();
         InventoryView iView = new InventoryView(Logic.player);
         goNext(iView);
+        revalidate();
+        repaint();
+    }
+    
+    private void showHallOfFame() {
+        resetDynamicPanel();
+        HallOfFameView hofView = new HallOfFameView();
+        dynamicContentPanel.add(hofView);
+        revalidate();
+        repaint();
+    }
+
+    private void contDialogue(String[] dialogue, int i) {
+        index++;
+        if(i < dialogue.length){
+            Logic.setGUIText(dialogue[i]);
+        }
+        else{
+            if(end){
+                SaveManager.addToHallOfFame(Logic.player);
+                enableButtons();
+                showHallOfFame();
+            }
+            else{
+                Logic.setGUIText(Logic.getCurrentLocationText());
+                resetDynamicPanel();
+                enableButtons();
+            }
+        }
+    }
+
+    private void changeLocation() {
+        resetDynamicPanel();
+        ChangeLocationView clView = new ChangeLocationView(Logic.act);
+        dynamicContentPanel.add(clView);
+        revalidate();
+        repaint();
+    }
+    
+    public void showDeadView(){
+        resetDynamicPanel();
+        disableButtons();
+        DeadView dView = new DeadView();
+        dynamicContentPanel.add(dView);
         revalidate();
         repaint();
     }

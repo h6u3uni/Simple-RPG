@@ -35,7 +35,6 @@ import javax.swing.ScrollPaneConstants;
 import rpggame.Logic;
 import rpggame.Player;
 import rpggame.SaveManager;
-import rpggame.Shop;
 
 public class ShopView extends JPanel {
 

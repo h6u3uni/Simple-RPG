@@ -5,6 +5,7 @@
  */
 package rpggame;
 
+import dialogue.Dialogue;
 import dialogue.Elf;
 import dialogue.Story;
 import gui.RPGGameGUI;
@@ -233,71 +234,82 @@ public class Logic {
     
     //continue game 
     public static void continueGame() {
-        Logic.clearConsole();
-        Logic.printHeading("Please select a save: ");
+//        Logic.clearConsole();
+//        Logic.printHeading("Please select a save: ");
         ArrayList<Player> saves = SaveManager.getPlayerSaves();
-        for(int i = 0; i < saves.size(); i++){
-            System.out.println("(" + (i+1) + ") " + saves.get(i).name + " | LVL: " + saves.get(i).lvl + " | ACT: " + saves.get(i).act);
-        }
-        System.out.println("(" + (saves.size()+1) + ") Cancel");
-        int input = readInt("-> ", saves.size()+1);
-        if(input == saves.size()+1){
-            gameStart();
-        }
-        else {
-            player = saves.get(input-1);
-            act = player.act;
-            place = player.place;
-            player.inventory = SaveManager.getInventory(player);
-        }
-        gameLoop();
+//        for(int i = 0; i < saves.size(); i++){
+//            System.out.println("(" + (i+1) + ") " + saves.get(i).name + " | LVL: " + saves.get(i).lvl + " | ACT: " + saves.get(i).act);
+//        }
+//        System.out.println("(" + (saves.size()+1) + ") Cancel");
+//        int input = readInt("-> ", saves.size()+1);
+//        if(input == saves.size()+1){
+//            gameStart();
+//        }
+//        else {
+//            player = saves.get(input-1);
+//            act = player.act;
+//            place = player.place;
+//            player.inventory = SaveManager.getInventory(player);
+//        }
+//        gameLoop();
+        frame.showContinueGameView(saves);
+    }
+    
+    public static void playerSelected(Player player){
+        newPlay = false;
+        Logic.player = player;
+        act = player.act;
+        place = player.place;
+        Logic.player.inventory = SaveManager.getInventory(player);
+        String[] loc = {createHeading(places[place])};
+        frame.showGameView(loc, false, true);
     }
     
     //prints user options menu
-    public static void printMenu(){
-        clearConsole();
-        printHeading(places[place]);
-        System.out.println("Choose an Action: ");
-        printSeparator(20);
-        System.out.println("(1) Explore");
-        System.out.println("(2) Change Location");
-        System.out.println("(3) Character Info");
-        System.out.println("(4) Inventory Options");
-        System.out.println("(5) Go to Shop");
-        System.out.println("(6) Save Game");
-        System.out.println("(7) Exit Game");
-    }
+//    public static void printMenu(){
+//        clearConsole();
+//        printHeading(places[place]);
+//        System.out.println("Choose an Action: ");
+//        printSeparator(20);
+//        System.out.println("(1) Explore");
+//        System.out.println("(2) Change Location");
+//        System.out.println("(3) Character Info");
+//        System.out.println("(4) Inventory Options");
+//        System.out.println("(5) Go to Shop");
+//        System.out.println("(6) Save Game");
+//        System.out.println("(7) Exit Game");
+//    }
     
     //main gameloop. prints menu and handles the input. 
-    public static void gameLoop(){
-        while(isRunning){
-            printMenu();
-            int input = readInt("-> ", 7);
-            switch(input){
-                case 1:
-                    continueJourney();
-                    break;
-                case 2:
-                    changeLocation();
-                    break;
-                case 3:
-                    checkCharacterInfo();
-                    break;
-                case 4:
-                    inventoryOptions();
-                    break;
-                case 5:
-                    Shop.enterShop(player);
-                    break;
-                case 6:
-                    save();
-                    break;
-                case 7:
-                    exit(true);
-                    break;
-            }
-        }
-    }
+//    public static void gameLoop(){
+//        while(isRunning){
+//            printMenu();
+//            int input = readInt("-> ", 7);
+//            switch(input){
+//                case 1:
+//                    continueJourney();
+//                    break;
+//                case 2:
+//                    changeLocation();
+//                    break;
+//                case 3:
+//                    checkCharacterInfo();
+//                    break;
+//                case 4:
+//                    inventoryOptions();
+//                    break;
+//                case 5:
+//                    Shop.enterShop(player);
+//                    break;
+//                case 6:
+//                    save();
+//                    break;
+//                case 7:
+//                    exit(true);
+//                    break;
+//            }
+//        }
+//    }
     
     //prints player info. current stats 
 //    private static void checkCharacterInfo() {
@@ -363,8 +375,12 @@ public class Logic {
 //        }
 //    }
     
-    public static void setStoryOrDialogue(String text){
-        frame.showGameView(text);
+    public static String getCurrentLocationText(){
+        return Logic.createHeading(places[place]);
+    }
+    
+    public static void setStoryOrDialogue(String[] text, boolean end){
+        frame.showGameView(text, end, false);
     }
     
     public static void setGUIText(String text){
@@ -385,50 +401,40 @@ public class Logic {
     private static void checkAct() {
         if(player.inventory.containsQuestItem(clearRewards[5])){
             act = 6;
-            Story.printActFiveOutro();
-            Story.printStoryOutro();
-            gamePauser();
-            SaveManager.addToHallOfFame(player);
-            ArrayList<String> hof = SaveManager.getHallOfFame();
-            clearConsole();
-            printHeading("Hall Of Fame - Players who cleared the game.");
-            for(String pName : hof){
-                System.out.println(" - " + pName);
-            }
-            gamePauser();
-            clearConsole();
-            System.out.println("That concludes this simple RPG. Thank you for playing!");
-            SaveManager.saveAll();
-            isRunning = false;
+            setStoryOrDialogue(Dialogue.getDialogueSix(), true);
+//            gamePauser();
+//            SaveManager.addToHallOfFame(player);
+//            ArrayList<String> hof = SaveManager.getHallOfFame();
+//            clearConsole();
+//            printHeading("Hall Of Fame - Players who cleared the game.");
+//            for(String pName : hof){
+//                System.out.println(" - " + pName);
+//            }
+//            gamePauser();
+//            clearConsole();
+//            System.out.println("That concludes this simple RPG. Thank you for playing!");
+//            SaveManager.saveAll();
+//            isRunning = false;
         }
         else if(player.inventory.containsQuestItem(clearRewards[3])){
             act = 5;
-            Story.printActFourOutro();
-            Elf.printAct5ElfDialogue();
-            Story.printActFiveIntro();
+            setStoryOrDialogue(Dialogue.getDialogueFive(), false);
         }
         else if(player.inventory.containsQuestItem(clearRewards[2])){
             act = 4;
-            Story.printActThreeOutro();
-            Elf.printAct4ElfDialogue();
-            Story.printActFourIntro();
+            setStoryOrDialogue(Dialogue.getDialogueFour(), false);
         }
         else if(player.inventory.containsQuestItem(clearRewards[1])){
             act = 3;
-            Story.printActTwoOutro();
-            Elf.printAct3ElfDialogue();
-            Story.printActThreeIntro();
+            setStoryOrDialogue(Dialogue.getDialogueThree(), false);
         }
         else if(player.inventory.containsQuestItem(clearRewards[0])){
             act = 2;
-            Story.printActOneOutro();
-            Elf.printAct2ElfDialogue();
-            Story.printActTwoIntro();
+            setStoryOrDialogue(Dialogue.getDialogueTwo(), false);
         }
         else {
             act = 1;
-            Elf.printAct1ElfDialogue();
-            //Story.printActOneIntro();
+            setStoryOrDialogue(Dialogue.getDialogueOne(), false);
         }
     }
     
@@ -454,7 +460,7 @@ public class Logic {
     
     //handles when player dies. 
     public static void playerDied() {
-        todo
+        frame.gView.showDeadView();
 //        clearConsole();
 //        printHeading("You died...");
 //        if(SaveManager.saveExist() && !(newPlay)){
@@ -471,56 +477,10 @@ public class Logic {
     }
 
     //change current location of character. changes the location options depending on current act.
-    private static void changeLocation() {
-        int count = 1;
-        clearConsole();
-        printHeading("Where would you like to go?");
-        System.out.println("(1) Elven City");
-        if(act == 1){
-            System.out.println("(2) Goblin Forest");
-            count+=act;
-        }
-        if(act == 2){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            count+=act;
-        }
-        if(act == 3){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            System.out.println("(4) Minotaur Labyrinth");
-            count+=act;
-        }
-        if(act == 4){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            System.out.println("(4) Minotaur Labyrinth");
-            System.out.println("(5) Death Mountain");
-            count+=act;
-        }
-        if(act == 5){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            System.out.println("(4) Minotaur Labyrinth");
-            System.out.println("(5) Death Mountain");
-            System.out.println("(6) Demon Castle");
-            count+=act;
-        }
-        if(act == 6){
-            System.out.println("(2) Goblin Forest");
-            System.out.println("(3) Ancient Tomb");
-            System.out.println("(4) Minotaur Labyrinth");
-            System.out.println("(5) Death Mountain");
-            System.out.println("(6) Demon Castle");
-            System.out.println("(7) ???");
-            count+=act;
-        }
-        System.out.println("(" + (count+1) + ") Stay at current location.");
-        int input = readInt("-> ", count+1);
-        if(!(input == (count+1))){
-            place = input-1;
-            exploration = 0;
-        }
+    public static void changeLocation(int place) {
+        Logic.place = place;
+        setGUIText(Logic.createHeading(places[place]));
+        exploration = 0;
     }
     
     //random enemy generated. battle() is called

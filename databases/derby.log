@@ -1,7 +1,7 @@
-Thu Jun 08 00:33:34 NZST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+Thu Jun 08 16:15:10 NZST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Thu Jun 08 00:33:34 NZST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-95d9-1cf9-000070a16e3d 
+Thu Jun 08 16:15:10 NZST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0188-9937-2ee3-000070a16e3d 
 on database directory D:\uniwork\comp603\Simple-RPG\databases\gameDB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
 Loaded from file:/D:/uniwork/comp603/Simple-RPG/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -13,4 +13,4 @@ os.version=10.0
 derby.system.home=D:\uniwork\comp603\Simple-RPG\databases
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Thu Jun 08 01:01:29 NZST 2023: Shutting down Derby engine
+Thu Jun 08 16:37:19 NZST 2023: Shutting down Derby engine

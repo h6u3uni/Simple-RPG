@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import rpggame.Logic;
 import rpggame.Player;
 
 public class ContinueGameView extends JPanel {
@@ -58,7 +59,7 @@ public class ContinueGameView extends JPanel {
         selectButton.addActionListener((ActionEvent e) -> {
             Player selectedPlayer = playerList.getSelectedValue();
             if (selectedPlayer != null) {
-                System.out.println("Selected player: " + selectedPlayer.name);
+                Logic.playerSelected(selectedPlayer);
             } else {
                 System.out.println("No player selected.");
             }
@@ -66,27 +67,27 @@ public class ContinueGameView extends JPanel {
         add(selectButton, BorderLayout.SOUTH);
     }
 
-    public static void main(String[] args) {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player("Player 1", "Male"));
-        players.add(new Player("Player 2", "Female"));
-        players.add(new Player("Player 3", "Male"));
-
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI(players);
-            }
-        });
-    }
-
-    private static void createAndShowGUI(ArrayList<Player> players) {
-        JFrame frame = new JFrame("Continue Game View");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-
-        ContinueGameView continueGameView = new ContinueGameView(players);
-        frame.getContentPane().add(continueGameView);
-
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        ArrayList<Player> players = new ArrayList<>();
+//        players.add(new Player("Player 1", "Male"));
+//        players.add(new Player("Player 2", "Female"));
+//        players.add(new Player("Player 3", "Male"));
+//
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                createAndShowGUI(players);
+//            }
+//        });
+//    }
+//
+//    private static void createAndShowGUI(ArrayList<Player> players) {
+//        JFrame frame = new JFrame("Continue Game View");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(400, 300);
+//
+//        ContinueGameView continueGameView = new ContinueGameView(players);
+//        frame.getContentPane().add(continueGameView);
+//
+//        frame.setVisible(true);
+//    }
 }

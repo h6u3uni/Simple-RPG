@@ -9,6 +9,7 @@ package gui;
  *
  * @author haruk
  */
+import dialogue.Dialogue;
 import dialogue.Story;
 import items.DmgItem;
 import items.HealItem;
@@ -83,7 +84,7 @@ public class ConfirmView extends JPanel {
                 // Perform the desired action when "Yes" is clicked
                 if(Logic.newPlay){
                     player.weapon = selectedWeapon;
-                    Logic.frame.showGameView(Story.getStoryIntro());
+                    Logic.frame.showGameView(Dialogue.getDialogueIntro(), false, false);
                 }
                 else{
                     player.inventory.addItem(player.weapon);
@@ -270,7 +271,7 @@ public class ConfirmView extends JPanel {
                 if(item instanceof HealItem){
                     HealItem selectedHeal = (HealItem)item;
                     if(inBattle){
-                        //todo
+                        todo
                     }
                     else{
                         player.hp += selectedHeal.heal;
@@ -284,15 +285,13 @@ public class ConfirmView extends JPanel {
                 else if(item instanceof DmgItem){
                     DmgItem selectedDmg = (DmgItem)item;
                     if(inBattle){
-                        //todo
+                        todo
+                        confirmed("Used " + selectedDmg.getName());
                     }
                     else{
                         player.hp-= selectedDmg.dmg;
-                        if(player.hp <= 0){
-                            Logic.playerDied();
-                        }
+                        confirmed("Used " + selectedDmg.getName() + ". You took damage!");
                     }
-                    confirmed("Used " + selectedDmg.getName());
                 }
             }
         });
@@ -328,6 +327,9 @@ public class ConfirmView extends JPanel {
         JButton okButton = new JButton("Ok");
         okButton.addActionListener((ActionEvent e) -> {
             Logic.frame.gView.goBack();
+            if(Logic.player.hp <= 0){
+                Logic.playerDied();
+            }
         });
         add(textLabel, BorderLayout.NORTH);
         add(okButton, BorderLayout.CENTER);

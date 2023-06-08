@@ -44,7 +44,7 @@ public class HallOfFameView extends JPanel {
         }
         else{
             for(String entry : hof){
-                out += " - " + entry;
+                out += " - " + entry + "\n";
             }
         }
         JTextArea textArea = new JTextArea(out);

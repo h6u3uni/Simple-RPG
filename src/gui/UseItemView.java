@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import rpggame.Logic;
 import rpggame.Player;
@@ -114,9 +115,18 @@ public class UseItemView extends JPanel{
         // Create the weapon list
         JList<HealItem> healsList = new JList<>(listModel);
         healsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        
+        JTextArea placeholder = new JTextArea("Owned healing items will be displayed here.");
+        placeholder.setEditable(false);
         // Create the scroll pane and add the weapon list to it
-        JScrollPane scrollPane = new JScrollPane(healsList);
+        JScrollPane scrollPane;
+        
+        if(!listModel.isEmpty()){
+            scrollPane = new JScrollPane(healsList);
+        }
+        else{
+            scrollPane = new JScrollPane(placeholder);
+        }
 
         // Create the Go Back button
         JPanel goBackPanel = new JPanel();
@@ -172,9 +182,17 @@ public class UseItemView extends JPanel{
         JList<DmgItem> dmgsList = new JList<>(listModel);
         dmgsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        JTextArea placeholder = new JTextArea("Owned damaging items will be displayed here.");
+        placeholder.setEditable(false);
         // Create the scroll pane and add the weapon list to it
-        JScrollPane scrollPane = new JScrollPane(dmgsList);
-
+        JScrollPane scrollPane;
+        
+        if(!listModel.isEmpty()){
+            scrollPane = new JScrollPane(dmgsList);
+        }
+        else{
+            scrollPane = new JScrollPane(placeholder);
+        }
         // Create the Go Back button
         JPanel goBackPanel = new JPanel();
         

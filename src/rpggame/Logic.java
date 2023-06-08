@@ -232,7 +232,7 @@ public class Logic {
             addGUIText("\nExploration Rate: " + exploration + "/100");
 //            System.out.println("Exploration Rate: " + exploration + "/100");
             double encounter = Math.random();
-            if(encounter <= 0.2){
+            if(encounter <= 0.2 && place != 6){
                 addGUIText("\nYou encountered an Enemy! You will have to fight it...");
                 randomBattle();
             }
@@ -392,9 +392,9 @@ public class Logic {
     private static int getExpGain(Enemy enemy){
         //return (int) ((Math.pow((double)player.lvl, 1.2)) * (player.currEnemy.lvl/player.lvl));
         int out = (int) ((Math.pow((double)player.lvl, 1.2)) * ((double)enemy.lvl/player.lvl));
-        System.out.println((Math.pow((double)player.lvl, 1.2)));
-        System.out.println((double)enemy.lvl/player.lvl);
-        System.out.println(out);
+//        System.out.println((Math.pow((double)player.lvl, 1.2)));
+//        System.out.println((double)enemy.lvl/player.lvl);
+//        System.out.println(out);
         return out;
     }
     
@@ -410,9 +410,11 @@ public class Logic {
             if(enemy.isBoss){
                 addGUIText("\nYou obtained the " + enemy.weapon.name);
                 player.inventory.addItem(enemy.weapon);
-                player.inventory.addItem(clearRewards[act-1]);
+                if(place != 6){
+                    player.inventory.addItem(clearRewards[place]);
+                }
                 if(enemy.name.equals("Demon Lord")){
-                    player.inventory.addItem(clearRewards[act]);
+                    player.inventory.addItem(clearRewards[5]);
                 }
             }
             else{
@@ -427,7 +429,7 @@ public class Logic {
             Logic.addGUIText("\n\nYou successfully ran away from the fight!");
         }
         if(!(player.levelCheck())){
-            frame.gView.goBack();
+            frame.gView.resetDynamicPanel();
             frame.gView.enableButtons();
         }
     }

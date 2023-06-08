@@ -91,6 +91,7 @@ public class ConfirmView extends JPanel {
                     player.weapon = selectedWeapon;
                     player.inventory.removeItem(selectedWeapon);
                     Logic.frame.gView.goBack();
+                    Logic.frame.gView.goBack();
                 }
             }
         });
@@ -289,12 +290,12 @@ public class ConfirmView extends JPanel {
                     DmgItem selectedDmg = (DmgItem)item;
                     if(inBattle){
                         player.currEnemy.hp -= selectedDmg.dmg;
-                        Logic.addGUIText("The item dealth " + selectedDmg.dmg + " damage to the enemy!");
+                        Logic.addGUIText("\nThe item dealth " + selectedDmg.dmg + " damage to the enemy!");
+                        player.inventory.removeItem(selectedDmg);
+                        confirmed("Used " + selectedDmg.getName());
                         if(player.currEnemy.hp <= 0){
                             Logic.battleFin(true, player.currEnemy);
                         }
-                        player.inventory.removeItem(selectedDmg);
-                        confirmed("Used " + selectedDmg.getName());
                     }
                     else{
                         player.hp-= selectedDmg.dmg;

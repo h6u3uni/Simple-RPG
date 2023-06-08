@@ -392,8 +392,11 @@ public class Logic {
             if(enemy.isBoss){
                 addGUIText("\nYou obtained the " + enemy.weapon.name);
                 player.inventory.addItem(enemy.weapon);
-                if(place != 6){
-                    player.inventory.addItem(clearRewards[place]);
+                if(place != 6 && place !=5){
+                    player.inventory.addItem(clearRewards[place-1]);
+                }
+                if(enemy.name.equals("Demon Lord")){
+                    player.inventory.addItem(clearRewards[5]);
                 }
             }
             else{

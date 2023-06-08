@@ -67,6 +67,7 @@ public class SaveManagerTest {
 
     /**
      * Test of getShopHeals method, of class SaveManager.
+     * Pass on this test proves healitem data can be correctly extracted from database.
      */
     @Test
     public void testGetShopHeals() {
@@ -79,6 +80,7 @@ public class SaveManagerTest {
 
     /**
      * Test of getShopDmgs method, of class SaveManager.
+     * Pass on this test proves dmgitem data can be correctly extracted from database.
      */
     @Test
     public void testGetShopDmgs() {
@@ -91,6 +93,7 @@ public class SaveManagerTest {
 
     /**
      * Test of getStarterWeapons method, of class SaveManager.
+     * Pass on this test proves weapon data can be correctly extracted from database.
      */
     @Test
     public void testGetStarterWeapons() {
@@ -107,6 +110,7 @@ public class SaveManagerTest {
 
     /**
      * Test of getPlaces method, of class SaveManager.
+     * Important for this to pass as game relies heavily on locations available.
      */
     @Test
     public void testGetPlaces() {
@@ -119,6 +123,7 @@ public class SaveManagerTest {
 
     /**
      * Test of saveExist method, of class SaveManager.
+     * Helps with testing if game saving is implemented and continuing is possible. 
      */
     @Test
     public void testSaveExist() {

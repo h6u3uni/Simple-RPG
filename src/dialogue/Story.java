@@ -46,6 +46,7 @@ public class Story {
         out[0] = p1;
         return out;
     }
+    
     // Dialogue for the act 1
     protected static String[] getActOneOutro(){
         String[] out = new String[1];

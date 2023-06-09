@@ -38,6 +38,10 @@ public class UseItemView extends JPanel{
     private JPanel newButtonsPanel;
     private ActionListener goBack;
     private ActionListener goBack2;
+    private JList<HealItem> healsList;
+    private JList<DmgItem> dmgsList;
+    private JScrollPane scrollPane;
+    private JPanel goBackPanel;
     
     public UseItemView(Player player){
         setLayout(new BorderLayout());
@@ -107,36 +111,18 @@ public class UseItemView extends JPanel{
         removeAll();
 
         // Create the weapon list model
-        ArrayList<HealItem> playerHeals = Logic.player.inventory.getHealItems();
-        DefaultListModel<HealItem> listModel = new DefaultListModel<>();
-        for (HealItem heal : playerHeals) {
-            listModel.addElement(heal);
-        }
-
-        // Create the weapon list
-        JList<HealItem> healsList = new JList<>(listModel);
-        healsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        JTextArea placeholder = new JTextArea("Owned healing items will be displayed here.");
-        placeholder.setEditable(false);
-        // Create the scroll pane and add the weapon list to it
-        JScrollPane scrollPane;
-        
-        if(!listModel.isEmpty()){
-            scrollPane = new JScrollPane(healsList);
-        }
-        else{
-            scrollPane = new JScrollPane(placeholder);
-        }
+        updateList(true);
 
         // Create the Go Back button
-        JPanel goBackPanel = new JPanel();
+        goBackPanel = new JPanel();
         
         JButton selectButton = new JButton("Select");
         selectButton.addActionListener((ActionEvent e) -> {
             int selectedIndex = healsList.getSelectedIndex();
             if (selectedIndex != -1) {
                 HealItem selectedHeal = (HealItem) healsList.getModel().getElementAt(selectedIndex);
+                updateList(true);
+                updatePanel();
                 ConfirmView confirmUse = new ConfirmView(player, selectedHeal, player.getInBattle());
                 Logic.frame.gView.goNext(confirmUse);
             }
@@ -158,9 +144,7 @@ public class UseItemView extends JPanel{
         goBackPanel.add(goBackButton);
 
         // Add the scroll pane and the Go Back button to the center and south positions, respectively
-        add(scrollPane, BorderLayout.CENTER);
-        add(goBackPanel, BorderLayout.SOUTH);
-        add(subheadingLabel, BorderLayout.NORTH);
+        updatePanel();
         //add(headerLabel, BorderLayout.NORTH);
 
         // Repaint the panel
@@ -170,45 +154,27 @@ public class UseItemView extends JPanel{
     
     // Use Damage Item
     private void useDamageItem() {
-        subheadingLabel.setText("Which Healing Item would you like to use?");
+        subheadingLabel.setText("Which Damaging Item would you like to use?");
         removeAll();
 
         // Create the weapon list model
-        ArrayList<DmgItem> playerDmgs = Logic.player.inventory.getDmgItems();
-        DefaultListModel<DmgItem> listModel = new DefaultListModel<>();
-        for (DmgItem dmg : playerDmgs) {
-            listModel.addElement(dmg);
-        }
-
-        // Create the weapon list
-        JList<DmgItem> dmgsList = new JList<>(listModel);
-        dmgsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        JTextArea placeholder = new JTextArea("Owned damaging items will be displayed here.");
-        placeholder.setEditable(false);
-        // Create the scroll pane and add the weapon list to it
-        JScrollPane scrollPane;
+        updateList(false);
         
-        if(!listModel.isEmpty()){
-            scrollPane = new JScrollPane(dmgsList);
-        }
-        else{
-            scrollPane = new JScrollPane(placeholder);
-        }
         // Create the Go Back button
-        JPanel goBackPanel = new JPanel();
+        goBackPanel = new JPanel();
         
         JButton selectButton = new JButton("Select");
         selectButton.addActionListener((ActionEvent e) -> {
             int selectedIndex = dmgsList.getSelectedIndex();
             if (selectedIndex != -1) {
                 DmgItem selectedDmg = (DmgItem) dmgsList.getModel().getElementAt(selectedIndex);
+                updateList(false);
+                updatePanel();
                 ConfirmView confirmUse = new ConfirmView(player, selectedDmg, player.getInBattle());
                 Logic.frame.gView.goNext(confirmUse);
             }
         });
         
-        goBackPanel.add(selectButton);
         
         JButton goBackButton = new JButton("Go Back");
         
@@ -221,15 +187,72 @@ public class UseItemView extends JPanel{
         };
         goBackButton.addActionListener(goBack2);
         
+        goBackPanel.add(selectButton);
         goBackPanel.add(goBackButton);
 
         // Add the scroll pane and the Go Back button to the center and south positions, respectively
-        add(scrollPane, BorderLayout.CENTER);
-        add(goBackPanel, BorderLayout.SOUTH);
-        add(subheadingLabel, BorderLayout.NORTH);
+        updatePanel();
         //add(headerLabel, BorderLayout.NORTH);
 
         // Repaint the panel
+        revalidate();
+        repaint();
+    }
+
+    private void updateList(boolean heal) {
+        ArrayList<HealItem> playerHeals = Logic.player.inventory.getHealItems();
+        DefaultListModel<HealItem> listModel = new DefaultListModel<>();
+        for (HealItem healItem : playerHeals) {
+            listModel.addElement(healItem);
+        }
+
+        // Create the weapon list
+        healsList = new JList<>(listModel);
+        healsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        JTextArea placeholder = new JTextArea("Owned healing items will be displayed here.");
+        placeholder.setEditable(false);
+        JTextArea placeholder2 = new JTextArea("Owned damaging items will be displayed here.");
+        placeholder.setEditable(false);
+        // Create the scroll pane and add the weapon list to it
+        
+        ArrayList<DmgItem> playerDmgs = Logic.player.inventory.getDmgItems();
+        DefaultListModel<DmgItem> listModel2 = new DefaultListModel<>();
+        for (DmgItem dmg : playerDmgs) {
+            listModel2.addElement(dmg);
+        }
+
+        // Create the weapon list
+        dmgsList = new JList<>(listModel2);
+        dmgsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        placeholder.setEditable(false);
+        // Create the scroll pane and add the weapon list to it
+        if(!listModel.isEmpty() || !listModel2.isEmpty()){
+            if(heal){
+                scrollPane = new JScrollPane(healsList);
+            }
+            else{
+                scrollPane = new JScrollPane(dmgsList);
+            }
+        }
+        else{
+            if(heal){
+                scrollPane = new JScrollPane(placeholder);
+            }
+            else{
+                scrollPane = new JScrollPane(placeholder2);
+            }
+        }
+        revalidate();
+        repaint();
+    }
+
+    private void updatePanel() {
+        removeAll();
+        add(scrollPane, BorderLayout.CENTER);
+        add(goBackPanel, BorderLayout.SOUTH);
+        add(subheadingLabel, BorderLayout.NORTH);
         revalidate();
         repaint();
     }

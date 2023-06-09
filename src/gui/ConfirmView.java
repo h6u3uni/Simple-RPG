@@ -370,6 +370,7 @@ public class ConfirmView extends JPanel {
                 Logic.playerDied();
             }
             Logic.frame.gView.goBack();
+            Logic.frame.gView.goBack();
         });
         add(textLabel, BorderLayout.NORTH);
         add(okButton, BorderLayout.CENTER);
